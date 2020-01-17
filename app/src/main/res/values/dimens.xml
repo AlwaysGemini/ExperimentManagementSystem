@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="fragment_login_edittext_width">250dp</dimen>
+    <dimen name="fragment_login_edittext_height">50dp</dimen>
+
+</resources>
