@@ -27,9 +27,4 @@ public class CourseExperimentProjectPresenter extends BasePresenter<CourseExperi
             }
         });
     }
-
-    public void progressData(JSONArray jsonArray){
-        //List<CourseExperimentProjectTable> list = this.courseExperimentProjectModel.progressData(jsonArray);
-        //getView().onProgressingData(list);
-    }
 }

@@ -13,16 +13,6 @@ public class LoginModel {
     private static final String URL_LOGIN = "/user/login";
 
     public void login(String account, String password, final OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
-        /*Map<String, String> map = new HashMap<>();
-        map.put("account", account);
-        map.put("password", password);
-        JSONObject requestJson = new JSONObject(map);
-        OkHttpUtils.post1(requestJson, URL_LOGIN, new OkHttpUtils.OnOkHttpUtilsListener() {
-            @Override
-            public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                onOkHttpUtilsListener.onResult(isSuccess, responseJson);
-            }
-        });*/
         FormBody formBody = new FormBody
                 .Builder()
                 .add("account",account)

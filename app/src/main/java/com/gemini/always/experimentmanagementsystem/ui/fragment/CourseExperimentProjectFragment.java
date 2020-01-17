@@ -12,16 +12,13 @@ import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
+import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.view.CourseExperimentProjectView;
-import com.google.gson.Gson;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -36,8 +33,6 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     @BindView(R.id.titlebar)
     TitleBar titlebar;
 
-    private List<CourseExperimentProjectTable> list = new ArrayList<>();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +46,11 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        initView();
+        initData();
+    }
+
+    private void initView() {
         tableCourseExperimentProject.getConfig().setShowXSequence(false);
         tableCourseExperimentProject.getConfig().setShowYSequence(false);
         tableCourseExperimentProject.setZoom(true);
@@ -65,7 +65,6 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                 }
             }
         });
-        initData();
     }
 
     private void initData() {
@@ -91,24 +90,11 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     public void onGetDataResult(Boolean isSuccess, JSONObject responseJson) {
         if (isSuccess) {
             try {
-                Gson gson = new Gson();
-                JSONArray jsonArray = responseJson.getJSONArray("data");
-                CourseExperimentProjectTable[] courseExperimentProjectTable = new CourseExperimentProjectTable[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    courseExperimentProjectTable[i] = gson.fromJson(jsonArray.getJSONObject(i).toString(), CourseExperimentProjectTable.class);
-                    list.add(courseExperimentProjectTable[i]);
-                }
-
-                tableCourseExperimentProject.setData(list);
+                tableCourseExperimentProject.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public void onProgressingData(List<CourseExperimentProjectTable> list) {
-
     }
 
     @Override
