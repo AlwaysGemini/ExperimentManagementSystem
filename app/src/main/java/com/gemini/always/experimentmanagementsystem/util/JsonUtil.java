@@ -4,6 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +56,19 @@ public class JsonUtil {
             list.add(gson.fromJson(elem, cls));
         }
         return list ;
+    }
+
+    public static List<String> jsonArrayToStringList(JSONArray jsonArray, String fieldName){
+        List<String> list = new ArrayList<>();
+        for (int i = 0 ; i < jsonArray.length() ; i++){
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                list.add(jsonObject.getString(fieldName));
+            } catch (JSONException e) {
+                Logger.e(e,"JSONException");
+            }
+        }
+        return list;
     }
 
 }

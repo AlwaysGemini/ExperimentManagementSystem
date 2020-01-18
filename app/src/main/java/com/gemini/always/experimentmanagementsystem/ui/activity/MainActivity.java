@@ -17,7 +17,7 @@ import com.gemini.always.experimentmanagementsystem.adapter.ExpandableItemAdapte
 import com.gemini.always.experimentmanagementsystem.bean.Item;
 import com.gemini.always.experimentmanagementsystem.bean.Level0Item;
 import com.gemini.always.experimentmanagementsystem.bean.User;
-import com.gemini.always.experimentmanagementsystem.util.ToastUtil;
+import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
 
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StatusBarCompat.setStatusBarColor(this,Color.parseColor("#FF108EE9"));
-        /*if (!User.isLogin()){
+        if (!User.isLogin()){
             FragmentSelectActivity.startFragmentSelecter(this,"LoginFragment");
             finish();
             return;
-        }*/
+        }
 
         initView();
         initData();
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(final BaseQuickAdapter adapter, View view, final int position) {
                 switch (adapter.getItemViewType(position)){
                     case 1:
-                        ToastUtil.showToast(getApplicationContext(),((Item)(Objects.requireNonNull(adapter.getItem(position)))).getItemName());
+                        XToastUtils.toast(((Item)(Objects.requireNonNull(adapter.getItem(position)))).getItemName());
                         break;
                 }
             }

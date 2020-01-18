@@ -16,8 +16,10 @@ import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.presenter.LoginPresenter;
 import com.gemini.always.experimentmanagementsystem.ui.activity.MainActivity;
+import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.LoginView;
 import com.orhanobut.logger.Logger;
+import com.tencent.mmkv.MMKV;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.toast.XToast;
 
@@ -79,12 +81,17 @@ public class LoginFragment extends BaseFragment<LoginView, LoginPresenter> imple
     public void onLoginResult(Boolean isSuccess, JSONObject responseJson) {
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             try {
-                XToast.normal(Objects.requireNonNull(getContext()), responseJson.getString("msg")).show();
+                XToastUtils.toast(responseJson.getString("msg"));
             } catch (JSONException e) {
                 Logger.e(e, "JSONException:");
             }
         });
         if (isSuccess) {
+            try {
+                MMKV.defaultMMKV().encode("account",responseJson.getJSONObject("data").getString("account"));
+            } catch (JSONException e) {
+                Logger.e(e, "JSONException:");
+            }
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             Objects.requireNonNull(getActivity()).finish();

@@ -6,4 +6,6 @@ import org.json.JSONObject;
 
 public interface CourseExperimentProjectView extends MVPView {
     void onGetDataResult(Boolean isSuccess, JSONObject responseJson);
+
+    void onGetQueryConditionListResult(Boolean isSuccess, JSONObject responseJson);
 }

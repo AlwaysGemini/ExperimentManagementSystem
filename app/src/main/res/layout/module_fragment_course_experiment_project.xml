@@ -15,8 +15,46 @@
         app:tb_sideTextPadding="10dp"
         app:tb_titleText="课程实验项目" />
 
-    <com.bin.david.form.core.SmartTable
+    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+        android:id="@+id/button_setting_query_condition"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="设置查询条件"
+        style="@style/RoundButton.Auto"
         android:layout_below="@+id/titlebar"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/line_query"
+        android:layout_below="@+id/button_setting_query_condition"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_course"
+            style="@style/EditText.Normal"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:layout_toStartOf="@id/button_query"
+            android:singleLine="true" />
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/button_query"
+            android:text="查询"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            style="@style/RoundButton.Auto"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <com.bin.david.form.core.SmartTable
+        android:layout_below="@+id/line_query"
         android:id="@+id/table_course_experiment_project"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -2,7 +2,6 @@ package com.gemini.always.experimentmanagementsystem.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,10 +9,9 @@ import android.os.Bundle;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
-import com.gemini.always.experimentmanagementsystem.util.ToastUtil;
+import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
 import com.orhanobut.logger.Logger;
-import com.xuexiang.xui.utils.StatusBarUtils;
 
 public class FragmentSelectActivity extends AppCompatActivity {
 
@@ -59,7 +57,7 @@ public class FragmentSelectActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, courseExperimentProjectFragment).commitAllowingStateLoss();
                 break;
             default:
-                ToastUtil.showToast(this, "Fragment加载错误");
+                XToastUtils.toast("Fragment加载错误");
                 break;
         }
     }

@@ -25,41 +25,4 @@ public class LoginModel {
             }
         });
     }
-
-    public User saveUserInfo(JSONObject data) {
-        User user = new User();
-        try {
-            if (data.has("userType")) {
-                user.setToken(data.getString("uid"));
-                user.setUserName(data.getString("name"));
-                switch (data.getString("userType")) {
-                    case "1":
-                        user.setUserType("学生");
-                        break;
-                    case "2":
-                        user.setUserType("辅导员");
-                        break;
-                    case "3":
-                        user.setUserType("教师");
-                        break;
-                    default:
-                        user.setUserType("未知");
-                        break;
-                }
-                user.setUserId(data.getString("id"));
-                if (data.getString("gender").equals("1")) {
-                    user.setUserSex("男");
-                } else if (data.getString("gender").equals("0")) {
-                    user.setUserSex("女");
-                }
-                user.setUserPhoneNumber(data.getString("phoneNumber"));
-            } else {
-                user.setToken(data.getString("uid"));
-            }
-            return user;
-        } catch (JSONException e) {
-            Logger.e(e, "JSONException:");
-        }
-        return null;
-    }
 }

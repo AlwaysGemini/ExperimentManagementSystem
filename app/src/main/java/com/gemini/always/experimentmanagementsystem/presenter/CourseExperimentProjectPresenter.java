@@ -1,15 +1,11 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
-import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.model.CourseExperimentProjectModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.CourseExperimentProjectView;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.List;
 
 public class CourseExperimentProjectPresenter extends BasePresenter<CourseExperimentProjectView> {
 
@@ -19,11 +15,29 @@ public class CourseExperimentProjectPresenter extends BasePresenter<CourseExperi
         this.courseExperimentProjectModel = new CourseExperimentProjectModel();
     }
 
-    public void getData() {
-        this.courseExperimentProjectModel.getData(new OkHttpUtils.OnOkHttpUtilsListener() {
+    public void getData(String instructional_school,
+                        String course_category,
+                        String course_assignment ,
+                        String course_enabling_grade,
+                        String course) {
+        this.courseExperimentProjectModel.getData(instructional_school,
+                course_category,
+                course_assignment,
+                course_enabling_grade,
+                course,
+                new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                getView().onGetDataResult(isSuccess,responseJson);
+                getView().onGetDataResult(isSuccess, responseJson);
+            }
+        });
+    }
+
+    public void getQueryConditionList(){
+        this.courseExperimentProjectModel.getQueryConditionList(new OkHttpUtils.OnOkHttpUtilsListener() {
+            @Override
+            public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                getView().onGetQueryConditionListResult(isSuccess,responseJson);
             }
         });
     }

@@ -4,4 +4,5 @@
     <dimen name="fragment_login_edittext_width">250dp</dimen>
     <dimen name="fragment_login_edittext_height">50dp</dimen>
 
+    <dimen name="dialog_custom_course_experiment_project_spinner_width">150dp</dimen>
 </resources>

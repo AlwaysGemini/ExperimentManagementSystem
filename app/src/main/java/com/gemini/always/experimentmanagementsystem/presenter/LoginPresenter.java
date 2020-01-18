@@ -24,8 +24,4 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             }
         });
     }
-
-    public User saveUserInfo(JSONObject data) {
-        return loginModel.saveUserInfo(data);
-    }
 }

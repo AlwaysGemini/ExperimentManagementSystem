@@ -2,10 +2,10 @@ package com.gemini.always.experimentmanagementsystem.bean;
 
 import android.content.Context;
 
+import com.tencent.mmkv.MMKV;
 import com.xuexiang.xui.XUI;
 
 public class User {
-    private String token;
     private String userId;
     private String userName;
     private String userType;
@@ -13,15 +13,7 @@ public class User {
     private String userPhoneNumber;
 
     public static boolean isLogin(){
-        return !XUI.getContext().getSharedPreferences("date", Context.MODE_PRIVATE).getString("token", "").equals("");
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
+        return !(MMKV.defaultMMKV().decodeString("account") == null);
     }
 
     public String getUserId() {
