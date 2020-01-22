@@ -67,7 +67,7 @@
 
         <com.xuexiang.xui.widget.button.roundbutton.RoundButton
             android:id="@+id/button_login"
-            android:text="登陆"
+            android:text="登    陆"
             style="@style/RoundButton.Auto"
             android:layout_marginTop="40dp"
             android:layout_below="@+id/tl_password"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
@@ -51,10 +52,13 @@ public class FragmentSelectActivity extends AppCompatActivity {
                 LoginFragment loginFragment = new LoginFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, loginFragment).commitAllowingStateLoss();
                 break;
-
             case "CourseExperimentProjectFragment":
                 CourseExperimentProjectFragment courseExperimentProjectFragment = new CourseExperimentProjectFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, courseExperimentProjectFragment).commitAllowingStateLoss();
+                break;
+            case "ExperimentalOrganizationFragment":
+                ExperimentalOrganizationFragment experimentalOrganizationFragment = new ExperimentalOrganizationFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalOrganizationFragment).commitAllowingStateLoss();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");

@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StatusBarCompat.setStatusBarColor(this,Color.parseColor("#FF108EE9"));
-        if (!User.isLogin()){
+        /*if (!User.isLogin()){
             FragmentSelectActivity.startFragmentSelecter(this,"LoginFragment");
             finish();
             return;
-        }
+        }*/
 
         initView();
         initData();
@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onItemClick(final BaseQuickAdapter adapter, View view, final int position) {
-                switch (adapter.getItemViewType(position)){
-                    case 1:
-                        XToastUtils.toast(((Item)(Objects.requireNonNull(adapter.getItem(position)))).getItemName());
+                switch (((Item)(Objects.requireNonNull(adapter.getItem(position)))).getItemName()){
+                    case "实验机构":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(),"ExperimentalOrganizationFragment");
                         break;
                 }
             }

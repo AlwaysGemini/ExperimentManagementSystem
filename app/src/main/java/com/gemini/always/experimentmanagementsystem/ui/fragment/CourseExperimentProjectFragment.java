@@ -18,10 +18,12 @@ import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentPr
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.CourseExperimentProjectView;
+import com.orhanobut.logger.Logger;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
+import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +52,8 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     RoundButton buttonQuery;
     @BindView(R.id.line_query)
     RelativeLayout lineQuery;
+    @BindView(R.id.ll_stateful)
+    StatefulLayout llStateful;
     private MaterialSpinner spinnerInstructionalSchool;
     private MaterialSpinner spinnerCourseCategory;
     private MaterialSpinner spinnerCourseAssignment;
@@ -68,6 +72,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     private String selectedCourseCategory = "全部";
     private String selectedCourseAssignment = "全部";
     private String selectedCourseEnablingGrade = "全部";
+    private String selectedCourse = "";
 
     @Nullable
     @Override
@@ -89,6 +94,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     private void initView() {
         tableCourseExperimentProject.getConfig().setShowXSequence(false);
         tableCourseExperimentProject.getConfig().setShowYSequence(false);
+        tableCourseExperimentProject.getConfig().setShowTableTitle(false);
         tableCourseExperimentProject.setZoom(true);
 
         buttonSettingQueryCondition.setOnClickListener(this);
@@ -110,11 +116,16 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         new Thread() {
             @Override
             public void run() {
+                if (editCourse.getText().toString() != null) {
+                    selectedCourse = editCourse.getText().toString();
+                } else {
+                    selectedCourse = "";
+                }
                 getPresenter().getData(selectedInstructionalSchool,
                         selectedCourseCategory,
                         selectedCourseAssignment,
                         selectedCourseEnablingGrade,
-                        editCourse.getText().toString());
+                        selectedCourse);
             }
         }.start();
     }
@@ -133,10 +144,14 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     public void onGetDataResult(Boolean isSuccess, JSONObject responseJson) {
         if (isSuccess) {
             try {
+                llStateful.showContent();
                 tableCourseExperimentProject.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
+                //Objects.requireNonNull(getActivity()).runOnUiThread(() -> tableCourseExperimentProject.notifyDataChanged());
             } catch (JSONException e) {
-                e.printStackTrace();
+                Logger.e(e, "JSONException");
             }
+        } else {
+            llStateful.showEmpty();
         }
     }
 
@@ -147,13 +162,13 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                 JSONArray jsonArray = responseJson.getJSONArray("data");
 
                 instructionalSchoolList.add("全部");
-                instructionalSchoolList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(0),"instructional_school"));
+                instructionalSchoolList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(0), "instructional_school"));
                 courseCategoryList.add("全部");
-                courseCategoryList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(1),"course_category"));
+                courseCategoryList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(1), "course_category"));
                 courseAssignmentList.add("全部");
-                courseAssignmentList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(2),"course_assignment"));
+                courseAssignmentList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(2), "course_assignment"));
                 courseEnablingGradeList.add("全部");
-                courseEnablingGradeList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(3),"course_enabling_grade"));
+                courseEnablingGradeList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(3), "course_enabling_grade"));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -171,11 +186,19 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         switch (view.getId()) {
             case R.id.button_setting_query_condition:
                 MaterialDialog dialog = new MaterialDialog.Builder(getContext())
-                        .customView(R.layout.dialog_custom_course_expermient_project, true)
+                        .customView(R.layout.dialog_custom_course_experiment_project, true)
                         .title("设置查询条件")
                         .positiveText("确定")
+                        .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
+                        .negativeColorRes(R.color.colorPrimary)
                         .show();
+
+                selectedInstructionalSchool = "全部";
+                selectedCourseCategory = "全部";
+                selectedCourseAssignment = "全部";
+                selectedCourseEnablingGrade = "全部";
+
                 spinnerInstructionalSchool = dialog.getWindow().findViewById(R.id.spinner_instructional_school);
                 spinnerCourseCategory = dialog.getWindow().findViewById(R.id.spinner_course_category);
                 spinnerCourseAssignment = dialog.getWindow().findViewById(R.id.spinner_course_assignment);

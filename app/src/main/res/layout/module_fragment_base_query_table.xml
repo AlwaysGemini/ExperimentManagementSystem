@@ -4,23 +4,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.xuexiang.xui.widget.actionbar.TitleBar
-        android:id="@+id/titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tb_actionPadding="20dp"
-        android:background="@color/colorPrimary"
-        app:tb_barHeight="65dp"
-        app:tb_leftText="返回"
-        app:tb_sideTextPadding="10dp"
-        app:tb_titleText="课程实验项目" />
-
     <com.xuexiang.xui.widget.button.roundbutton.RoundButton
         android:id="@+id/button_setting_query_condition"
         android:layout_marginTop="@dimen/dp_10"
         android:text="设置查询条件"
         style="@style/RoundButton.Auto"
-        android:layout_below="@+id/titlebar"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -61,12 +49,20 @@
         android:layout_below="@+id/line_query">
 
         <com.bin.david.form.core.SmartTable
-            android:id="@+id/table_course_experiment_project"
+            android:id="@+id/table"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </com.xuexiang.xui.widget.statelayout.StatefulLayout>
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_add"
+        android:src="@drawable/add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
