@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="?attr/xui_config_content_spacing_horizontal"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="实验室类型:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_laboratory_type"
+            style="@style/Material.SpinnerStyle"
+            android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
+            android:layout_marginLeft="20dp"
+            app:es_hint="实验室类型"
+            app:ms_in_dialog="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="启用标志:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_enable_flag"
+            style="@style/Material.SpinnerStyle"
+            android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
+            android:layout_marginLeft="20dp"
+            app:es_hint="启用标志"
+            app:ms_in_dialog="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>
