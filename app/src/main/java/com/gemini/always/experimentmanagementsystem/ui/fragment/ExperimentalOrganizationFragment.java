@@ -68,7 +68,7 @@ public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalO
 
         contentViewPager.setAdapter(adapter);
         contentViewPager.setCurrentItem(0);
-        tabSegment.setMode(TabSegment.MODE_SCROLLABLE);
+        tabSegment.setMode(TabSegment.MODE_FIXED);
         tabSegment.setupWithViewPager(contentViewPager,false);
         //tabSegment.notifyDataChanged();
 

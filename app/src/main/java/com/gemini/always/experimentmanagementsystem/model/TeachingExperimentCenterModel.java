@@ -8,9 +8,9 @@ import okhttp3.FormBody;
 
 public class TeachingExperimentCenterModel {
 
-    private static final String URL_INSERT_DATA = "/experimentalOrganization/teachingExperimentCenterData/insertData";
-    private static final String URL_getQueryConditionList = "/experimentalOrganization/teachingExperimentCenterData/getQueryConditionList";
-    private static final String URL_getTeachingExperimentCenterList = "/experimentalOrganization/teachingExperimentCenterData/getData";
+    private static final String URL_INSERT_DATA = "/experimentalOrganization/teachingExperimentCenter/insertData";
+    private static final String URL_getQueryConditionList = "/experimentalOrganization/teachingExperimentCenter/getQueryConditionList";
+    private static final String URL_getTeachingExperimentCenterList = "/experimentalOrganization/teachingExperimentCenter/getData";
 
     public void insertData(String code_of_teaching_experiment_center,
                            String name_of_teaching_experiment_center,

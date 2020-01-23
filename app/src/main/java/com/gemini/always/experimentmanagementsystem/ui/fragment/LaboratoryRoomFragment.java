@@ -26,8 +26,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
 
     @BindView(R.id.button_setting_query_condition)
     RoundButton buttonSettingQueryCondition;
-    @BindView(R.id.edit_course)
-    EditText editCourse;
     @BindView(R.id.button_query)
     RoundButton buttonQuery;
     @BindView(R.id.line_query)
