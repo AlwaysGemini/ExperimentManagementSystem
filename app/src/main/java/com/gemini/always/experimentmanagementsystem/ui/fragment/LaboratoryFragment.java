@@ -17,6 +17,7 @@ import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
+import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.LaboratoryView;
 import com.orhanobut.logger.Logger;
@@ -271,12 +272,9 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                affiliatedTeachingExperimentCenterList.add("全部");
-                affiliatedTeachingExperimentCenterList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(0), "affiliated_teaching_experiment_center"));
-                laboratoryNameList.add("全部");
-                laboratoryNameList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(1), "laboratory_name"));
-                enableFlagList.add("全部");
-                enableFlagList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(2), "enable_flag"));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0),"affiliated_teaching_experiment_center",affiliatedTeachingExperimentCenterList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1),"laboratory_name",laboratoryNameList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "enable_flag",enableFlagList);
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
