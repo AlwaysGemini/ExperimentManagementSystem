@@ -16,6 +16,7 @@ import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
+import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.CourseExperimentProjectView;
 import com.orhanobut.logger.Logger;
@@ -146,7 +147,6 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
             try {
                 llStateful.showContent();
                 tableCourseExperimentProject.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
-                //Objects.requireNonNull(getActivity()).runOnUiThread(() -> tableCourseExperimentProject.notifyDataChanged());
             } catch (JSONException e) {
                 Logger.e(e, "JSONException");
             }
@@ -160,15 +160,10 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-
-                instructionalSchoolList.add("全部");
-                instructionalSchoolList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(0), "instructional_school"));
-                courseCategoryList.add("全部");
-                courseCategoryList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(1), "course_category"));
-                courseAssignmentList.add("全部");
-                courseAssignmentList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(2), "course_assignment"));
-                courseEnablingGradeList.add("全部");
-                courseEnablingGradeList.addAll(JsonUtil.jsonArrayToStringList(jsonArray.getJSONArray(3), "course_enabling_grade"));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "instructional_school", instructionalSchoolList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "course_category", courseCategoryList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "course_assignment", courseAssignmentList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(3), "course_enabling_grade", courseEnablingGradeList);
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -185,7 +180,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_setting_query_condition:
-                MaterialDialog dialog = new MaterialDialog.Builder(getContext())
+                MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_course_experiment_project, true)
                         .title("设置查询条件")
                         .positiveText("确定")

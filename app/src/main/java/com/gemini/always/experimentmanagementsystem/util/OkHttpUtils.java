@@ -1,7 +1,5 @@
 package com.gemini.always.experimentmanagementsystem.util;
 
-import android.util.Log;
-
 import com.gemini.always.experimentmanagementsystem.Constants;
 import com.orhanobut.logger.Logger;
 
@@ -141,7 +139,7 @@ public class OkHttpUtils {
                 onOkHttpUtilsListener.onResult(responseJson.getString("code").equals("200"), responseJson);
             } catch (JSONException e) {
                 //Logger.e(e, "JSONException:");
-                Logger.e(e,"JSONException:");
+                Logger.e(e, "JSONException:");
             }
         }
         Logger.json(responseJson.toString());
@@ -162,7 +160,7 @@ public class OkHttpUtils {
         } catch (IOException e) {
             //Logger.e(e, "IOException:");
             e.printStackTrace();
-            Logger.e(e,"IOException:");
+            Logger.e(e, "IOException:");
         } catch (JSONException e) {
             Logger.e(e, "JSONException:");
         }
@@ -173,7 +171,7 @@ public class OkHttpUtils {
                 onOkHttpUtilsListener.onResult(responseJson.getString("code").equals("200"), responseJson);
             } catch (JSONException e) {
                 //Logger.e(e, "JSONException:");
-                Logger.e(e,"JSONException:");
+                Logger.e(e, "JSONException:");
             }
         }
         Logger.json(responseJson.toString());

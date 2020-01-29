@@ -6,31 +6,31 @@ import com.bin.david.form.annotation.SmartTable;
 @SmartTable
 public class LaboratoryRoomTable {
 
-    @SmartColumn(id = 1 ,name = "实验分室代码")
+    @SmartColumn(id = 1, name = "实验分室代码")
     private String laboratory_room_code;
-    @SmartColumn(id = 2 ,name = "实验分室名称")
+    @SmartColumn(id = 2, name = "实验分室名称")
     private String laboratory_room_name;
-    @SmartColumn(id = 3 ,name = "隶属教学实验中心")
+    @SmartColumn(id = 3, name = "隶属教学实验中心")
     private String affiliated_teaching_experiment_center;
-    @SmartColumn(id = 4 ,name = "隶属实验室")
+    @SmartColumn(id = 4, name = "隶属实验室")
     private String affiliated_laboratory;
-    @SmartColumn(id = 5 ,name = "隶属实验房间")
+    @SmartColumn(id = 5, name = "隶属实验房间")
     private String affiliated_experimental_compartment;
-    @SmartColumn(id = 6 ,name = "实验场地性质")
+    @SmartColumn(id = 6, name = "实验场地性质")
     private String nature_of_experimental_site;
-    @SmartColumn(id = 7 ,name = "科研基地类别")
+    @SmartColumn(id = 7, name = "科研基地类别")
     private String category_of_scientific_research_base;
-    @SmartColumn(id = 8 ,name = "实验房间负责人")
+    @SmartColumn(id = 8, name = "实验房间负责人")
     private String person_in_charge_of_the_experimental_room;
-    @SmartColumn(id = 9 ,name = "共建情况")
+    @SmartColumn(id = 9, name = "共建情况")
     private String status_of_joint_construction;
-    @SmartColumn(id = 10 ,name = "校区")
+    @SmartColumn(id = 10, name = "校区")
     private String campus;
-    @SmartColumn(id = 11 ,name = "容量")
+    @SmartColumn(id = 11, name = "容量")
     private String capacity;
-    @SmartColumn(id = 12,name = "备注")
+    @SmartColumn(id = 12, name = "备注")
     private String remarks;
-    @SmartColumn(id = 13,name = "启用标志")
+    @SmartColumn(id = 13, name = "启用标志")
     private String enable_flag;
 
     public String getLaboratory_room_code() {

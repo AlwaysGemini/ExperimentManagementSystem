@@ -23,16 +23,18 @@ public class JsonUtil {
 
     /**
      * 将json字符串转化成实体对象
+     *
      * @param json
      * @param classOfT
      * @return
      */
-    public static Object stringToObject( String json , Class classOfT){
-        return  mGson.fromJson( json , classOfT ) ;
+    public static Object stringToObject(String json, Class classOfT) {
+        return mGson.fromJson(json, classOfT);
     }
 
     /**
      * 将对象准换为json字符串 或者 把list 转化成json
+     *
      * @param object
      * @param <T>
      * @return
@@ -43,29 +45,30 @@ public class JsonUtil {
 
     /**
      * 把json 字符串转化成list
+     *
      * @param json
      * @param cls
      * @param <T>
      * @return
      */
-    public static <T>  List<T> stringToList(String json ,Class<T> cls  ){
+    public static <T> List<T> stringToList(String json, Class<T> cls) {
         Gson gson = new Gson();
         List<T> list = new ArrayList<T>();
         JsonArray array = new JsonParser().parse(json).getAsJsonArray();
-        for(final JsonElement elem : array){
+        for (final JsonElement elem : array) {
             list.add(gson.fromJson(elem, cls));
         }
-        return list ;
+        return list;
     }
 
-    public static List<String> jsonArrayToStringList(JSONArray jsonArray, String fieldName){
+    public static List<String> jsonArrayToStringList(JSONArray jsonArray, String fieldName) {
         List<String> list = new ArrayList<>();
-        for (int i = 0 ; i < jsonArray.length() ; i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 list.add(jsonObject.getString(fieldName));
             } catch (JSONException e) {
-                Logger.e(e,"JSONException");
+                Logger.e(e, "JSONException");
             }
         }
         return list;

@@ -1,26 +1,49 @@
 package com.gemini.always.experimentmanagementsystem.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gemini.always.experimentmanagementsystem.R;
+import com.gemini.always.experimentmanagementsystem.adapter.DrawerAdapter;
 import com.gemini.always.experimentmanagementsystem.adapter.ExpandableItemAdapter;
+import com.gemini.always.experimentmanagementsystem.base.DrawerItem;
+import com.gemini.always.experimentmanagementsystem.base.SimpleItem;
+import com.gemini.always.experimentmanagementsystem.base.SpaceItem;
 import com.gemini.always.experimentmanagementsystem.bean.Item;
 import com.gemini.always.experimentmanagementsystem.bean.Level0Item;
 import com.gemini.always.experimentmanagementsystem.bean.User;
+import com.gemini.always.experimentmanagementsystem.util.OtherUtils;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
+import com.xuexiang.xui.utils.ResUtils;
+import com.xuexiang.xui.utils.ThemeUtils;
+import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.xuexiang.xui.widget.guidview.GuideCaseQueue;
+import com.xuexiang.xui.widget.guidview.GuideCaseView;
+import com.yarolegovich.slidingrootnav.SlidingRootNav;
+import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
+import com.yarolegovich.slidingrootnav.callback.DragStateListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,27 +51,194 @@ import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int POS_CHANGE_ROLE = 0;
+    private static final int POS_SETTING = 1;
+    private static final int POS_LOGOUT = 3;
+    private static SlidingRootNav mSlidingRootNav;
+    Level0Item[] level0Item = new Level0Item[8];
+    private TitleBar titleBar;
+    private RelativeLayout container;
+    private LinearLayout mLLMenu;
+    private String[] mMenuTitles;
+    private Drawable[] mMenuIcons;
+    private DrawerAdapter mAdapter;
     private ExpandableItemAdapter adapter;
     private List<MultiItemEntity> data = new ArrayList<>();
-    Level0Item[] level0Item = new Level0Item[8];
+
+    public static SlidingRootNav getSlidingRootNav() {
+        return mSlidingRootNav;
+    }
+
+    //仅仅启动MainActivity
+    public static void startMainActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        StatusBarCompat.setStatusBarColor(this,Color.parseColor("#FF108EE9"));
+        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
         /*if (!User.isLogin()){
             FragmentSelectActivity.startFragmentSelecter(this,"LoginFragment");
             finish();
             return;
         }*/
+        initSlidingMenu(savedInstanceState);
 
         initView();
         initData();
     }
 
-    private void initView(){
+    private void initSlidingMenu(Bundle savedInstanceState) {
+        mMenuTitles = ResUtils.getStringArray(R.array.menu_titles);
+        mMenuIcons = OtherUtils.getDrawableArray(this, R.array.menu_icons);
+
+        mSlidingRootNav = new SlidingRootNavBuilder(this)
+                .withMenuOpened(false)
+                .withContentClickableWhenMenuOpened(true)
+                .withSavedState(savedInstanceState)
+                .withMenuLayout(R.layout.menu_left_drawer)
+                .inject();
+
+        mLLMenu = mSlidingRootNav.getLayout().findViewById(R.id.ll_menu);
+        final AppCompatImageView ivQrcode = mSlidingRootNav.getLayout().findViewById(R.id.iv_qrcode);
+        ivQrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        final AppCompatImageView ivSetting = mSlidingRootNav.getLayout().findViewById(R.id.iv_setting);
+        ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mAdapter = new DrawerAdapter(Arrays.asList(
+                createItemFor(POS_CHANGE_ROLE).setChecked(true),
+                createItemFor(POS_SETTING),
+                new SpaceItem(48),
+                createItemFor(POS_LOGOUT)));
+        mAdapter.setListener(new DrawerAdapter.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position) {
+                switch (position) {
+                    case POS_CHANGE_ROLE:
+
+                        break;
+                    case POS_SETTING:
+
+                        break;
+                    case POS_LOGOUT:
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("确定退出登录吗？")
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        User.logout();
+                                        XToastUtils.toast("成功退出登录");
+                                    }
+                                })
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                }).show();
+                        /*new MaterialDialog.Builder(MyApplication.getContext())
+                                .content("确定退出登录吗？")
+                                .positiveText("确定")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        mSlidingRootNav.closeMenu();
+                                        User.logout();
+                                    }
+                                })
+                                .negativeText("取消")
+                                .show();*/
+                        break;
+                }
+            }
+        });
+
+        RecyclerView list = findViewById(R.id.list);
+        list.setNestedScrollingEnabled(false);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(mAdapter);
+
+        mAdapter.setSelected(POS_CHANGE_ROLE);
+        mSlidingRootNav.setMenuLocked(false);
+        mSlidingRootNav.getLayout().addDragStateListener(new DragStateListener() {
+            @Override
+            public void onDragStart() {
+
+            }
+
+            @Override
+            public void onDragEnd(boolean isMenuOpened) {
+                if (isMenuOpened) {
+                    if (!GuideCaseView.isShowOnce(MainActivity.this, "guide_key_sliding_root_navigation")) {
+                        final GuideCaseView guideStep1 = new GuideCaseView.Builder(MainActivity.this)
+                                .title("点击进入，可切换主题样式哦～～")
+                                .titleSize(18, TypedValue.COMPLEX_UNIT_SP)
+                                .focusOn(ivSetting)
+                                .build();
+
+                        final GuideCaseView guideStep2 = new GuideCaseView.Builder(MainActivity.this)
+                                .title("点击进入，扫码关注哦～～")
+                                .titleSize(18, TypedValue.COMPLEX_UNIT_SP)
+                                .focusOn(ivQrcode)
+                                .build();
+
+                        new GuideCaseQueue()
+                                .add(guideStep1)
+                                .add(guideStep2)
+                                .show();
+                        GuideCaseView.setShowOnce(MainActivity.this, "guide_key_sliding_root_navigation");
+                    }
+                }
+            }
+        });
+    }
+
+    private DrawerItem createItemFor(int position) {
+        return new SimpleItem(mMenuIcons[position], mMenuTitles[position])
+                .withIconTint(ThemeUtils.resolveColor(this, R.attr.xui_config_color_content_text))
+                .withTextTint(ThemeUtils.resolveColor(this, R.attr.xui_config_color_content_text))
+                .withSelectedIconTint(ThemeUtils.resolveColor(this, R.attr.colorAccent))
+                .withSelectedTextTint(ThemeUtils.resolveColor(this, R.attr.colorAccent));
+    }
+
+    private void initView() {
+
+        titleBar = findViewById(R.id.titlebar);
+        titleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mSlidingRootNav.isMenuClosed()) {
+                    mSlidingRootNav.openMenu();
+                } else if (mSlidingRootNav.isMenuOpened()) {
+                    mSlidingRootNav.closeMenu();
+                }
+            }
+        });
+
+        container = findViewById(R.id.container);
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mSlidingRootNav.isMenuOpened()) {
+                    mSlidingRootNav.closeMenu();
+                }
+            }
+        });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         //创建布局管理
@@ -67,9 +257,10 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onItemClick(final BaseQuickAdapter adapter, View view, final int position) {
-                switch (((Item)(Objects.requireNonNull(adapter.getItem(position)))).getItemName()){
+                mSlidingRootNav.closeMenu();
+                switch (((Item) (Objects.requireNonNull(adapter.getItem(position)))).getItemName()) {
                     case "实验机构":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(),"ExperimentalOrganizationFragment");
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalOrganizationFragment");
                         break;
                 }
             }
@@ -78,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void initData(){
+    private void initData() {
         level0Item[0] = new Level0Item("实验课程项目");
         data.add(level0Item[0]);
 

@@ -6,19 +6,19 @@ import com.bin.david.form.annotation.SmartTable;
 @SmartTable
 public class LaboratoryTable {
 
-    @SmartColumn(id = 1,name = "实验室代码")
+    @SmartColumn(id = 1, name = "实验室代码")
     private String laboratory_code;
-    @SmartColumn(id = 2,name = "实验室名称")
+    @SmartColumn(id = 2, name = "实验室名称")
     private String laboratory_name;
-    @SmartColumn(id = 3,name = "隶属教学实验中心")
+    @SmartColumn(id = 3, name = "隶属教学实验中心")
     private String affiliated_teaching_experiment_center;
-    @SmartColumn(id = 4,name = "实验室负责人")
+    @SmartColumn(id = 4, name = "实验室负责人")
     private String laboratory_director;
-    @SmartColumn(id = 5,name = "规章制度")
+    @SmartColumn(id = 5, name = "规章制度")
     private String rules_and_regulations;
-    @SmartColumn(id = 6,name = "备注")
+    @SmartColumn(id = 6, name = "备注")
     private String remarks;
-    @SmartColumn(id = 7,name = "启用标志")
+    @SmartColumn(id = 7, name = "启用标志")
     private String enable_flag;
 
     public String getLaboratory_code() {

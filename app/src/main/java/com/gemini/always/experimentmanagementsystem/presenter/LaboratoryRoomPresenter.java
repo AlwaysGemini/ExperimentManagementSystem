@@ -11,7 +11,7 @@ public class LaboratoryRoomPresenter extends BasePresenter<LaboratoryRoomView> {
 
     private LaboratoryRoomModel laboratoryRoomModel;
 
-    public LaboratoryRoomPresenter(){
+    public LaboratoryRoomPresenter() {
         this.laboratoryRoomModel = new LaboratoryRoomModel();
     }
 
@@ -75,10 +75,10 @@ public class LaboratoryRoomPresenter extends BasePresenter<LaboratoryRoomView> {
                 campus,
                 enable_flag,
                 new OkHttpUtils.OnOkHttpUtilsListener() {
-            @Override
-            public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                getView().onGetDataResult(isSuccess, responseJson);
-            }
-        });
+                    @Override
+                    public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                        getView().onGetDataResult(isSuccess, responseJson);
+                    }
+                });
     }
 }

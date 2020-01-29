@@ -25,22 +25,22 @@ public class LaboratoryRoomModel {
                            String capacity,
                            String remarks,
                            String enable_flag,
-                           OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener){
+                           OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("laboratory_room_code",laboratory_room_code)
-                .add("laboratory_room_name",laboratory_room_name)
-                .add("affiliated_teaching_experiment_center",affiliated_teaching_experiment_center)
-                .add("affiliated_laboratory",affiliated_laboratory)
-                .add("affiliated_experimental_compartment",affiliated_experimental_compartment)
-                .add("nature_of_experimental_site",nature_of_experimental_site)
-                .add("category_of_scientific_research_base",category_of_scientific_research_base)
-                .add("person_in_charge_of_the_experimental_room",person_in_charge_of_the_experimental_room)
-                .add("status_of_joint_construction",status_of_joint_construction)
-                .add("campus",campus)
-                .add("capacity",capacity)
-                .add("remarks",remarks)
-                .add("enable_flag",enable_flag)
+                .add("laboratory_room_code", laboratory_room_code)
+                .add("laboratory_room_name", laboratory_room_name)
+                .add("affiliated_teaching_experiment_center", affiliated_teaching_experiment_center)
+                .add("affiliated_laboratory", affiliated_laboratory)
+                .add("affiliated_experimental_compartment", affiliated_experimental_compartment)
+                .add("nature_of_experimental_site", nature_of_experimental_site)
+                .add("category_of_scientific_research_base", category_of_scientific_research_base)
+                .add("person_in_charge_of_the_experimental_room", person_in_charge_of_the_experimental_room)
+                .add("status_of_joint_construction", status_of_joint_construction)
+                .add("campus", campus)
+                .add("capacity", capacity)
+                .add("remarks", remarks)
+                .add("enable_flag", enable_flag)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
@@ -50,7 +50,7 @@ public class LaboratoryRoomModel {
         });
     }
 
-    public void getQueryConditionList(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener){
+    public void getQueryConditionList(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .build();

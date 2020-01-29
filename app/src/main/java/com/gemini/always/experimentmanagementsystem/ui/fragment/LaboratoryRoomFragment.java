@@ -15,7 +15,6 @@ import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryRoomPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
@@ -390,14 +389,14 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0),"affiliated_teaching_experiment_center",affiliatedTeachingExperimentCenterList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1),"affiliated_laboratory",affiliatedLaboratoryNameList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "affiliated_experimental_compartment",affiliatedExperimentalCompartmentNameList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(3), "nature_of_experimental_site",natureOfExperimentalSiteList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(4), "category_of_scientific_research_base",categoryOfScientificResearchBaseList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(5), "status_of_joint_construction",statusOfJointConstructionList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(6), "campus",campusList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(7), "enable_flag",enableFlagList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "affiliated_teaching_experiment_center", affiliatedTeachingExperimentCenterList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "affiliated_laboratory", affiliatedLaboratoryNameList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "affiliated_experimental_compartment", affiliatedExperimentalCompartmentNameList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(3), "nature_of_experimental_site", natureOfExperimentalSiteList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(4), "category_of_scientific_research_base", categoryOfScientificResearchBaseList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(5), "status_of_joint_construction", statusOfJointConstructionList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(6), "campus", campusList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(7), "enable_flag", enableFlagList);
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }

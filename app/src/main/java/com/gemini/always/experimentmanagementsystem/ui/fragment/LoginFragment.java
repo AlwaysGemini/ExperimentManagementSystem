@@ -1,6 +1,5 @@
 package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,14 +13,13 @@ import android.widget.TextView;
 
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.User;
 import com.gemini.always.experimentmanagementsystem.presenter.LoginPresenter;
 import com.gemini.always.experimentmanagementsystem.ui.activity.MainActivity;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.LoginView;
 import com.orhanobut.logger.Logger;
-import com.tencent.mmkv.MMKV;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
-import com.xuexiang.xui.widget.toast.XToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,12 +86,11 @@ public class LoginFragment extends BaseFragment<LoginView, LoginPresenter> imple
         });
         if (isSuccess) {
             try {
-                MMKV.defaultMMKV().encode("account",responseJson.getJSONObject("data").getString("account"));
+                User.login(responseJson.getJSONObject("data").getString("account"));
             } catch (JSONException e) {
                 Logger.e(e, "JSONException:");
             }
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
+            MainActivity.startMainActivity(getContext());
             Objects.requireNonNull(getActivity()).finish();
         }
     }
@@ -115,6 +112,8 @@ public class LoginFragment extends BaseFragment<LoginView, LoginPresenter> imple
                             getPresenter().login(editAccount.getText().toString(), editPassword.getText().toString());
                         }
                     }.start();
+                } else if (editAccount.getText().toString().isEmpty() || editPassword.toString().isEmpty()) {
+                    XToastUtils.toast("账号密码不可为空");
                 }
                 break;
             case R.id.edit_forget_password:

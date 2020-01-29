@@ -20,17 +20,17 @@ public class TeachingExperimentCenterModel {
                            String year_of_establishment,
                            String remarks,
                            String enable_flag,
-                           OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener){
+                           OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("code_of_teaching_experiment_center",code_of_teaching_experiment_center)
-                .add("name_of_teaching_experiment_center",name_of_teaching_experiment_center)
-                .add("laboratory_type",laboratory_type)
-                .add("subordinate_unit",subordinate_unit)
-                .add("subordinate_discipline",subordinate_discipline)
-                .add("year_of_establishment",year_of_establishment)
-                .add("remarks",remarks)
-                .add("enable_flag",enable_flag)
+                .add("code_of_teaching_experiment_center", code_of_teaching_experiment_center)
+                .add("name_of_teaching_experiment_center", name_of_teaching_experiment_center)
+                .add("laboratory_type", laboratory_type)
+                .add("subordinate_unit", subordinate_unit)
+                .add("subordinate_discipline", subordinate_discipline)
+                .add("year_of_establishment", year_of_establishment)
+                .add("remarks", remarks)
+                .add("enable_flag", enable_flag)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
@@ -40,7 +40,7 @@ public class TeachingExperimentCenterModel {
         });
     }
 
-    public void getQueryConditionList(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener){
+    public void getQueryConditionList(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .build();
@@ -53,11 +53,11 @@ public class TeachingExperimentCenterModel {
         });
     }
 
-    public void getData(String laboratory_type,String enable_flag,OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener){
+    public void getData(String laboratory_type, String enable_flag, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("laboratory_type",laboratory_type)
-                .add("enable_flag",enable_flag)
+                .add("laboratory_type", laboratory_type)
+                .add("enable_flag", enable_flag)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override

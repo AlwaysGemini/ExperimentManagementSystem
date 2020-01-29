@@ -11,7 +11,7 @@ public class ExperimentalCompartmentPresenter extends BasePresenter<Experimental
 
     private ExperimentalCompartmentModel experimentalCompartmentModel;
 
-    public ExperimentalCompartmentPresenter(){
+    public ExperimentalCompartmentPresenter() {
         this.experimentalCompartmentModel = new ExperimentalCompartmentModel();
     }
 

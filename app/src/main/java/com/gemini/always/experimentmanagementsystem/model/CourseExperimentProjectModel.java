@@ -12,17 +12,17 @@ public class CourseExperimentProjectModel {
 
     public void getData(String instructional_school,
                         String course_category,
-                        String course_assignment ,
+                        String course_assignment,
                         String course_enabling_grade,
                         String course,
                         OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("instructional_school",instructional_school)
-                .add("course_category",course_category)
-                .add("course_assignment",course_assignment)
-                .add("course_enabling_grade",course_enabling_grade)
-                .add("course",course)
+                .add("instructional_school", instructional_school)
+                .add("course_category", course_category)
+                .add("course_assignment", course_assignment)
+                .add("course_enabling_grade", course_enabling_grade)
+                .add("course", course)
                 .build();
 
         OkHttpUtils.postByFormBody(formBody, URL_getCourseExperimentProjectList, new OkHttpUtils.OnOkHttpUtilsListener() {
@@ -33,7 +33,7 @@ public class CourseExperimentProjectModel {
         });
     }
 
-    public void getQueryConditionList(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener){
+    public void getQueryConditionList(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .build();

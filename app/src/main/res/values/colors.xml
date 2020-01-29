@@ -3,4 +3,5 @@
     <color name="colorPrimary">#FF108EE9</color>
     <color name="colorPrimaryDark">#FF108EE9</color>
     <color name="colorAccent">#FF108EE9</color>
+    <color name="module_fragment_login_edittext_color">#696969</color>
 </resources>

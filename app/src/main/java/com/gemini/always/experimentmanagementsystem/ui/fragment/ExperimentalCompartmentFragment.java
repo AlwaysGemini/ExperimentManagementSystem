@@ -12,19 +12,24 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.bin.david.form.core.SmartTable;
+import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.table.TableData;
+import com.gemini.always.experimentmanagementsystem.DataProvider;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalCompartmentPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentalCompartmentView;
 import com.orhanobut.logger.Logger;
+import com.xuexiang.xui.adapter.simple.AdapterItem;
+import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
+import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
@@ -108,6 +113,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         table.getConfig().setShowTableTitle(false);
         table.setZoom(true);
 
+
         buttonSettingQueryCondition.setOnClickListener(this);
         buttonQuery.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
@@ -179,9 +185,9 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0),"affiliated_teaching_experiment_center",affiliatedTeachingExperimentCenterList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1),"affiliated_laboratory",affiliatedLaboratoryNameList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2),"enable_flag",enableFlagList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "affiliated_teaching_experiment_center", affiliatedTeachingExperimentCenterList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "affiliated_laboratory", affiliatedLaboratoryNameList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "enable_flag", enableFlagList);
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -194,6 +200,20 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
             try {
                 llStateful.showContent();
                 table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), ExperimentalCompartmentTable.class));
+                table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
+                    @Override
+                    public void onClick(Column column, Object o, int col, int row) {
+                        new XUISimplePopup(Objects.requireNonNull(getContext()), DataProvider.items)
+                                .create(new XUISimplePopup.OnPopupItemClickListener() {
+                                    @Override
+                                    public void onItemClick(XUISimpleAdapter adapter, AdapterItem item, int position) {
+                                        XToastUtils.toast(item.getTitle().toString());
+                                    }
+                                })
+                                .setHasDivider(true)
+                                .showDown(getView());
+                    }
+                });
             } catch (JSONException e) {
                 Logger.e(e, "JSONException");
             }

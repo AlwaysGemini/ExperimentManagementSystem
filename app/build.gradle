@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.githang:status-bar-compat:latest.integration'
     implementation 'com.tencent:mmkv-static:1.0.24'
     implementation 'com.alibaba:fastjson:1.2.8'
+    implementation 'com.yarolegovich:sliding-root-nav:1.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

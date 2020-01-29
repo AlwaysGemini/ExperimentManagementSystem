@@ -6,17 +6,17 @@ import com.bin.david.form.annotation.SmartTable;
 @SmartTable
 public class ExperimentalCompartmentTable {
 
-    @SmartColumn(id = 1,name = "实验分室代码")
+    @SmartColumn(id = 1, name = "实验分室代码")
     private String experimental_compartment_code;
-    @SmartColumn(id = 2,name = "实验分室名称")
+    @SmartColumn(id = 2, name = "实验分室名称")
     private String experimental_compartment_name;
-    @SmartColumn(id = 3,name = "隶属教学实验中心")
+    @SmartColumn(id = 3, name = "隶属教学实验中心")
     private String affiliated_teaching_experiment_center;
-    @SmartColumn(id = 4,name = "隶属实验室")
+    @SmartColumn(id = 4, name = "隶属实验室")
     private String affiliated_laboratory;
-    @SmartColumn(id = 5,name = "备注")
+    @SmartColumn(id = 5, name = "备注")
     private String remarks;
-    @SmartColumn(id = 6,name = "启用标志")
+    @SmartColumn(id = 6, name = "启用标志")
     private String enable_flag;
 
     public String getExperimental_compartment_code() {

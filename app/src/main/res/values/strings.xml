@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">实验管理系统</string>
+
+    <string name="module_fragment_login_button_login">登    陆</string>
+    <string name="module_fragment_login_text_forget_password">忘记密码</string>
+    <string name="module_fragment_login_edittext_password_hint">请输入密码</string>
+    <string name="module_fragment_login_edittext_account_hint">请输入账号</string>
 </resources>

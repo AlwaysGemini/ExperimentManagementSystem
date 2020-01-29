@@ -7,7 +7,7 @@ public class Level0Item extends AbstractExpandableItem<Item> implements MultiIte
 
     private String itemName;
 
-    public Level0Item(String itemName){
+    public Level0Item(String itemName) {
         this.itemName = itemName;
     }
 

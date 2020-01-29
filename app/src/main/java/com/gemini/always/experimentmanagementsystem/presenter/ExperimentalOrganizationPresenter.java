@@ -8,7 +8,7 @@ public class ExperimentalOrganizationPresenter extends BasePresenter<Experimenta
 
     private ExperimentalOrganizationModel experimentalOrganizationModel;
 
-    public ExperimentalOrganizationPresenter(){
+    public ExperimentalOrganizationPresenter() {
         this.experimentalOrganizationModel = new ExperimentalOrganizationModel();
     }
 }

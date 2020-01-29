@@ -17,7 +17,7 @@ public class CourseExperimentProjectPresenter extends BasePresenter<CourseExperi
 
     public void getData(String instructional_school,
                         String course_category,
-                        String course_assignment ,
+                        String course_assignment,
                         String course_enabling_grade,
                         String course) {
         this.courseExperimentProjectModel.getData(instructional_school,
@@ -26,18 +26,18 @@ public class CourseExperimentProjectPresenter extends BasePresenter<CourseExperi
                 course_enabling_grade,
                 course,
                 new OkHttpUtils.OnOkHttpUtilsListener() {
-            @Override
-            public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                getView().onGetDataResult(isSuccess, responseJson);
-            }
-        });
+                    @Override
+                    public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                        getView().onGetDataResult(isSuccess, responseJson);
+                    }
+                });
     }
 
-    public void getQueryConditionList(){
+    public void getQueryConditionList() {
         this.courseExperimentProjectModel.getQueryConditionList(new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                getView().onGetQueryConditionListResult(isSuccess,responseJson);
+                getView().onGetQueryConditionListResult(isSuccess, responseJson);
             }
         });
     }

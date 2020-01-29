@@ -3,8 +3,8 @@ package com.gemini.always.experimentmanagementsystem.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
@@ -44,7 +44,7 @@ public class FragmentSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fragment_select);
 
         //StatusBarUtils.translucent(this);
-        StatusBarCompat.setStatusBarColor(this,Color.parseColor("#FF108EE9"));
+        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
 
         Intent intent = getIntent();
         switch (intent.getStringExtra("Fragment")) {

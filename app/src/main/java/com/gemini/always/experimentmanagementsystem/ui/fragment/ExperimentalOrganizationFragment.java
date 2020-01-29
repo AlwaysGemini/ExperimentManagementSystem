@@ -26,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalOrganizationView, ExperimentalOrganizationPresenter> implements ExperimentalOrganizationView{
+public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalOrganizationView, ExperimentalOrganizationPresenter> implements ExperimentalOrganizationView {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -55,22 +55,21 @@ public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalO
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getChildFragmentManager());
         for (String page : pages) {
             tabSegment.addTab(new TabSegment.Tab(page));
         }
-        adapter.addFragment(new TeachingExperimentCenterFragment(),"实验教学中心");
-        adapter.addFragment(new LaboratoryFragment(),"实验室");
-        adapter.addFragment(new ExperimentalCompartmentFragment(),"实验分室");
-        adapter.addFragment(new LaboratoryRoomFragment(),"实验房间");
+        adapter.addFragment(new TeachingExperimentCenterFragment(), "实验教学中心");
+        adapter.addFragment(new LaboratoryFragment(), "实验室");
+        adapter.addFragment(new ExperimentalCompartmentFragment(), "实验分室");
+        adapter.addFragment(new LaboratoryRoomFragment(), "实验房间");
 
 
         contentViewPager.setAdapter(adapter);
         contentViewPager.setCurrentItem(0);
         tabSegment.setMode(TabSegment.MODE_FIXED);
-        tabSegment.setupWithViewPager(contentViewPager,false);
-        //tabSegment.notifyDataChanged();
+        tabSegment.setupWithViewPager(contentViewPager, false);
 
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override

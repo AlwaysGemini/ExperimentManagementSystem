@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.bin.david.form.core.SmartTable;
+import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.table.TableData;
+import com.gemini.always.experimentmanagementsystem.DataProvider;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
@@ -21,9 +24,12 @@ import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.TeachingExperimentCenterView;
 import com.orhanobut.logger.Logger;
+import com.xuexiang.xui.adapter.simple.AdapterItem;
+import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
+import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
@@ -266,8 +272,8 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0),"laboratory_type",laboratoryTypeList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1),"enable_flag",enableFlagList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "laboratory_type", laboratoryTypeList);
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "enable_flag", enableFlagList);
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -280,6 +286,20 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
             try {
                 llStateful.showContent();
                 table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), TeachingExperimentCenterTable.class));
+                table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
+                    @Override
+                    public void onClick(Column column, Object o, int col, int row) {
+                        new XUISimplePopup(Objects.requireNonNull(getContext()), DataProvider.items)
+                                .create(new XUISimplePopup.OnPopupItemClickListener() {
+                                    @Override
+                                    public void onItemClick(XUISimpleAdapter adapter, AdapterItem item, int position) {
+                                        XToastUtils.toast(item.getTitle().toString());
+                                    }
+                                })
+                                .setHasDivider(true)
+                                .showDown(getView());
+                    }
+                });
             } catch (JSONException e) {
                 Logger.e(e, "JSONException");
             }

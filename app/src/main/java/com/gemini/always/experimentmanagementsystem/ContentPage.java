@@ -2,6 +2,7 @@ package com.gemini.always.experimentmanagementsystem;
 
 /**
  * 页面枚举
+ *
  * @since 2020/1/23 下午2:23
  */
 public enum ContentPage {
@@ -18,11 +19,11 @@ public enum ContentPage {
     }
 
     public static ContentPage getPage(int position) {
-       return ContentPage.values()[position];
+        return ContentPage.values()[position];
     }
 
     public static int size() {
-       return ContentPage.values().length;
+        return ContentPage.values().length;
     }
 
     public static String[] getPageNames() {

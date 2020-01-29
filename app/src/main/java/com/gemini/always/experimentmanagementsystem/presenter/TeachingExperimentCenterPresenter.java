@@ -11,7 +11,7 @@ public class TeachingExperimentCenterPresenter extends BasePresenter<TeachingExp
 
     private TeachingExperimentCenterModel teachingExperimentCenterModel;
 
-    public TeachingExperimentCenterPresenter(){
+    public TeachingExperimentCenterPresenter() {
         this.teachingExperimentCenterModel = new TeachingExperimentCenterModel();
     }
 
@@ -22,7 +22,7 @@ public class TeachingExperimentCenterPresenter extends BasePresenter<TeachingExp
                            String subordinate_discipline,
                            String year_of_establishment,
                            String remarks,
-                           String enable_flag){
+                           String enable_flag) {
         this.teachingExperimentCenterModel.insertData(code_of_teaching_experiment_center,
                 name_of_teaching_experiment_center,
                 laboratory_type,
@@ -33,25 +33,25 @@ public class TeachingExperimentCenterPresenter extends BasePresenter<TeachingExp
                 enable_flag, new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                        getView().onInsertDataResult(isSuccess,responseJson);
+                        getView().onInsertDataResult(isSuccess, responseJson);
                     }
                 });
     }
 
-    public void getQueryConditionList(){
+    public void getQueryConditionList() {
         this.teachingExperimentCenterModel.getQueryConditionList(new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                getView().onGetQueryConditionListResult(isSuccess,responseJson);
+                getView().onGetQueryConditionListResult(isSuccess, responseJson);
             }
         });
     }
 
-    public void getData(String laboratory_type,String enable_flag){
+    public void getData(String laboratory_type, String enable_flag) {
         this.teachingExperimentCenterModel.getData(laboratory_type, enable_flag, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                getView().onGetDataResult(isSuccess,responseJson);
+                getView().onGetDataResult(isSuccess, responseJson);
             }
         });
     }

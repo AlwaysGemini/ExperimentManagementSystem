@@ -1,9 +1,6 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import android.content.Context;
-
 import com.tencent.mmkv.MMKV;
-import com.xuexiang.xui.XUI;
 
 public class User {
     private String userId;
@@ -12,8 +9,20 @@ public class User {
     private String userSex;
     private String userPhoneNumber;
 
-    public static boolean isLogin(){
+    public static void login(String account) {
+        if (MMKV.defaultMMKV().decodeString("account") == null) {
+            MMKV.defaultMMKV().encode("account", account);
+        }
+    }
+
+    public static boolean isLogin() {
         return !(MMKV.defaultMMKV().decodeString("account") == null);
+    }
+
+    public static void logout() {
+        if (MMKV.defaultMMKV().decodeString("account") != null) {
+            MMKV.defaultMMKV().remove("account");
+        }
     }
 
     public String getUserId() {
