@@ -140,7 +140,7 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
             case R.id.button_setting_query_condition:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_teaching_experiment_center, true)
-                        .title("增加")
+                        .title(R.string.title_set_query_condition)
                         .positiveText("确定")
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
@@ -182,7 +182,7 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
             case R.id.button_add:
                 new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_teaching_experiment_center, true)
-                        .title("增加")
+                        .title(R.string.title_add)
                         .positiveText("确定")
                         .positiveColorRes(R.color.colorPrimary)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {

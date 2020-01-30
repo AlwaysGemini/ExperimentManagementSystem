@@ -63,14 +63,12 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
 
     private EditText edit_experimental_compartment_code;
     private EditText edit_experimental_compartment_name;
-    private EditText edit_affiliated_teaching_experiment_center;
     private EditText edit_affiliated_laboratory;
     private EditText edit_remarks;
     private EditText edit_enable_flag;
 
     private String edited_experimental_compartment_code = "";
     private String edited_experimental_compartment_name = "";
-    private String edited_affiliated_teaching_experiment_center = "";
     private String edited_affiliated_laboratory = "";
     private String edited_remarks = "";
     private String edited_enable_flag = "";
@@ -141,7 +139,6 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
             public void run() {
                 getPresenter().insertData(edited_experimental_compartment_code,
                         edited_experimental_compartment_name,
-                        edited_affiliated_teaching_experiment_center,
                         edited_affiliated_laboratory,
                         edited_remarks,
                         edited_enable_flag);
@@ -228,7 +225,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
             case R.id.button_setting_query_condition:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_experimental_compartment, true)
-                        .title("增加")
+                        .title(R.string.title_set_query_condition)
                         .positiveText("确定")
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
@@ -291,14 +288,12 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
 
                                 edit_experimental_compartment_code = dialog.findViewById(R.id.edit_experimental_compartment_code);
                                 edit_experimental_compartment_name = dialog.findViewById(R.id.edit_experimental_compartment_name);
-                                edit_affiliated_teaching_experiment_center = dialog.findViewById(R.id.edit_affiliated_teaching_experiment_center);
                                 edit_affiliated_laboratory = dialog.findViewById(R.id.edit_affiliated_laboratory);
                                 edit_remarks = dialog.findViewById(R.id.edit_remarks);
                                 edit_enable_flag = dialog.findViewById(R.id.edit_enable_flag);
 
                                 edited_experimental_compartment_code = edit_experimental_compartment_code.getText().toString();
                                 edited_experimental_compartment_name = edit_experimental_compartment_name.getText().toString();
-                                edited_affiliated_teaching_experiment_center = edit_affiliated_teaching_experiment_center.getText().toString();
                                 edited_affiliated_laboratory = edit_affiliated_laboratory.getText().toString();
                                 edited_remarks = edit_remarks.getText().toString();
                                 edited_enable_flag = edit_enable_flag.getText().toString();

@@ -33,7 +33,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/edit_course"
+            android:id="@+id/edit_fuzzy_query"
             style="@style/EditText.Normal"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
@@ -61,7 +61,7 @@
         android:layout_below="@+id/line_query">
 
         <com.bin.david.form.core.SmartTable
-            android:id="@+id/table_course_experiment_project"
+            android:id="@+id/table"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

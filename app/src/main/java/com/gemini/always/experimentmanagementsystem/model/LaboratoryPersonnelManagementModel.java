@@ -6,25 +6,27 @@ import org.json.JSONObject;
 
 import okhttp3.FormBody;
 
-public class ExperimentalCompartmentModel {
+public class LaboratoryPersonnelManagementModel {
 
-    private static final String URL_INSERT_DATA = "/experimentalOrganization/experimentalCompartment/insertData";
-    private static final String URL_getQueryConditionList = "/experimentalOrganization/experimentalCompartment/getQueryConditionList";
-    private static final String URL_getTeachingExperimentCenterList = "/experimentalOrganization/experimentalCompartment/getData";
+    private static final String URL_INSERT_DATA = "/laboratoryPersonnelManagement/insertData";
+    private static final String URL_getQueryConditionList = "/laboratoryPersonnelManagement/getQueryConditionList";
+    private static final String URL_getTeachingExperimentCenterList = "/laboratoryPersonnelManagement/getData";
 
-    public void insertData(String experimental_compartment_code,
-                           String experimental_compartment_name,
-                           String affiliated_laboratory,
-                           String remarks,
-                           String enable_flag,
+    public void insertData(String job_number,
+                           String full_name,
+                           String sex,
+                           String title,
+                           String laboratory_name,
+                           String incumbency,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("experimental_compartment_code", experimental_compartment_code)
-                .add("experimental_compartment_name", experimental_compartment_name)
-                .add("affiliated_laboratory", affiliated_laboratory)
-                .add("remarks", remarks)
-                .add("enable_flag", enable_flag)
+                .add("job_number", job_number)
+                .add("full_name", full_name)
+                .add("sex", sex)
+                .add("title", title)
+                .add("laboratory_name", laboratory_name)
+                .add("incumbency", incumbency)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
@@ -47,12 +49,13 @@ public class ExperimentalCompartmentModel {
         });
     }
 
-    public void getData(String affiliated_teaching_experiment_center, String affiliated_laboratory, String enable_flag, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+    public void getData(String teaching_experiment_center_name, String laboratory_name, String incumbency ,String full_name, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("affiliated_teaching_experiment_center", affiliated_teaching_experiment_center)
-                .add("affiliated_laboratory", affiliated_laboratory)
-                .add("enable_flag", enable_flag)
+                .add("teaching_experiment_center_name", teaching_experiment_center_name)
+                .add("laboratory_name", laboratory_name)
+                .add("incumbency", incumbency)
+                .add("full_name",full_name)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override

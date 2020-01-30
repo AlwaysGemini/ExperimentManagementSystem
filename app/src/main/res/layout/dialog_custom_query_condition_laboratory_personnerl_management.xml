@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="?attr/xui_config_content_spacing_horizontal"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="教学实验中心:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_teaching_experiment_center_name"
+            style="@style/Material.SpinnerStyle"
+            android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
+            android:layout_marginLeft="20dp"
+            app:es_hint="教学实验中心"
+            app:ms_in_dialog="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="实验室:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_laboratory_name"
+            style="@style/Material.SpinnerStyle"
+            android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
+            android:layout_marginLeft="20dp"
+            app:es_hint="实验室"
+            app:ms_in_dialog="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="在职状况:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_incumbency"
+            style="@style/Material.SpinnerStyle"
+            android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
+            android:layout_marginLeft="20dp"
+            app:es_hint="在职状况"
+            app:ms_in_dialog="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

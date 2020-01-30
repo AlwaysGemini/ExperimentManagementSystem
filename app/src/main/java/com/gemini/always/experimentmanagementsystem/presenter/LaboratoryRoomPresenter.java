@@ -17,8 +17,6 @@ public class LaboratoryRoomPresenter extends BasePresenter<LaboratoryRoomView> {
 
     public void insertData(String laboratory_room_code,
                            String laboratory_room_name,
-                           String affiliated_teaching_experiment_center,
-                           String affiliated_laboratory,
                            String affiliated_experimental_compartment,
                            String nature_of_experimental_site,
                            String category_of_scientific_research_base,
@@ -30,8 +28,6 @@ public class LaboratoryRoomPresenter extends BasePresenter<LaboratoryRoomView> {
                            String enable_flag) {
         this.laboratoryRoomModel.insertData(laboratory_room_code,
                 laboratory_room_name,
-                affiliated_teaching_experiment_center,
-                affiliated_laboratory,
                 affiliated_experimental_compartment,
                 nature_of_experimental_site,
                 category_of_scientific_research_base,

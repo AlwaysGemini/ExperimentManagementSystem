@@ -8,125 +8,150 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/line_experimental_compartment_code"
+            android:id="@+id/line_job_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/text_experimental_compartment_code"
+                android:id="@+id/text_job_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="实验分室代码:" />
+                android:text="工号:" />
 
             <EditText
-                android:id="@+id/edit_experimental_compartment_code"
+                android:id="@+id/edit_job_number"
                 style="@style/EditText.Normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:layout_toEndOf="@id/text_experimental_compartment_code"
+                android:layout_toEndOf="@id/text_job_number"
                 android:singleLine="true" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/line_experimental_compartment_name"
-            android:layout_below="@+id/line_experimental_compartment_code"
+            android:id="@+id/line_full_name"
+            android:layout_below="@+id/line_job_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/text_experimental_compartment_name"
+                android:id="@+id/text_full_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="实验分室名称:" />
+                android:text="姓名:" />
 
             <EditText
-                android:id="@+id/edit_experimental_compartment_name"
+                android:id="@+id/edit_full_name"
                 style="@style/EditText.Normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:layout_toEndOf="@id/text_experimental_compartment_name"
+                android:layout_toEndOf="@id/text_full_name"
                 android:singleLine="true" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/line_affiliated_laboratory"
-            android:layout_below="@+id/line_experimental_compartment_name"
+            android:id="@+id/line_sex"
+            android:layout_below="@+id/line_full_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/text_affiliated_laboratory"
+                android:id="@+id/text_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="隶属实验室:" />
+                android:text="性别:" />
 
             <EditText
-                android:id="@+id/edit_affiliated_laboratory"
+                android:id="@+id/edit_sex"
                 style="@style/EditText.Normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:layout_toEndOf="@id/text_affiliated_laboratory"
+                android:layout_toEndOf="@id/text_sex"
                 android:singleLine="true" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/line_remarks"
-            android:layout_below="@+id/line_affiliated_laboratory"
+            android:id="@+id/line_title"
+            android:layout_below="@+id/line_sex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/text_remarks"
+                android:id="@+id/text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="备注:" />
+                android:text="职称:" />
 
             <EditText
-                android:id="@+id/edit_remarks"
+                android:id="@+id/edit_title"
                 style="@style/EditText.Normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:layout_toEndOf="@id/text_remarks"
+                android:layout_toEndOf="@id/text_title"
                 android:singleLine="true" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/line_enable_flag"
-            android:layout_below="@+id/line_remarks"
+            android:id="@+id/line_laboratory_name"
+            android:layout_below="@+id/line_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/text_enable_flag"
+                android:id="@+id/text_laboratory_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="启用标志:" />
+                android:text="实验室:" />
 
             <EditText
-                android:id="@+id/edit_enable_flag"
+                android:id="@+id/edit_laboratory_name"
                 style="@style/EditText.Normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:layout_toEndOf="@id/text_enable_flag"
+                android:layout_toEndOf="@id/text_laboratory_name"
+                android:singleLine="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/line_incumbency"
+            android:layout_below="@+id/line_laboratory_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_incumbency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="在职状态:" />
+
+            <EditText
+                android:id="@+id/edit_incumbency"
+                style="@style/EditText.Normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:layout_toEndOf="@id/text_incumbency"
                 android:singleLine="true" />
 
         </RelativeLayout>

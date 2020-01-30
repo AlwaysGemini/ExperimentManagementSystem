@@ -40,15 +40,15 @@ import butterknife.Unbinder;
 
 public class CourseExperimentProjectFragment extends BaseFragment<CourseExperimentProjectView, CourseExperimentProjectPresenter> implements CourseExperimentProjectView, View.OnClickListener {
 
-    @BindView(R.id.table_course_experiment_project)
+    @BindView(R.id.table)
     SmartTable tableCourseExperimentProject;
     Unbinder unbinder;
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.button_setting_query_condition)
     RoundButton buttonSettingQueryCondition;
-    @BindView(R.id.edit_course)
-    EditText editCourse;
+    @BindView(R.id.edit_fuzzy_query)
+    EditText editFuzzyQuery;
     @BindView(R.id.button_query)
     RoundButton buttonQuery;
     @BindView(R.id.line_query)
@@ -78,7 +78,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_course_experiment_project, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_fuzzy_query, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -117,8 +117,8 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         new Thread() {
             @Override
             public void run() {
-                if (editCourse.getText().toString() != null) {
-                    selectedCourse = editCourse.getText().toString();
+                if (editFuzzyQuery.getText().toString() != null) {
+                    selectedCourse = editFuzzyQuery.getText().toString();
                 } else {
                     selectedCourse = "";
                 }
@@ -182,7 +182,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
             case R.id.button_setting_query_condition:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_course_experiment_project, true)
-                        .title("设置查询条件")
+                        .title(R.string.title_set_query_condition)
                         .positiveText("确定")
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")

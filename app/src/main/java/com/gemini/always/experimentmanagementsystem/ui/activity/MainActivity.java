@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.gemini.always.experimentmanagementsystem.MyApplication;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.adapter.DrawerAdapter;
 import com.gemini.always.experimentmanagementsystem.adapter.ExpandableItemAdapter;
@@ -65,27 +66,17 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableItemAdapter adapter;
     private List<MultiItemEntity> data = new ArrayList<>();
 
-    public static SlidingRootNav getSlidingRootNav() {
-        return mSlidingRootNav;
-    }
-
-    //仅仅启动MainActivity
-    public static void startMainActivity(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
-        /*if (!User.isLogin()){
+        if (!User.isLogin()){
             FragmentSelectActivity.startFragmentSelecter(this,"LoginFragment");
             finish();
             return;
-        }*/
+        }
         initSlidingMenu(savedInstanceState);
 
         initView();
@@ -143,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         User.logout();
                                         XToastUtils.toast("成功退出登录");
+                                        if (!User.isLogin()){
+                                            FragmentSelectActivity.startFragmentSelecter(MyApplication.getContext(),"LoginFragment");
+                                            finish();
+                                            return;
+                                        }
                                     }
                                 })
                                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -262,6 +258,9 @@ public class MainActivity extends AppCompatActivity {
                     case "实验机构":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalOrganizationFragment");
                         break;
+                    case "实验人员管理":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "LaboratoryPersonnelManagementFragment");
+                        break;
                 }
             }
         });
@@ -275,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
         level0Item[1] = new Level0Item("实验资源管理");
         level0Item[1].addSubItem(new Item("实验机构"));
-        level0Item[1].addSubItem(new Item("实验人员管理"));
+        level0Item[1].addSubItem(new Item("实验室人员管理"));
         level0Item[1].addSubItem(new Item("实验仪器设备管理"));
         level0Item[1].addSubItem(new Item("实验耗材管理"));
         level0Item[1].addSubItem(new Item("代码维护"));
@@ -324,5 +323,15 @@ public class MainActivity extends AppCompatActivity {
         data.add(level0Item[7]);
 
         adapter.notifyDataSetChanged();
+    }
+
+    //仅仅启动MainActivity
+    public static void startMainActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static SlidingRootNav getSlidingRootNav() {
+        return mSlidingRootNav;
     }
 }

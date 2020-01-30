@@ -14,8 +14,6 @@ public class LaboratoryRoomModel {
 
     public void insertData(String laboratory_room_code,
                            String laboratory_room_name,
-                           String affiliated_teaching_experiment_center,
-                           String affiliated_laboratory,
                            String affiliated_experimental_compartment,
                            String nature_of_experimental_site,
                            String category_of_scientific_research_base,
@@ -30,8 +28,6 @@ public class LaboratoryRoomModel {
                 .Builder()
                 .add("laboratory_room_code", laboratory_room_code)
                 .add("laboratory_room_name", laboratory_room_name)
-                .add("affiliated_teaching_experiment_center", affiliated_teaching_experiment_center)
-                .add("affiliated_laboratory", affiliated_laboratory)
                 .add("affiliated_experimental_compartment", affiliated_experimental_compartment)
                 .add("nature_of_experimental_site", nature_of_experimental_site)
                 .add("category_of_scientific_research_base", category_of_scientific_research_base)

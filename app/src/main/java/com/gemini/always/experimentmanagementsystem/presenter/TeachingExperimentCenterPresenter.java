@@ -15,16 +15,16 @@ public class TeachingExperimentCenterPresenter extends BasePresenter<TeachingExp
         this.teachingExperimentCenterModel = new TeachingExperimentCenterModel();
     }
 
-    public void insertData(String code_of_teaching_experiment_center,
-                           String name_of_teaching_experiment_center,
+    public void insertData(String teaching_experiment_center_code,
+                           String teaching_experiment_center_name,
                            String laboratory_type,
                            String subordinate_unit,
                            String subordinate_discipline,
                            String year_of_establishment,
                            String remarks,
                            String enable_flag) {
-        this.teachingExperimentCenterModel.insertData(code_of_teaching_experiment_center,
-                name_of_teaching_experiment_center,
+        this.teachingExperimentCenterModel.insertData(teaching_experiment_center_code,
+                teaching_experiment_center_name,
                 laboratory_type,
                 subordinate_unit,
                 subordinate_discipline,

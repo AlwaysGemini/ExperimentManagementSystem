@@ -57,8 +57,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
 
     private EditText edit_laboratory_room_code;
     private EditText edit_laboratory_room_name;
-    private EditText edit_affiliated_teaching_experiment_center;
-    private EditText edit_affiliated_laboratory;
     private EditText edit_affiliated_experimental_compartment;
     private EditText edit_nature_of_experimental_site;
     private EditText edit_category_of_scientific_research_base;
@@ -71,8 +69,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
 
     private String edited_laboratory_room_code = "";
     private String edited_laboratory_room_name = "";
-    private String edited_affiliated_teaching_experiment_center = "";
-    private String edited_affiliated_laboratory = "";
     private String edited_affiliated_experimental_compartment = "";
     private String edited_nature_of_experimental_site = "";
     private String edited_category_of_scientific_research_base = "";
@@ -168,7 +164,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
             case R.id.button_setting_query_condition:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_laboratory_room, true)
-                        .title("增加")
+                        .title(R.string.title_set_query_condition)
                         .positiveText("确定")
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
@@ -282,7 +278,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
             case R.id.button_add:
                 new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_laboratory_room, true)
-                        .title("增加")
+                        .title(R.string.title_add)
                         .positiveText("确定")
                         .positiveColorRes(R.color.colorPrimary)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -291,8 +287,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
 
                                 edit_laboratory_room_code = dialog.findViewById(R.id.edit_laboratory_room_code);
                                 edit_laboratory_room_name = dialog.findViewById(R.id.edit_laboratory_room_name);
-                                edit_affiliated_teaching_experiment_center = dialog.findViewById(R.id.edit_affiliated_teaching_experiment_center);
-                                edit_affiliated_laboratory = dialog.findViewById(R.id.edit_affiliated_laboratory);
                                 edit_affiliated_experimental_compartment = dialog.findViewById(R.id.edit_affiliated_experimental_compartment);
                                 edit_nature_of_experimental_site = dialog.findViewById(R.id.edit_nature_of_experimental_site);
                                 edit_category_of_scientific_research_base = dialog.findViewById(R.id.edit_category_of_scientific_research_base);
@@ -305,8 +299,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
 
                                 edited_laboratory_room_code = edit_laboratory_room_code.getText().toString();
                                 edited_laboratory_room_name = edit_laboratory_room_name.getText().toString();
-                                edited_affiliated_teaching_experiment_center = edit_affiliated_teaching_experiment_center.getText().toString();
-                                edited_affiliated_laboratory = edit_affiliated_laboratory.getText().toString();
                                 edited_affiliated_experimental_compartment = edit_affiliated_experimental_compartment.getText().toString();
                                 edited_nature_of_experimental_site = edit_nature_of_experimental_site.getText().toString();
                                 edited_category_of_scientific_research_base = edit_category_of_scientific_research_base.getText().toString();
@@ -333,8 +325,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
             public void run() {
                 getPresenter().insertData(edited_laboratory_room_code,
                         edited_laboratory_room_name,
-                        edited_affiliated_teaching_experiment_center,
-                        edited_affiliated_laboratory,
                         edited_affiliated_experimental_compartment,
                         edited_nature_of_experimental_site,
                         edited_category_of_scientific_research_base,

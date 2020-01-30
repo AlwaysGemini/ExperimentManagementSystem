@@ -7,9 +7,9 @@ import com.bin.david.form.annotation.SmartTable;
 public class TeachingExperimentCenterTable {
 
     @SmartColumn(id = 1, name = "教学实验中心代码")
-    private String code_of_teaching_experiment_center;
+    private String teaching_experiment_center_code;
     @SmartColumn(id = 2, name = "教学实验中心名称")
-    private String name_of_teaching_experiment_center;
+    private String teaching_experiment_center_name;
     @SmartColumn(id = 3, name = "实验室类型")
     private String laboratory_type;
     @SmartColumn(id = 4, name = "所属单位")
@@ -22,22 +22,6 @@ public class TeachingExperimentCenterTable {
     private String remarks;
     @SmartColumn(id = 8, name = "启用标志")
     private String enable_flag;
-
-    public String getCode_of_teaching_experiment_center() {
-        return code_of_teaching_experiment_center;
-    }
-
-    public void setCode_of_teaching_experiment_center(String code_of_teaching_experiment_center) {
-        this.code_of_teaching_experiment_center = code_of_teaching_experiment_center;
-    }
-
-    public String getName_of_teaching_experiment_center() {
-        return name_of_teaching_experiment_center;
-    }
-
-    public void setName_of_teaching_experiment_center(String name_of_teaching_experiment_center) {
-        this.name_of_teaching_experiment_center = name_of_teaching_experiment_center;
-    }
 
     public String getLaboratory_type() {
         return laboratory_type;
@@ -85,5 +69,21 @@ public class TeachingExperimentCenterTable {
 
     public void setEnable_flag(String enable_flag) {
         this.enable_flag = enable_flag;
+    }
+
+    public String getTeaching_experiment_center_code() {
+        return teaching_experiment_center_code;
+    }
+
+    public void setTeaching_experiment_center_code(String teaching_experiment_center_code) {
+        this.teaching_experiment_center_code = teaching_experiment_center_code;
+    }
+
+    public String getTeaching_experiment_center_name() {
+        return teaching_experiment_center_name;
+    }
+
+    public void setTeaching_experiment_center_name(String teaching_experiment_center_name) {
+        this.teaching_experiment_center_name = teaching_experiment_center_name;
     }
 }

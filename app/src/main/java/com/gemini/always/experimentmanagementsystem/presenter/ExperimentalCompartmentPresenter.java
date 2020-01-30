@@ -17,13 +17,11 @@ public class ExperimentalCompartmentPresenter extends BasePresenter<Experimental
 
     public void insertData(String experimental_compartment_code,
                            String experimental_compartment_name,
-                           String affiliated_teaching_experiment_center,
                            String affiliated_laboratory,
                            String remarks,
                            String enable_flag) {
         this.experimentalCompartmentModel.insertData(experimental_compartment_code,
                 experimental_compartment_name,
-                affiliated_teaching_experiment_center,
                 affiliated_laboratory,
                 remarks,
                 enable_flag, new OkHttpUtils.OnOkHttpUtilsListener() {

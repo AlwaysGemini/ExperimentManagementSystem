@@ -5,4 +5,6 @@
     <string name="module_fragment_login_text_forget_password">忘记密码</string>
     <string name="module_fragment_login_edittext_password_hint">请输入密码</string>
     <string name="module_fragment_login_edittext_account_hint">请输入账号</string>
+    <string name="title_set_query_condition">设置查询条件</string>
+    <string name="title_add">增加</string>
 </resources>
