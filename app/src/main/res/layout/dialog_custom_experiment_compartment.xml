@@ -33,9 +33,9 @@
 
         <RelativeLayout
             android:id="@+id/line_experimental_compartment_name"
-            android:layout_below="@+id/line_experimental_compartment_code"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_experimental_compartment_code">
 
             <TextView
                 android:id="@+id/text_experimental_compartment_name"
@@ -58,9 +58,9 @@
 
         <RelativeLayout
             android:id="@+id/line_affiliated_laboratory"
-            android:layout_below="@+id/line_experimental_compartment_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_experimental_compartment_name">
 
             <TextView
                 android:id="@+id/text_affiliated_laboratory"
@@ -83,9 +83,9 @@
 
         <RelativeLayout
             android:id="@+id/line_remarks"
-            android:layout_below="@+id/line_affiliated_laboratory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_affiliated_laboratory">
 
             <TextView
                 android:id="@+id/text_remarks"
@@ -108,9 +108,9 @@
 
         <RelativeLayout
             android:id="@+id/line_enable_flag"
-            android:layout_below="@+id/line_remarks"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_remarks">
 
             <TextView
                 android:id="@+id/text_enable_flag"

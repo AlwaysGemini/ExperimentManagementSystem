@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.xuexiang.xui.widget.actionbar.TitleBar
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tb_actionPadding="20dp"
         android:background="@color/colorPrimary"
+        app:tb_actionPadding="20dp"
         app:tb_barHeight="65dp"
         app:tb_leftText="返回"
         app:tb_sideTextPadding="10dp"
@@ -17,20 +17,20 @@
 
     <com.xuexiang.xui.widget.button.roundbutton.RoundButton
         android:id="@+id/button_setting_query_condition"
-        android:layout_marginTop="@dimen/dp_10"
-        android:text="设置查询条件"
         style="@style/RoundButton.Auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/titlebar"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="设置查询条件" />
 
     <RelativeLayout
         android:id="@+id/line_query"
-        android:layout_below="@+id/button_setting_query_condition"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_setting_query_condition"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit_fuzzy_query"
@@ -43,13 +43,13 @@
 
         <com.xuexiang.xui.widget.button.roundbutton.RoundButton
             android:id="@+id/button_query"
-            android:text="查询"
+            style="@style/RoundButton.Auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            style="@style/RoundButton.Auto"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="查询" />
 
     </RelativeLayout>
 
@@ -57,8 +57,8 @@
         android:id="@+id/ll_stateful"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/line_query">
+        android:layout_below="@+id/line_query"
+        android:layout_margin="10dp">
 
         <com.bin.david.form.core.SmartTable
             android:id="@+id/table"

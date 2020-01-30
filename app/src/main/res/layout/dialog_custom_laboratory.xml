@@ -33,9 +33,9 @@
 
         <RelativeLayout
             android:id="@+id/line_laboratory_name"
-            android:layout_below="@+id/line_laboratory_code"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_laboratory_code">
 
             <TextView
                 android:id="@+id/text_laboratory_name"
@@ -58,9 +58,9 @@
 
         <RelativeLayout
             android:id="@+id/line_affiliated_teaching_experiment_center"
-            android:layout_below="@+id/line_laboratory_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_laboratory_name">
 
             <TextView
                 android:id="@+id/text_affiliated_teaching_experiment_center"
@@ -83,9 +83,9 @@
 
         <RelativeLayout
             android:id="@+id/line_laboratory_director"
-            android:layout_below="@+id/line_affiliated_teaching_experiment_center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_affiliated_teaching_experiment_center">
 
             <TextView
                 android:id="@+id/text_laboratory_director"
@@ -108,9 +108,9 @@
 
         <RelativeLayout
             android:id="@+id/line_rules_and_regulations"
-            android:layout_below="@+id/line_laboratory_director"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_laboratory_director">
 
             <TextView
                 android:id="@+id/text_rules_and_regulations"
@@ -133,9 +133,9 @@
 
         <RelativeLayout
             android:id="@+id/line_remarks"
-            android:layout_below="@+id/line_rules_and_regulations"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_rules_and_regulations">
 
             <TextView
                 android:id="@+id/text_remarks"
@@ -158,9 +158,9 @@
 
         <RelativeLayout
             android:id="@+id/line_enable_flag"
-            android:layout_below="@+id/line_remarks"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_remarks">
 
             <TextView
                 android:id="@+id/text_enable_flag"

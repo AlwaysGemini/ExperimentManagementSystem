@@ -49,13 +49,13 @@ public class LaboratoryPersonnelManagementModel {
         });
     }
 
-    public void getData(String teaching_experiment_center_name, String laboratory_name, String incumbency ,String full_name, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+    public void getData(String teaching_experiment_center_name, String laboratory_name, String incumbency, String full_name, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .add("teaching_experiment_center_name", teaching_experiment_center_name)
                 .add("laboratory_name", laboratory_name)
                 .add("incumbency", incumbency)
-                .add("full_name",full_name)
+                .add("full_name", full_name)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override

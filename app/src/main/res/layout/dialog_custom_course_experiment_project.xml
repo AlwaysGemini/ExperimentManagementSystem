@@ -11,9 +11,9 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="开课学院:"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="开课学院:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_instructional_school"
@@ -21,7 +21,7 @@
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginLeft="20dp"
             app:es_hint="开课学院"
-            app:ms_in_dialog="true"/>
+            app:ms_in_dialog="true" />
 
     </LinearLayout>
 
@@ -30,9 +30,9 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="课程类别:"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="课程类别:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_course_category"
@@ -40,7 +40,7 @@
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginLeft="20dp"
             app:es_hint="课程类别"
-            app:ms_in_dialog="true"/>
+            app:ms_in_dialog="true" />
 
     </LinearLayout>
 
@@ -49,9 +49,9 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="课程归属:"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="课程归属:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_course_assignment"
@@ -59,7 +59,7 @@
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginLeft="20dp"
             app:es_hint="课程归属"
-            app:ms_in_dialog="true"/>
+            app:ms_in_dialog="true" />
 
     </LinearLayout>
 
@@ -68,9 +68,9 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="启用年级:"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="启用年级:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_course_enabling_grade"
@@ -78,7 +78,7 @@
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginLeft="20dp"
             app:es_hint="启用年级"
-            app:ms_in_dialog="true"/>
+            app:ms_in_dialog="true" />
 
     </LinearLayout>
 

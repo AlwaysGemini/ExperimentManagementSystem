@@ -66,14 +66,24 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableItemAdapter adapter;
     private List<MultiItemEntity> data = new ArrayList<>();
 
+    //仅仅启动MainActivity
+    public static void startMainActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static SlidingRootNav getSlidingRootNav() {
+        return mSlidingRootNav;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
-        if (!User.isLogin()){
-            FragmentSelectActivity.startFragmentSelecter(this,"LoginFragment");
+        if (!User.isLogin()) {
+            FragmentSelectActivity.startFragmentSelecter(this, "LoginFragment");
             finish();
             return;
         }
@@ -134,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         User.logout();
                                         XToastUtils.toast("成功退出登录");
-                                        if (!User.isLogin()){
-                                            FragmentSelectActivity.startFragmentSelecter(MyApplication.getContext(),"LoginFragment");
+                                        if (!User.isLogin()) {
+                                            FragmentSelectActivity.startFragmentSelecter(MyApplication.getContext(), "LoginFragment");
                                             finish();
                                             return;
                                         }
@@ -323,15 +333,5 @@ public class MainActivity extends AppCompatActivity {
         data.add(level0Item[7]);
 
         adapter.notifyDataSetChanged();
-    }
-
-    //仅仅启动MainActivity
-    public static void startMainActivity(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
-    }
-
-    public static SlidingRootNav getSlidingRootNav() {
-        return mSlidingRootNav;
     }
 }

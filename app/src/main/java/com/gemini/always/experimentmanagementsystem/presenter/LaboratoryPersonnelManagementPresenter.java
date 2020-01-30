@@ -11,7 +11,7 @@ public class LaboratoryPersonnelManagementPresenter extends BasePresenter<Labora
 
     private LaboratoryPersonnelManagementModel laboratoryPersonnelManagementModel;
 
-    public LaboratoryPersonnelManagementPresenter(){
+    public LaboratoryPersonnelManagementPresenter() {
         this.laboratoryPersonnelManagementModel = new LaboratoryPersonnelManagementModel();
     }
 
@@ -43,8 +43,8 @@ public class LaboratoryPersonnelManagementPresenter extends BasePresenter<Labora
         });
     }
 
-    public void getData(String teaching_experiment_center_name, String laboratory_name, String incumbency ,String full_name) {
-        this.laboratoryPersonnelManagementModel.getData(teaching_experiment_center_name, laboratory_name, incumbency, full_name,new OkHttpUtils.OnOkHttpUtilsListener() {
+    public void getData(String teaching_experiment_center_name, String laboratory_name, String incumbency, String full_name) {
+        this.laboratoryPersonnelManagementModel.getData(teaching_experiment_center_name, laboratory_name, incumbency, full_name, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
                 getView().onGetDataResult(isSuccess, responseJson);
