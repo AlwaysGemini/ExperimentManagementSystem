@@ -22,33 +22,6 @@ public final class PermissionUtils {
 
     private static OnPermissionListener mOnPermissionListener;
 
-    public interface OnPermissionListener {
-
-        void onPermissionGranted();
-
-        void onPermissionDenied(String[] deniedPermissions);
-    }
-
-    public abstract static class RationaleHandler {
-        private Context context;
-        private int requestCode;
-        private String[] permissions;
-
-        protected abstract void showRationale();
-
-        void showRationale(Context context, int requestCode, String[] permissions) {
-            this.context = context;
-            this.requestCode = requestCode;
-            this.permissions = permissions;
-            showRationale();
-        }
-
-        @TargetApi(Build.VERSION_CODES.M)
-        public void requestPermissionsAgain() {
-            ((Activity) context).requestPermissions(permissions, requestCode);
-        }
-    }
-
     @TargetApi(Build.VERSION_CODES.M)
     public static void requestPermissions(Context context, int requestCode
             , String[] permissions, OnPermissionListener listener) {
@@ -131,5 +104,32 @@ public final class PermissionUtils {
             if (rationale) return true;
         }
         return false;
+    }
+
+    public interface OnPermissionListener {
+
+        void onPermissionGranted();
+
+        void onPermissionDenied(String[] deniedPermissions);
+    }
+
+    public abstract static class RationaleHandler {
+        private Context context;
+        private int requestCode;
+        private String[] permissions;
+
+        protected abstract void showRationale();
+
+        void showRationale(Context context, int requestCode, String[] permissions) {
+            this.context = context;
+            this.requestCode = requestCode;
+            this.permissions = permissions;
+            showRationale();
+        }
+
+        @TargetApi(Build.VERSION_CODES.M)
+        public void requestPermissionsAgain() {
+            ((Activity) context).requestPermissions(permissions, requestCode);
+        }
     }
 }

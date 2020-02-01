@@ -31,7 +31,7 @@ public class LaboratoryPersonnelManagementPresenter extends BasePresenter<Labora
                 });
     }
 
-    public void insertData(LaboratoryPersonnelManagementTable laboratoryPersonnelManagementTable){
+    public void insertData(LaboratoryPersonnelManagementTable laboratoryPersonnelManagementTable) {
         this.laboratoryPersonnelManagementModel.insertData(laboratoryPersonnelManagementTable.getJob_number(),
                 laboratoryPersonnelManagementTable.getTitle(),
                 laboratoryPersonnelManagementTable.getLaboratory_name(),

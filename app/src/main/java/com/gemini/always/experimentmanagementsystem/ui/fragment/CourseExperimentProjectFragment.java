@@ -16,13 +16,11 @@ import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
-import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.CourseExperimentProjectView;
 import com.orhanobut.logger.Logger;
-import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
@@ -137,8 +135,8 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         }.start();
     }
 
-    private void writeExcel(){
-        ExcelUtils.createExcel(getContext(),"courseExperimentProjectExcel.xlsx",list,CourseExperimentProjectTable.getFields(),CourseExperimentProjectTable.getColumnNames());
+    private void writeExcel() {
+        ExcelUtils.createExcel(getContext(), "courseExperimentProjectExcel.xlsx", list, CourseExperimentProjectTable.getFields(), CourseExperimentProjectTable.getColumnNames());
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

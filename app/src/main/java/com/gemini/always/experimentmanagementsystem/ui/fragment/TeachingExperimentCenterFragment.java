@@ -16,7 +16,6 @@ import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.DataProvider;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
 import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.presenter.TeachingExperimentCenterPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
@@ -194,16 +193,16 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
                     @Override
                     public void onFileChoosen(String filePath) {
-                        new Thread(){
+                        new Thread() {
                             @Override
                             public void run() {
-                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<TeachingExperimentCenterTable> list = ExcelUtils.readExcelContent(filePath,TeachingExperimentCenterTable.getFields(),TeachingExperimentCenterTable.class);
-                                    for (TeachingExperimentCenterTable teachingExperimentCenterTable:list){
+                                    List<TeachingExperimentCenterTable> list = ExcelUtils.readExcelContent(filePath, TeachingExperimentCenterTable.getFields(), TeachingExperimentCenterTable.class);
+                                    for (TeachingExperimentCenterTable teachingExperimentCenterTable : list) {
                                         getPresenter().insertData(teachingExperimentCenterTable);
                                     }
-                                }else {
+                                } else {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
                                 }
                             }
@@ -213,11 +212,11 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
                 FileUtils.initFileChooser(fileChooser);
                 break;
             case R.id.fab_export:
-                new Thread(){
+                new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(),"TeachingExperimentCenterTable",list,TeachingExperimentCenterTable.getFields(),TeachingExperimentCenterTable.getColumnNames());
-                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                        ExcelUtils.createExcel(getContext(), "TeachingExperimentCenterTable", list, TeachingExperimentCenterTable.getFields(), TeachingExperimentCenterTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
                 break;

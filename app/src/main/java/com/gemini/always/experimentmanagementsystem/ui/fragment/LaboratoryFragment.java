@@ -14,10 +14,7 @@ import android.widget.RelativeLayout;
 import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
-import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
-import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -209,16 +206,16 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
                     @Override
                     public void onFileChoosen(String filePath) {
-                        new Thread(){
+                        new Thread() {
                             @Override
                             public void run() {
-                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<LaboratoryTable> list = ExcelUtils.readExcelContent(filePath,LaboratoryTable.getFields(),LaboratoryTable.class);
-                                    for (LaboratoryTable laboratoryTable:list){
+                                    List<LaboratoryTable> list = ExcelUtils.readExcelContent(filePath, LaboratoryTable.getFields(), LaboratoryTable.class);
+                                    for (LaboratoryTable laboratoryTable : list) {
                                         getPresenter().insertData(laboratoryTable);
                                     }
-                                }else {
+                                } else {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
                                 }
                             }
@@ -228,11 +225,11 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 FileUtils.initFileChooser(fileChooser);
                 break;
             case R.id.fab_export:
-                new Thread(){
+                new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(),"LaboratoryTable",list,LaboratoryTable.getFields(),LaboratoryTable.getColumnNames());
-                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                        ExcelUtils.createExcel(getContext(), "LaboratoryTable", list, LaboratoryTable.getFields(), LaboratoryTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
                 break;

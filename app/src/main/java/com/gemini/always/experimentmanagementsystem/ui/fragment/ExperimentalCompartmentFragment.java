@@ -17,14 +17,12 @@ import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.DataProvider;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalCompartmentPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
-import com.gemini.always.experimentmanagementsystem.util.SpinnerUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentalCompartmentView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -122,7 +120,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
 
         initView();
         getQueryConditionList();
-        ExperimentalCompartmentFragmentPermissionsDispatcher.onClickWithCheck(ExperimentalCompartmentFragment.this,getView());
+        ExperimentalCompartmentFragmentPermissionsDispatcher.onClickWithCheck(ExperimentalCompartmentFragment.this, getView());
     }
 
     private void initView() {
@@ -298,16 +296,16 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
                     @Override
                     public void onFileChoosen(String filePath) {
-                        new Thread(){
+                        new Thread() {
                             @Override
                             public void run() {
-                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<ExperimentalCompartmentTable> list = ExcelUtils.readExcelContent(filePath,ExperimentalCompartmentTable.getFields(),ExperimentalCompartmentTable.class);
-                                    for (ExperimentalCompartmentTable experimentalCompartmentTable:list){
+                                    List<ExperimentalCompartmentTable> list = ExcelUtils.readExcelContent(filePath, ExperimentalCompartmentTable.getFields(), ExperimentalCompartmentTable.class);
+                                    for (ExperimentalCompartmentTable experimentalCompartmentTable : list) {
                                         getPresenter().insertData(experimentalCompartmentTable);
                                     }
-                                }else {
+                                } else {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
                                 }
                             }
@@ -317,11 +315,11 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                 FileUtils.initFileChooser(fileChooser);
                 break;
             case R.id.fab_export:
-                new Thread(){
+                new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(),"ExperimentalCompartmentTable",list,ExperimentalCompartmentTable.getFields(),ExperimentalCompartmentTable.getColumnNames());
-                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                        ExcelUtils.createExcel(getContext(), "ExperimentalCompartmentTable", list, ExperimentalCompartmentTable.getFields(), ExperimentalCompartmentTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
                 break;

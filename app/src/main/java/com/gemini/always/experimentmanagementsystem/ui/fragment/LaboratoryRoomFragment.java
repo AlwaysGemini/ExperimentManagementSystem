@@ -14,8 +14,6 @@ import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
-import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryRoomPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -291,16 +289,16 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
                     @Override
                     public void onFileChoosen(String filePath) {
-                        new Thread(){
+                        new Thread() {
                             @Override
                             public void run() {
-                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
-                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("文件保存在:"+filePath));
-                                    List<LaboratoryRoomTable> list = ExcelUtils.readExcelContent(filePath,LaboratoryRoomTable.getFields(),LaboratoryRoomTable.class);
-                                    for (LaboratoryRoomTable laboratoryRoomTable:list){
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")) {
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("文件保存在:" + filePath));
+                                    List<LaboratoryRoomTable> list = ExcelUtils.readExcelContent(filePath, LaboratoryRoomTable.getFields(), LaboratoryRoomTable.class);
+                                    for (LaboratoryRoomTable laboratoryRoomTable : list) {
                                         getPresenter().insertData(laboratoryRoomTable);
                                     }
-                                }else {
+                                } else {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
                                 }
                             }
@@ -310,11 +308,11 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 FileUtils.initFileChooser(fileChooser);
                 break;
             case R.id.fab_export:
-                new Thread(){
+                new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(),"LaboratoryRoomTable",list,LaboratoryRoomTable.getFields(),LaboratoryRoomTable.getColumnNames());
-                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                        ExcelUtils.createExcel(getContext(), "LaboratoryRoomTable", list, LaboratoryRoomTable.getFields(), LaboratoryRoomTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
                 break;
