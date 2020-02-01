@@ -13,8 +13,6 @@ public class LaboratoryPersonnelManagementModel {
     private static final String URL_getTeachingExperimentCenterList = "/laboratoryPersonnelManagement/getData";
 
     public void insertData(String job_number,
-                           String full_name,
-                           String sex,
                            String title,
                            String laboratory_name,
                            String incumbency,
@@ -22,8 +20,6 @@ public class LaboratoryPersonnelManagementModel {
         FormBody formBody = new FormBody
                 .Builder()
                 .add("job_number", job_number)
-                .add("full_name", full_name)
-                .add("sex", sex)
                 .add("title", title)
                 .add("laboratory_name", laboratory_name)
                 .add("incumbency", incumbency)

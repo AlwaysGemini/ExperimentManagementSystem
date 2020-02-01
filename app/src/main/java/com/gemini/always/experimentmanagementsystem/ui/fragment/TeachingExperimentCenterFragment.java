@@ -3,7 +3,6 @@ package com.gemini.always.experimentmanagementsystem.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,19 @@ import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.DataProvider;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
 import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.presenter.TeachingExperimentCenterPresenter;
+import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
+import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.TeachingExperimentCenterView;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
+import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
 import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
@@ -43,6 +48,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExperimentCenterView, TeachingExperimentCenterPresenter> implements TeachingExperimentCenterView, View.OnClickListener {
@@ -58,8 +64,16 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
     Unbinder unbinder;
-    @BindView(R.id.button_add)
-    FloatingActionButton buttonAdd;
+    @BindView(R.id.fab_import)
+    FloatingActionButton fabImport;
+    @BindView(R.id.fab_export)
+    FloatingActionButton fabExport;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
+    @BindView(R.id.fab_menu)
+    FloatingActionsMenu fabMenu;
+
+    private List<TeachingExperimentCenterTable> list = new ArrayList<>();
 
     private EditText edit_code;
     private EditText edit_name;
@@ -112,10 +126,6 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
         table.getConfig().setShowYSequence(false);
         table.getConfig().setShowTableTitle(false);
         table.setZoom(true);
-
-        buttonSettingQueryCondition.setOnClickListener(this);
-        buttonQuery.setOnClickListener(this);
-        buttonAdd.setOnClickListener(this);
     }
 
     @Override
@@ -135,6 +145,7 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
     }
 
     @Override
+    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_setting_query_condition:
@@ -179,7 +190,38 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
             case R.id.button_query:
                 getData();
                 break;
-            case R.id.button_add:
+            case R.id.fab_import:
+                FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
+                    @Override
+                    public void onFileChoosen(String filePath) {
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
+                                    List<TeachingExperimentCenterTable> list = ExcelUtils.readExcelContent(filePath,TeachingExperimentCenterTable.getFields(),TeachingExperimentCenterTable.class);
+                                    for (TeachingExperimentCenterTable teachingExperimentCenterTable:list){
+                                        getPresenter().insertData(teachingExperimentCenterTable);
+                                    }
+                                }else {
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
+                                }
+                            }
+                        }.start();
+                    }
+                });
+                FileUtils.initFileChooser(fileChooser);
+                break;
+            case R.id.fab_export:
+                new Thread(){
+                    @Override
+                    public void run() {
+                        ExcelUtils.createExcel(getContext(),"TeachingExperimentCenterTable",list,TeachingExperimentCenterTable.getFields(),TeachingExperimentCenterTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                    }
+                }.start();
+                break;
+            case R.id.fab_add:
                 new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_teaching_experiment_center, true)
                         .title(R.string.title_add)
@@ -218,6 +260,8 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
                         })
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
+                break;
+            case R.id.fab_menu:
                 break;
         }
     }
@@ -285,7 +329,8 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
         if (isSuccess) {
             try {
                 llStateful.showContent();
-                table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), TeachingExperimentCenterTable.class));
+                list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), TeachingExperimentCenterTable.class));
+                table.setData(list);
                 table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
                     @Override
                     public void onClick(Column column, Object o, int col, int row) {

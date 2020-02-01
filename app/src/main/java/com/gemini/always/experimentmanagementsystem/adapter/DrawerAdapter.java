@@ -21,7 +21,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gemini.always.experimentmanagementsystem.base.DrawerItem;
+import com.gemini.always.experimentmanagementsystem.bean.DrawerItem;
 
 import java.util.HashMap;
 import java.util.List;

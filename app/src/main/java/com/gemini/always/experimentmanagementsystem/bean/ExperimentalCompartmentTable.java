@@ -19,6 +19,24 @@ public class ExperimentalCompartmentTable {
     @SmartColumn(id = 6, name = "启用标志")
     private String enable_flag;
 
+    public static String[] getFields() {
+        return new String[]{"experimental_compartment_code",
+                "experimental_compartment_name",
+                "affiliated_teaching_experiment_center",
+                "affiliated_laboratory",
+                "remarks",
+                "enable_flag"};
+    }
+
+    public static String[] getColumnNames() {
+        return new String[]{"实验分室代码",
+                "实验分室名称",
+                "隶属教学实验中心",
+                "隶属实验室",
+                "备注",
+                "启用标志"};
+    }
+
     public String getExperimental_compartment_code() {
         return experimental_compartment_code;
     }

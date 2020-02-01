@@ -25,15 +25,17 @@ import com.gemini.always.experimentmanagementsystem.MyApplication;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.adapter.DrawerAdapter;
 import com.gemini.always.experimentmanagementsystem.adapter.ExpandableItemAdapter;
-import com.gemini.always.experimentmanagementsystem.base.DrawerItem;
-import com.gemini.always.experimentmanagementsystem.base.SimpleItem;
-import com.gemini.always.experimentmanagementsystem.base.SpaceItem;
+import com.gemini.always.experimentmanagementsystem.bean.DrawerItem;
+import com.gemini.always.experimentmanagementsystem.bean.SimpleItem;
+import com.gemini.always.experimentmanagementsystem.bean.SpaceItem;
 import com.gemini.always.experimentmanagementsystem.bean.Item;
 import com.gemini.always.experimentmanagementsystem.bean.Level0Item;
 import com.gemini.always.experimentmanagementsystem.bean.User;
+import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.OtherUtils;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
+import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.utils.ResUtils;
 import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -82,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
-        if (!User.isLogin()) {
+        /*if (!User.isLogin()) {
             FragmentSelectActivity.startFragmentSelecter(this, "LoginFragment");
             finish();
             return;
-        }
+        }*/
         initSlidingMenu(savedInstanceState);
 
         initView();
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     case POS_LOGOUT:
                         new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("确定退出登录吗？")
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         User.logout();
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                 })
-                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dialogInterface.dismiss();
@@ -268,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                     case "实验机构":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalOrganizationFragment");
                         break;
-                    case "实验人员管理":
+                    case "实验室人员管理":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "LaboratoryPersonnelManagementFragment");
                         break;
                 }

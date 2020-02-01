@@ -1,6 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
+import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
 import com.gemini.always.experimentmanagementsystem.model.ExperimentalCompartmentModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentalCompartmentView;
@@ -25,6 +26,19 @@ public class ExperimentalCompartmentPresenter extends BasePresenter<Experimental
                 affiliated_laboratory,
                 remarks,
                 enable_flag, new OkHttpUtils.OnOkHttpUtilsListener() {
+                    @Override
+                    public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                        getView().onInsertDataResult(isSuccess, responseJson);
+                    }
+                });
+    }
+
+    public void insertData(ExperimentalCompartmentTable experimentalCompartmentTable) {
+        this.experimentalCompartmentModel.insertData(experimentalCompartmentTable.getExperimental_compartment_code(),
+                experimentalCompartmentTable.getExperimental_compartment_name(),
+                experimentalCompartmentTable.getAffiliated_laboratory(),
+                experimentalCompartmentTable.getRemarks(),
+                experimentalCompartmentTable.getEnable_flag(), new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
                         getView().onInsertDataResult(isSuccess, responseJson);

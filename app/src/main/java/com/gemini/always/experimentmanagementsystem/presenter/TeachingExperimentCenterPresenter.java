@@ -1,6 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
+import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.model.TeachingExperimentCenterModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.TeachingExperimentCenterView;
@@ -31,6 +32,22 @@ public class TeachingExperimentCenterPresenter extends BasePresenter<TeachingExp
                 year_of_establishment,
                 remarks,
                 enable_flag, new OkHttpUtils.OnOkHttpUtilsListener() {
+                    @Override
+                    public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                        getView().onInsertDataResult(isSuccess, responseJson);
+                    }
+                });
+    }
+
+    public void insertData(TeachingExperimentCenterTable teachingExperimentCenterTable) {
+        this.teachingExperimentCenterModel.insertData(teachingExperimentCenterTable.getTeaching_experiment_center_code(),
+                teachingExperimentCenterTable.getTeaching_experiment_center_name(),
+                teachingExperimentCenterTable.getLaboratory_type(),
+                teachingExperimentCenterTable.getSubordinate_unit(),
+                teachingExperimentCenterTable.getSubordinate_discipline(),
+                teachingExperimentCenterTable.getYear_of_establishment(),
+                teachingExperimentCenterTable.getRemarks(),
+                teachingExperimentCenterTable.getEnable_flag(), new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
                         getView().onInsertDataResult(isSuccess, responseJson);

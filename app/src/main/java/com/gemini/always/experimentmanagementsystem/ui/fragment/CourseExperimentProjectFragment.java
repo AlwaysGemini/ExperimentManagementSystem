@@ -15,11 +15,14 @@ import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
+import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
+import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.CourseExperimentProjectView;
 import com.orhanobut.logger.Logger;
+import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
@@ -55,6 +58,9 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     RelativeLayout lineQuery;
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
+
+    private List<CourseExperimentProjectTable> list = new ArrayList<>();
+
     private MaterialSpinner spinnerInstructionalSchool;
     private MaterialSpinner spinnerCourseCategory;
     private MaterialSpinner spinnerCourseAssignment;
@@ -131,6 +137,16 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         }.start();
     }
 
+    private void writeExcel(){
+        ExcelUtils.createExcel(getContext(),"courseExperimentProjectExcel.xlsx",list,CourseExperimentProjectTable.getFields(),CourseExperimentProjectTable.getColumnNames());
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                XToastUtils.toast("courseExperimentProjectExcel.xlsx");
+            }
+        });
+    }
+
     @Override
     public CourseExperimentProjectPresenter createPresenter() {
         return new CourseExperimentProjectPresenter();
@@ -146,7 +162,10 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         if (isSuccess) {
             try {
                 llStateful.showContent();
-                tableCourseExperimentProject.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
+                list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
+                tableCourseExperimentProject.setData(list);
+                writeExcel();
+                //tableCourseExperimentProject.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
             } catch (JSONException e) {
                 Logger.e(e, "JSONException");
             }

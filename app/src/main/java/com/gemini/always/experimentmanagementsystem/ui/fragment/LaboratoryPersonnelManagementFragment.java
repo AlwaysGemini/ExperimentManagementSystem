@@ -63,15 +63,11 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
     private String edited_fuzzy_query = "";
 
     private EditText edit_job_number;
-    private EditText edit_full_name;
-    private EditText edit_sex;
     private EditText edit_title;
     private EditText edit_laboratory_name;
     private EditText edit_incumbency;
 
     private String edited_job_number = "";
-    private String edited_full_name = "";
-    private String edited_sex = "";
     private String edited_title = "";
     private String edited_laboratory_name = "";
     private String edited_incumbency = "";
@@ -139,15 +135,15 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_laboratory_personnerl_management, true)
                         .title(R.string.title_set_query_condition)
-                        .positiveText("确定")
+                        .positiveText(R.string.btn_confirm)
                         .positiveColorRes(R.color.colorPrimary)
-                        .negativeText("取消")
+                        .negativeText(R.string.btn_cancel)
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
 
-                selected_affiliated_teaching_experiment_center = "全部";
-                selected_laboratory_name = "全部";
-                selected_incumbency = "全部";
+                selected_affiliated_teaching_experiment_center = getString(R.string.all);
+                selected_laboratory_name = getString(R.string.all);
+                selected_incumbency = getString(R.string.all);
 
                 spinner_affiliated_teaching_experiment_center = dialog.getWindow().findViewById(R.id.spinner_teaching_experiment_center_name);
                 spinner_laboratory_name = dialog.getWindow().findViewById(R.id.spinner_laboratory_name);
@@ -193,21 +189,17 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
                 new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_laboratory_personnel_management, true)
                         .title(R.string.title_add)
-                        .positiveText("确定")
+                        .positiveText(R.string.btn_confirm)
                         .positiveColorRes(R.color.colorPrimary)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 edit_job_number = dialog.findViewById(R.id.edit_job_number);
-                                edit_full_name = dialog.findViewById(R.id.edit_full_name);
-                                edit_sex = dialog.findViewById(R.id.edit_sex);
                                 edit_title = dialog.findViewById(R.id.edit_title);
                                 edit_laboratory_name = dialog.findViewById(R.id.edit_laboratory_name);
                                 edit_incumbency = dialog.findViewById(R.id.edit_incumbency);
 
                                 edited_job_number = edit_job_number.getText().toString();
-                                edited_full_name = edit_full_name.getText().toString();
-                                edited_sex = edit_sex.getText().toString();
                                 edited_title = edit_title.getText().toString();
                                 edited_laboratory_name = edit_laboratory_name.getText().toString();
                                 edited_incumbency = edit_incumbency.getText().toString();
@@ -215,7 +207,7 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
                                 insertData();
                             }
                         })
-                        .negativeText("取消")
+                        .negativeText(R.string.btn_cancel)
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
                 break;
@@ -227,8 +219,6 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
             @Override
             public void run() {
                 getPresenter().insertData(edited_job_number,
-                        edited_full_name,
-                        edited_sex,
                         edited_title,
                         edited_laboratory_name,
                         edited_incumbency);
@@ -246,7 +236,7 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
     }
 
     private void getData() {
-        if (editFuzzyQuery.getText().toString() != null) {
+        if (!editFuzzyQuery.getText().toString().isEmpty()) {
             edited_fuzzy_query = editFuzzyQuery.getText().toString();
         } else {
             edited_fuzzy_query = "";

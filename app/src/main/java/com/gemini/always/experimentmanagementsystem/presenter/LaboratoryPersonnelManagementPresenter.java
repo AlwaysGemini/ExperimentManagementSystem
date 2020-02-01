@@ -1,6 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
+import com.gemini.always.experimentmanagementsystem.bean.LaboratoryPersonnelManagementTable;
 import com.gemini.always.experimentmanagementsystem.model.LaboratoryPersonnelManagementModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.LaboratoryPersonnelManagementView;
@@ -16,17 +17,25 @@ public class LaboratoryPersonnelManagementPresenter extends BasePresenter<Labora
     }
 
     public void insertData(String job_number,
-                           String full_name,
-                           String sex,
                            String title,
                            String laboratory_name,
                            String incumbency) {
         this.laboratoryPersonnelManagementModel.insertData(job_number,
-                full_name,
-                sex,
                 title,
                 laboratory_name,
                 incumbency, new OkHttpUtils.OnOkHttpUtilsListener() {
+                    @Override
+                    public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                        getView().onInsertDataResult(isSuccess, responseJson);
+                    }
+                });
+    }
+
+    public void insertData(LaboratoryPersonnelManagementTable laboratoryPersonnelManagementTable){
+        this.laboratoryPersonnelManagementModel.insertData(laboratoryPersonnelManagementTable.getJob_number(),
+                laboratoryPersonnelManagementTable.getTitle(),
+                laboratoryPersonnelManagementTable.getLaboratory_name(),
+                laboratoryPersonnelManagementTable.getIncumbency(), new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
                         getView().onInsertDataResult(isSuccess, responseJson);

@@ -23,6 +23,28 @@ public class TeachingExperimentCenterTable {
     @SmartColumn(id = 8, name = "启用标志")
     private String enable_flag;
 
+    public static String[] getFields() {
+        return new String[]{"teaching_experiment_center_code",
+                "teaching_experiment_center_name",
+                "laboratory_type",
+                "subordinate_unit",
+                "subordinate_discipline",
+                "year_of_establishment",
+                "remarks",
+                "enable_flag"};
+    }
+
+    public static String[] getColumnNames() {
+        return new String[]{"教学实验中心代码",
+                "教学实验中心名称",
+                "实验室类型",
+                "所属单位",
+                "所属学科",
+                "建立年份",
+                "备注",
+                "启用标志"};
+    }
+
     public String getLaboratory_type() {
         return laboratory_type;
     }

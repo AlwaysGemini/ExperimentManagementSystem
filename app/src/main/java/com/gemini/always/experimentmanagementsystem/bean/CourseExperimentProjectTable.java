@@ -31,6 +31,36 @@ public class CourseExperimentProjectTable {
     @SmartColumn(id = 12, name = "课程启用年级")
     private String course_enabling_grade;
 
+    public static String[] getFields() {
+        return new String[]{"course_code",
+                "course_chinese_name",
+                "course_english_name",
+                "course_video",
+                "instructional_school",
+                "credit",
+                "total_hours",
+                "week_hours",
+                "number_of_experimental_items",
+                "course_category",
+                "course_assignment",
+                "course_enabling_grade"};
+    }
+
+    public static String[] getColumnNames() {
+        return new String[]{"课程代码",
+                "课程中文名称",
+                "课程英文名称",
+                "课程视频",
+                "开课学院",
+                "学分",
+                "总学时",
+                "实验项目数",
+                "实验项目数",
+                "课程类别",
+                "课程归属",
+                "课程启用年级"};
+    }
+
     public String getCourse_code() {
         return course_code;
     }

@@ -1,9 +1,9 @@
 package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +17,20 @@ import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.DataProvider;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalCompartmentPresenter;
+import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
+import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
+import com.gemini.always.experimentmanagementsystem.util.SpinnerUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentalCompartmentView;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
+import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
 import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
@@ -43,8 +50,12 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCompartmentView, ExperimentalCompartmentPresenter> implements ExperimentalCompartmentView, View.OnClickListener {
 
     @BindView(R.id.button_setting_query_condition)
@@ -58,8 +69,16 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
     Unbinder unbinder;
-    @BindView(R.id.button_add)
-    FloatingActionButton buttonAdd;
+    @BindView(R.id.fab_import)
+    FloatingActionButton fabImport;
+    @BindView(R.id.fab_export)
+    FloatingActionButton fabExport;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
+    @BindView(R.id.fab_menu)
+    FloatingActionsMenu fabMenu;
+
+    private List<ExperimentalCompartmentTable> list = new ArrayList<>();
 
     private EditText edit_experimental_compartment_code;
     private EditText edit_experimental_compartment_name;
@@ -103,6 +122,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
 
         initView();
         getQueryConditionList();
+        ExperimentalCompartmentFragmentPermissionsDispatcher.onClickWithCheck(ExperimentalCompartmentFragment.this,getView());
     }
 
     private void initView() {
@@ -110,11 +130,6 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         table.getConfig().setShowYSequence(false);
         table.getConfig().setShowTableTitle(false);
         table.setZoom(true);
-
-
-        buttonSettingQueryCondition.setOnClickListener(this);
-        buttonQuery.setOnClickListener(this);
-        buttonAdd.setOnClickListener(this);
     }
 
     @Override
@@ -196,7 +211,8 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         if (isSuccess) {
             try {
                 llStateful.showContent();
-                table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), ExperimentalCompartmentTable.class));
+                list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), ExperimentalCompartmentTable.class));
+                table.setData(list);
                 table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
                     @Override
                     public void onClick(Column column, Object o, int col, int row) {
@@ -220,6 +236,8 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
     }
 
     @Override
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_setting_query_condition:
@@ -276,7 +294,38 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
             case R.id.button_query:
                 getData();
                 break;
-            case R.id.button_add:
+            case R.id.fab_import:
+                FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
+                    @Override
+                    public void onFileChoosen(String filePath) {
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
+                                    List<ExperimentalCompartmentTable> list = ExcelUtils.readExcelContent(filePath,ExperimentalCompartmentTable.getFields(),ExperimentalCompartmentTable.class);
+                                    for (ExperimentalCompartmentTable experimentalCompartmentTable:list){
+                                        getPresenter().insertData(experimentalCompartmentTable);
+                                    }
+                                }else {
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
+                                }
+                            }
+                        }.start();
+                    }
+                });
+                FileUtils.initFileChooser(fileChooser);
+                break;
+            case R.id.fab_export:
+                new Thread(){
+                    @Override
+                    public void run() {
+                        ExcelUtils.createExcel(getContext(),"ExperimentalCompartmentTable",list,ExperimentalCompartmentTable.getFields(),ExperimentalCompartmentTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                    }
+                }.start();
+                break;
+            case R.id.fab_add:
                 new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_experiment_compartment, true)
                         .title("增加")
@@ -304,6 +353,9 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
+                break;
+            case R.id.fab_menu:
+
                 break;
         }
     }

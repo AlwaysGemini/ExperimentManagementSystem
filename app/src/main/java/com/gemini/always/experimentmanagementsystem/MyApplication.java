@@ -2,6 +2,7 @@ package com.gemini.always.experimentmanagementsystem;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -26,6 +27,7 @@ public class MyApplication extends Application {
         XUI.debug(true);  //开启UI框架调试日志
 
         MMKV.initialize(this);
+        MultiDex.install(this);
 
         //初始化Logger
         Logger.addLogAdapter(new AndroidLogAdapter());

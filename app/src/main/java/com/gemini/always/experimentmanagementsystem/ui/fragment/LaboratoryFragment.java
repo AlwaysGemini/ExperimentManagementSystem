@@ -1,9 +1,9 @@
 package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +14,21 @@ import android.widget.RelativeLayout;
 import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
+import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
+import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryPresenter;
+import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
+import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.LaboratoryView;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
+import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
@@ -37,8 +45,12 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryPresenter> implements LaboratoryView, View.OnClickListener {
 
     @BindView(R.id.button_setting_query_condition)
@@ -52,8 +64,16 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
     Unbinder unbinder;
-    @BindView(R.id.button_add)
-    FloatingActionButton buttonAdd;
+    @BindView(R.id.fab_import)
+    FloatingActionButton fabImport;
+    @BindView(R.id.fab_export)
+    FloatingActionButton fabExport;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
+    @BindView(R.id.fab_menu)
+    FloatingActionsMenu fabMenu;
+
+    private List<LaboratoryTable> list = new ArrayList<>();
 
     private EditText edit_laboratory_code;
     private EditText edit_laboratory_name;
@@ -108,10 +128,6 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
         table.getConfig().setShowYSequence(false);
         table.getConfig().setShowTableTitle(false);
         table.setZoom(true);
-
-        buttonSettingQueryCondition.setOnClickListener(this);
-        buttonQuery.setOnClickListener(this);
-        buttonAdd.setOnClickListener(this);
     }
 
     @Override
@@ -131,6 +147,8 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
     }
 
     @Override
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_setting_query_condition:
@@ -187,7 +205,38 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
             case R.id.button_query:
                 getData();
                 break;
-            case R.id.button_add:
+            case R.id.fab_import:
+                FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
+                    @Override
+                    public void onFileChoosen(String filePath) {
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
+                                    List<LaboratoryTable> list = ExcelUtils.readExcelContent(filePath,LaboratoryTable.getFields(),LaboratoryTable.class);
+                                    for (LaboratoryTable laboratoryTable:list){
+                                        getPresenter().insertData(laboratoryTable);
+                                    }
+                                }else {
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
+                                }
+                            }
+                        }.start();
+                    }
+                });
+                FileUtils.initFileChooser(fileChooser);
+                break;
+            case R.id.fab_export:
+                new Thread(){
+                    @Override
+                    public void run() {
+                        ExcelUtils.createExcel(getContext(),"LaboratoryTable",list,LaboratoryTable.getFields(),LaboratoryTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                    }
+                }.start();
+                break;
+            case R.id.fab_add:
                 new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_laboratory, true)
                         .title(R.string.title_add)
@@ -219,6 +268,8 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
+                break;
+            case R.id.fab_menu:
                 break;
         }
     }
@@ -286,7 +337,8 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
         if (isSuccess) {
             try {
                 llStateful.showContent();
-                table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryTable.class));
+                list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryTable.class));
+                table.setData(list);
             } catch (JSONException e) {
                 Logger.e(e, "JSONException");
             }

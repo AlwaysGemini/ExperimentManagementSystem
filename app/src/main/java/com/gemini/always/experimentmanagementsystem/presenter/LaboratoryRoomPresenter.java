@@ -1,6 +1,8 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
+import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
+import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
 import com.gemini.always.experimentmanagementsystem.model.LaboratoryRoomModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.LaboratoryRoomView;
@@ -37,6 +39,26 @@ public class LaboratoryRoomPresenter extends BasePresenter<LaboratoryRoomView> {
                 capacity,
                 remarks,
                 enable_flag,
+                new OkHttpUtils.OnOkHttpUtilsListener() {
+                    @Override
+                    public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                        getView().onInsertDataResult(isSuccess, responseJson);
+                    }
+                });
+    }
+
+    public void insertData(LaboratoryRoomTable laboratoryRoomTable) {
+        this.laboratoryRoomModel.insertData(laboratoryRoomTable.getLaboratory_room_code(),
+                laboratoryRoomTable.getLaboratory_room_name(),
+                laboratoryRoomTable.getAffiliated_experimental_compartment(),
+                laboratoryRoomTable.getNature_of_experimental_site(),
+                laboratoryRoomTable.getCategory_of_scientific_research_base(),
+                laboratoryRoomTable.getPerson_in_charge_of_the_experimental_room(),
+                laboratoryRoomTable.getStatus_of_joint_construction(),
+                laboratoryRoomTable.getCampus(),
+                laboratoryRoomTable.getCapacity(),
+                laboratoryRoomTable.getRemarks(),
+                laboratoryRoomTable.getEnable_flag(),
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {

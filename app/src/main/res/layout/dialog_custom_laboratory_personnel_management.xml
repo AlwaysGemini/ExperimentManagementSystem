@@ -32,60 +32,10 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/line_full_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line_job_number">
-
-            <TextView
-                android:id="@+id/text_full_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="姓名:" />
-
-            <EditText
-                android:id="@+id/edit_full_name"
-                style="@style/EditText.Normal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:layout_toEndOf="@id/text_full_name"
-                android:singleLine="true" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/line_sex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line_full_name">
-
-            <TextView
-                android:id="@+id/text_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="性别:" />
-
-            <EditText
-                android:id="@+id/edit_sex"
-                style="@style/EditText.Normal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:layout_toEndOf="@id/text_sex"
-                android:singleLine="true" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/line_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/line_sex">
+            android:layout_below="@+id/line_job_number">
 
             <TextView
                 android:id="@+id/text_title"

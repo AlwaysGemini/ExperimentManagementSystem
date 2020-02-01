@@ -3,7 +3,6 @@ package com.gemini.always.experimentmanagementsystem.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,19 @@ import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
+import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
+import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryRoomPresenter;
+import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
+import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.LaboratoryRoomView;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
+import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
@@ -37,6 +43,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, LaboratoryRoomPresenter> implements LaboratoryRoomView, View.OnClickListener {
@@ -52,8 +59,16 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
     Unbinder unbinder;
-    @BindView(R.id.button_add)
-    FloatingActionButton buttonAdd;
+    @BindView(R.id.fab_import)
+    FloatingActionButton fabImport;
+    @BindView(R.id.fab_export)
+    FloatingActionButton fabExport;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
+    @BindView(R.id.fab_menu)
+    FloatingActionsMenu fabMenu;
+
+    private List<LaboratoryRoomTable> list = new ArrayList<>();
 
     private EditText edit_laboratory_room_code;
     private EditText edit_laboratory_room_name;
@@ -136,10 +151,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
         table.getConfig().setShowYSequence(false);
         table.getConfig().setShowTableTitle(false);
         table.setZoom(true);
-
-        buttonSettingQueryCondition.setOnClickListener(this);
-        buttonQuery.setOnClickListener(this);
-        buttonAdd.setOnClickListener(this);
     }
 
     @Override
@@ -159,6 +170,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
     }
 
     @Override
+    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_setting_query_condition:
@@ -275,7 +287,38 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
             case R.id.button_query:
                 getData();
                 break;
-            case R.id.button_add:
+            case R.id.fab_import:
+                FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
+                    @Override
+                    public void onFileChoosen(String filePath) {
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                if (FileUtils.getFormatName(filePath).equals("xlsx")){
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("文件保存在:"+filePath));
+                                    List<LaboratoryRoomTable> list = ExcelUtils.readExcelContent(filePath,LaboratoryRoomTable.getFields(),LaboratoryRoomTable.class);
+                                    for (LaboratoryRoomTable laboratoryRoomTable:list){
+                                        getPresenter().insertData(laboratoryRoomTable);
+                                    }
+                                }else {
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
+                                }
+                            }
+                        }.start();
+                    }
+                });
+                FileUtils.initFileChooser(fileChooser);
+                break;
+            case R.id.fab_export:
+                new Thread(){
+                    @Override
+                    public void run() {
+                        ExcelUtils.createExcel(getContext(),"LaboratoryRoomTable",list,LaboratoryRoomTable.getFields(),LaboratoryRoomTable.getColumnNames());
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:"+getActivity().getExternalFilesDir(null)));
+                    }
+                }.start();
+                break;
+            case R.id.fab_add:
                 new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_laboratory_room, true)
                         .title(R.string.title_add)
@@ -315,6 +358,8 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
+                break;
+            case R.id.fab_menu:
                 break;
         }
     }
@@ -398,7 +443,8 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
         if (isSuccess) {
             try {
                 llStateful.showContent();
-                table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryRoomTable.class));
+                list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryRoomTable.class));
+                table.setData(list);
             } catch (JSONException e) {
                 Logger.e(e, "JSONException");
             }
