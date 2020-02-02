@@ -21,26 +21,6 @@ public class LaboratoryTable {
     @SmartColumn(id = 7, name = "启用标志")
     private String enable_flag;
 
-    public static String[] getFields() {
-        return new String[]{"laboratory_code",
-                "laboratory_name",
-                "affiliated_teaching_experiment_center",
-                "laboratory_director",
-                "rules_and_regulations",
-                "remarks",
-                "enable_flag"};
-    }
-
-    public static String[] getColumnNames() {
-        return new String[]{"实验室代码",
-                "实验室名称",
-                "隶属教学实验中心",
-                "实验室负责人",
-                "规章制度",
-                "备注",
-                "启用标志"};
-    }
-
     public String getLaboratory_code() {
         return laboratory_code;
     }

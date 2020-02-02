@@ -20,26 +20,6 @@ public class LaboratoryPersonnelManagementTable {
     @SmartColumn(id = 7, name = "在职状态")
     private String incumbency;
 
-    public static String[] getFields() {
-        return new String[]{"job_number",
-                "full_name",
-                "sex",
-                "title",
-                "teaching_experiment_center_name",
-                "laboratory_name",
-                "incumbency"};
-    }
-
-    public static String[] getColumnNames() {
-        return new String[]{"工号",
-                "姓名",
-                "性别",
-                "职称",
-                "实验教学中心",
-                "实验室",
-                "在职状态"};
-    }
-
     public String getJob_number() {
         return job_number;
     }

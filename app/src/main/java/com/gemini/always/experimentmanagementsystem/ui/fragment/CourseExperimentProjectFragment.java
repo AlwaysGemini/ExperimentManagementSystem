@@ -135,16 +135,6 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         }.start();
     }
 
-    private void writeExcel() {
-        ExcelUtils.createExcel(getContext(), "courseExperimentProjectExcel.xlsx", list, CourseExperimentProjectTable.getFields(), CourseExperimentProjectTable.getColumnNames());
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                XToastUtils.toast("courseExperimentProjectExcel.xlsx");
-            }
-        });
-    }
-
     @Override
     public CourseExperimentProjectPresenter createPresenter() {
         return new CourseExperimentProjectPresenter();
@@ -160,10 +150,9 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         if (isSuccess) {
             try {
                 llStateful.showContent();
+                list.clear();
                 list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
                 tableCourseExperimentProject.setData(list);
-                writeExcel();
-                //tableCourseExperimentProject.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
             } catch (JSONException e) {
                 Logger.e(e, "JSONException");
             }

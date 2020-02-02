@@ -33,38 +33,6 @@ public class LaboratoryRoomTable {
     @SmartColumn(id = 13, name = "启用标志")
     private String enable_flag;
 
-    public static String[] getFields() {
-        return new String[]{"laboratory_room_code",
-                "laboratory_room_name",
-                "affiliated_teaching_experiment_center",
-                "affiliated_laboratory",
-                "affiliated_experimental_compartment",
-                "nature_of_experimental_site",
-                "category_of_scientific_research_base",
-                "person_in_charge_of_the_experimental_room",
-                "status_of_joint_construction",
-                "campus",
-                "capacity",
-                "remarks",
-                "enable_flag"};
-    }
-
-    public static String[] getColumnNames() {
-        return new String[]{"实验分室代码",
-                "实验分室名称",
-                "隶属教学实验中心",
-                "隶属实验室",
-                "隶属实验房间",
-                "实验场地性质",
-                "科研基地类别",
-                "实验房间负责人",
-                "共建情况",
-                "校区",
-                "容量",
-                "备注",
-                "启用标志"};
-    }
-
     public String getLaboratory_room_code() {
         return laboratory_room_code;
     }

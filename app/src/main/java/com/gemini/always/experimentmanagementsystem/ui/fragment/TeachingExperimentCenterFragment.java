@@ -198,7 +198,7 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<TeachingExperimentCenterTable> list = ExcelUtils.readExcelContent(filePath, TeachingExperimentCenterTable.getFields(), TeachingExperimentCenterTable.class);
+                                    List<TeachingExperimentCenterTable> list = ExcelUtils.readExcelContent(filePath, TeachingExperimentCenterTable.class);
                                     for (TeachingExperimentCenterTable teachingExperimentCenterTable : list) {
                                         getPresenter().insertData(teachingExperimentCenterTable);
                                     }
@@ -215,7 +215,7 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "TeachingExperimentCenterTable", list, TeachingExperimentCenterTable.getFields(), TeachingExperimentCenterTable.getColumnNames());
+                        ExcelUtils.createExcel(getContext(), "TeachingExperimentCenterTable", list, TeachingExperimentCenterTable.class);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -328,6 +328,7 @@ public class TeachingExperimentCenterFragment extends BaseFragment<TeachingExper
         if (isSuccess) {
             try {
                 llStateful.showContent();
+                list.clear();
                 list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), TeachingExperimentCenterTable.class));
                 table.setData(list);
                 table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {

@@ -209,6 +209,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         if (isSuccess) {
             try {
                 llStateful.showContent();
+                list.clear();
                 list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), ExperimentalCompartmentTable.class));
                 table.setData(list);
                 table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
@@ -301,7 +302,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<ExperimentalCompartmentTable> list = ExcelUtils.readExcelContent(filePath, ExperimentalCompartmentTable.getFields(), ExperimentalCompartmentTable.class);
+                                    List<ExperimentalCompartmentTable> list = ExcelUtils.readExcelContent(filePath, ExperimentalCompartmentTable.class);
                                     for (ExperimentalCompartmentTable experimentalCompartmentTable : list) {
                                         getPresenter().insertData(experimentalCompartmentTable);
                                     }
@@ -318,7 +319,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "ExperimentalCompartmentTable", list, ExperimentalCompartmentTable.getFields(), ExperimentalCompartmentTable.getColumnNames());
+                        ExcelUtils.createExcel(getContext(), "ExperimentalCompartmentTable", list, ExperimentalCompartmentTable.class);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();

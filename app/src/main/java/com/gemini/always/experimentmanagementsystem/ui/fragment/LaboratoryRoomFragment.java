@@ -294,7 +294,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("文件保存在:" + filePath));
-                                    List<LaboratoryRoomTable> list = ExcelUtils.readExcelContent(filePath, LaboratoryRoomTable.getFields(), LaboratoryRoomTable.class);
+                                    List<LaboratoryRoomTable> list = ExcelUtils.readExcelContent(filePath, LaboratoryRoomTable.class);
                                     for (LaboratoryRoomTable laboratoryRoomTable : list) {
                                         getPresenter().insertData(laboratoryRoomTable);
                                     }
@@ -311,7 +311,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "LaboratoryRoomTable", list, LaboratoryRoomTable.getFields(), LaboratoryRoomTable.getColumnNames());
+                        ExcelUtils.createExcel(getContext(), "LaboratoryRoomTable", list, LaboratoryRoomTable.class);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -441,6 +441,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
         if (isSuccess) {
             try {
                 llStateful.showContent();
+                list.clear();
                 list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryRoomTable.class));
                 table.setData(list);
             } catch (JSONException e) {
