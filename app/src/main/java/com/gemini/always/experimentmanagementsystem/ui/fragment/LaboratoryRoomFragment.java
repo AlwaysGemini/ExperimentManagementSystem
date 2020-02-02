@@ -438,17 +438,19 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
 
     @Override
     public void onGetDataResult(Boolean isSuccess, JSONObject responseJson) {
-        if (isSuccess) {
-            try {
-                llStateful.showContent();
-                list.clear();
-                list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryRoomTable.class));
-                table.setData(list);
-            } catch (JSONException e) {
-                Logger.e(e, "JSONException");
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            if (isSuccess) {
+                try {
+                    llStateful.showContent();
+                    list.clear();
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryRoomTable.class));
+                    table.setData(list);
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException");
+                }
+            } else {
+                llStateful.showEmpty();
             }
-        } else {
-            llStateful.showEmpty();
-        }
+        });
     }
 }

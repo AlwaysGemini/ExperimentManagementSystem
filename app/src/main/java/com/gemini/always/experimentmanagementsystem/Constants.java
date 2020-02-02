@@ -3,8 +3,8 @@ package com.gemini.always.experimentmanagementsystem;
 import okhttp3.MediaType;
 
 public class Constants {
-    public static final String URL = "http://always.qicp.vip";
-    //public static final String URL = "http://114.116.240.133:8080";
+    //public static final String URL = "http://always.qicp.vip";
+    public static final String URL = "http://114.116.240.133:8080";
 
     public static final int REQUEST_CODE_CHOOSE = 23;
 

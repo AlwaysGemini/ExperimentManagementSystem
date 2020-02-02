@@ -2,9 +2,7 @@ package com.gemini.always.experimentmanagementsystem.util;
 
 import android.content.Context;
 
-import com.bin.david.form.annotation.ColumnType;
 import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.data.column.Column;
 import com.orhanobut.logger.Logger;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -25,12 +23,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class ExcelUtils {
 
@@ -39,7 +34,7 @@ public class ExcelUtils {
     static private Row row;
     static private Cell cell;
 
-    public static <T> void createExcel(Context context,String fileName, List<T> list, Class<T> clazz) {
+    public static <T> void createExcel(Context context, String fileName, List<T> list, Class<T> clazz) {
 
         Field[] fields = clazz.getDeclaredFields();
 
@@ -47,28 +42,24 @@ public class ExcelUtils {
         XSSFSheet sheet = workbook.createSheet(WorkbookUtil.createSafeSheetName("sheet"));
 
         row = sheet.createRow(0);
-        for (Field field:fields){
+        for (Field field : fields) {
             field.setAccessible(true);
             Annotation fieldAnnotation = field.getAnnotation(SmartColumn.class);
-            if(fieldAnnotation != null){
+            if (fieldAnnotation != null) {
                 SmartColumn smartColumn = (SmartColumn) fieldAnnotation;
-                cell = row.createCell(smartColumn.id()-1);
+                cell = row.createCell(smartColumn.id() - 1);
                 cell.setCellValue(smartColumn.name());
             }
         }
-        for (int i = 1; i <= list.size() ;i++){
+        for (int i = 1; i <= list.size(); i++) {
             row = sheet.createRow(i);
-            for (Field field:fields){
+            for (Field field : fields) {
                 field.setAccessible(true);
                 Annotation fieldAnnotation = field.getAnnotation(SmartColumn.class);
-                if(fieldAnnotation != null){
+                if (fieldAnnotation != null) {
                     SmartColumn smartColumn = (SmartColumn) fieldAnnotation;
-                    cell = row.createCell(smartColumn.id()-1);
-                    try {
-                        cell.setCellValue((String) Objects.requireNonNull(getGetMethod(clazz, field.getName())).invoke(list.get(i-1)));
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        Logger.e(e, "IllegalAccessException and InvocationTargetException:");
-                    }
+                    cell = row.createCell(smartColumn.id() - 1);
+                    cell.setCellValue((String) invokeGet(list.get(i - 1), field.getName()));
                 }
             }
         }
@@ -114,24 +105,20 @@ public class ExcelUtils {
         } catch (InstantiationException | IllegalAccessException e) {
             Logger.e(e, "InstantiationException and IllegalAccessException:");
         }
-        for (int i = 1; i <= rowNum ;i++){
+        for (int i = 1; i <= rowNum; i++) {
             row = sheet.getRow(i);
             try {
                 temp = clazz.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 Logger.e(e, "InstantiationException and IllegalAccessException:");
             }
-            for (Field field:fields){
+            for (Field field : fields) {
                 field.setAccessible(true);
                 Annotation fieldAnnotation = field.getAnnotation(SmartColumn.class);
-                if(fieldAnnotation != null){
+                if (fieldAnnotation != null) {
                     SmartColumn smartColumn = (SmartColumn) fieldAnnotation;
-                    cell = row.getCell(smartColumn.id()-1);
-                    try {
-                        getSetMethod(clazz,field.getName()).invoke(temp,(String)cell.getStringCellValue());
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        Logger.e(e, "IllegalAccessException and InvocationTargetException:");
-                    }
+                    cell = row.getCell(smartColumn.id() - 1);
+                    invokeSet(temp, field.getName(), cell.getStringCellValue());
                 }
             }
             list.add(temp);

@@ -156,7 +156,6 @@ public class OkHttpUtils {
             response = client.newCall(request).execute();
             responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
         } catch (IOException e) {
-            XToastUtils.error("");
             Logger.e(e, "IOException:");
         } catch (JSONException e) {
             Logger.e(e, "JSONException:");
@@ -167,7 +166,6 @@ public class OkHttpUtils {
             try {
                 onOkHttpUtilsListener.onResult(responseJson.getString("code").equals("200"), responseJson);
             } catch (JSONException e) {
-                //Logger.e(e, "JSONException:");
                 Logger.e(e, "JSONException:");
             }
         }

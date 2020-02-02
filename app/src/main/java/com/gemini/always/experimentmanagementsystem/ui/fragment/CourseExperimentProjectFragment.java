@@ -15,7 +15,6 @@ import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
-import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
@@ -147,18 +146,21 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
 
     @Override
     public void onGetDataResult(Boolean isSuccess, JSONObject responseJson) {
-        if (isSuccess) {
-            try {
-                llStateful.showContent();
-                list.clear();
-                list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
-                tableCourseExperimentProject.setData(list);
-            } catch (JSONException e) {
-                Logger.e(e, "JSONException");
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            if (isSuccess) {
+                try {
+
+                    llStateful.showContent();
+                    list.clear();
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
+                    tableCourseExperimentProject.setData(list);
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException");
+                }
+            } else {
+                llStateful.showEmpty();
             }
-        } else {
-            llStateful.showEmpty();
-        }
+        });
     }
 
     @Override

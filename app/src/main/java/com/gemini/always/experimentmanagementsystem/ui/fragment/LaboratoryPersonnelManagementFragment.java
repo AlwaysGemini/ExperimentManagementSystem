@@ -287,16 +287,18 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
 
     @Override
     public void onGetDataResult(Boolean isSuccess, JSONObject responseJson) {
-        if (isSuccess) {
-            try {
-                llStateful.showContent();
-                table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryPersonnelManagementTable.class));
-            } catch (JSONException e) {
-                Logger.e(e, "JSONException");
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            if (isSuccess) {
+                try {
+                    llStateful.showContent();
+                    table.setData(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryPersonnelManagementTable.class));
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException");
+                }
+            } else {
+                llStateful.showEmpty();
             }
-        } else {
-            llStateful.showEmpty();
-        }
+        });
     }
 
     @Override
