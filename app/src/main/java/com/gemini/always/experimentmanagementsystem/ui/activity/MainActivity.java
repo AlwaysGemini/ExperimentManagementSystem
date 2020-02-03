@@ -271,6 +271,12 @@ public class MainActivity extends AppCompatActivity {
                     case "实验室人员管理":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "LaboratoryPersonnelManagementFragment");
                         break;
+                    case "实验仪器设备管理":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalEquipmentFragment");
+                        break;
+                    case "实验耗材管理":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalConsumablesManagementFragment");
+                        break;
                 }
             }
         });

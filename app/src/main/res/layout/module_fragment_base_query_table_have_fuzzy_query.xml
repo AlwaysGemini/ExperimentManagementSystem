@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/line_query"
-        android:layout_margin="10dp">
+        android:layout_marginTop="@dimen/module_fragment_base_query_table_line_query_margin_top">
 
         <com.bin.david.form.core.SmartTable
             android:id="@+id/table"

@@ -156,6 +156,11 @@ public class OkHttpUtils {
             response = client.newCall(request).execute();
             responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
         } catch (IOException e) {
+            try {
+                onOkHttpUtilsListener.onResult(false, new JSONObject("{msg:获取数据失败}"));
+            } catch (JSONException e1) {
+                Logger.e(e1, "JSONException:");
+            }
             Logger.e(e, "IOException:");
         } catch (JSONException e) {
             Logger.e(e, "JSONException:");

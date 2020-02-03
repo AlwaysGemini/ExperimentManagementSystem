@@ -108,7 +108,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_base_query_table, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_no_toolbar, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -121,6 +121,12 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         initView();
         getQueryConditionList();
         ExperimentalCompartmentFragmentPermissionsDispatcher.onClickWithCheck(ExperimentalCompartmentFragment.this, getView());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        table.setData(list);
     }
 
     private void initView() {
@@ -231,6 +237,11 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                     Logger.e(e, "JSONException");
                 }
             } else {
+                try {
+                    XToastUtils.toast(responseJson.getString("msg"));
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException:");
+                }
                 llStateful.showEmpty();
             }
         });
@@ -321,7 +332,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "ExperimentalCompartmentTable", list, ExperimentalCompartmentTable.class);
+                        ExcelUtils.createExcel(getContext(), "实验分室表格", list, ExperimentalCompartmentTable.class);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();

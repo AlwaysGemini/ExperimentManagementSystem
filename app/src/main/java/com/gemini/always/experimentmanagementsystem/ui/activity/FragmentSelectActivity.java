@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalConsumablesManagementFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalEquipmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryPersonnelManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
@@ -64,6 +66,14 @@ public class FragmentSelectActivity extends AppCompatActivity {
             case "LaboratoryPersonnelManagementFragment":
                 LaboratoryPersonnelManagementFragment laboratoryPersonnelManagementFragment = new LaboratoryPersonnelManagementFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, laboratoryPersonnelManagementFragment).commitAllowingStateLoss();
+                break;
+            case "ExperimentalEquipmentFragment":
+                ExperimentalEquipmentFragment experimentalEquipmentFragment = new ExperimentalEquipmentFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalEquipmentFragment).commitAllowingStateLoss();
+                break;
+            case "ExperimentalConsumablesManagementFragment":
+                ExperimentalConsumablesManagementFragment experimentalConsumablesManagementFragment = new ExperimentalConsumablesManagementFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalConsumablesManagementFragment).commitAllowingStateLoss();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");

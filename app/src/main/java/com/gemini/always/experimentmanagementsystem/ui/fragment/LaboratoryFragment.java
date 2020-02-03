@@ -106,7 +106,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_base_query_table, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_no_toolbar, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -118,6 +118,12 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
 
         initView();
         getQueryConditionList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        table.setData(list);
     }
 
     private void initView() {
@@ -228,7 +234,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "LaboratoryTable", list, LaboratoryTable.class);
+                        ExcelUtils.createExcel(getContext(), "实验室表格", list, LaboratoryTable.class);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -342,6 +348,11 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                     Logger.e(e, "JSONException");
                 }
             } else {
+                try {
+                    XToastUtils.toast(responseJson.getString("msg"));
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException:");
+                }
                 llStateful.showEmpty();
             }
         });

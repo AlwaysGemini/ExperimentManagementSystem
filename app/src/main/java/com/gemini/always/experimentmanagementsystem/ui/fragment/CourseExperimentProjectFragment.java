@@ -158,6 +158,11 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                     Logger.e(e, "JSONException");
                 }
             } else {
+                try {
+                    XToastUtils.toast(responseJson.getString("msg"));
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException:");
+                }
                 llStateful.showEmpty();
             }
         });
