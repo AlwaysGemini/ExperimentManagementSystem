@@ -13,14 +13,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="教学实验中心:" />
+            android:text="实验属性:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_teaching_experiment_center_name"
+            android:id="@+id/spinner_experimental_properties"
             style="@style/Material.SpinnerStyle"
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginLeft="20dp"
-            app:es_hint="教学实验中心"
+            app:es_hint="实验属性"
             app:ms_in_dialog="true" />
 
     </LinearLayout>
@@ -32,14 +32,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实验室:" />
+            android:text="实验类型:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_laboratory_name"
+            android:id="@+id/spinner_experimental_type"
             style="@style/Material.SpinnerStyle"
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginLeft="20dp"
-            app:es_hint="实验室"
+            app:es_hint="实验类型"
             app:ms_in_dialog="true" />
 
     </LinearLayout>
@@ -51,14 +51,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="在职状况:" />
+            android:text="实验类别:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_incumbency"
+            android:id="@+id/spinner_experimental_category"
             style="@style/Material.SpinnerStyle"
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginLeft="20dp"
-            app:es_hint="在职状况"
+            app:es_hint="实验类别"
             app:ms_in_dialog="true" />
 
     </LinearLayout>
@@ -72,16 +72,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="实验类别:" />
+            android:text="实验项目名称:" />
 
         <EditText
-            android:id="@+id/edit_teacher"
+            android:id="@+id/edit_experimental_project_name"
             style="@style/EditText.Normal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dialog_custom_add_edit_text_height"
+            android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
-            android:hint="按教工号、姓名模糊查询"
+            android:layout_marginStart="20dp"
+            android:hint="实验项目名称"
             android:singleLine="true" />
 
     </LinearLayout>

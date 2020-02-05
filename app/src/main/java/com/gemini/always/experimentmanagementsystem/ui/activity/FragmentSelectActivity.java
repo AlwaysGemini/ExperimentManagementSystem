@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gemini.always.experimentmanagementsystem.R;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentOutlineFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalConsumablesManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalEquipmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalProjectManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryPersonnelManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
@@ -74,6 +76,14 @@ public class FragmentSelectActivity extends AppCompatActivity {
             case "ExperimentalConsumablesManagementFragment":
                 ExperimentalConsumablesManagementFragment experimentalConsumablesManagementFragment = new ExperimentalConsumablesManagementFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalConsumablesManagementFragment).commitAllowingStateLoss();
+                break;
+            case "ExperimentalProjectManagementFragment":
+                ExperimentalProjectManagementFragment experimentalProjectManagementFragment = new ExperimentalProjectManagementFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalProjectManagementFragment).commitAllowingStateLoss();
+                break;
+            case "CourseExperimentOutlineFragment":
+                CourseExperimentOutlineFragment courseExperimentOutlineFragment = new CourseExperimentOutlineFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, courseExperimentOutlineFragment).commitAllowingStateLoss();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");

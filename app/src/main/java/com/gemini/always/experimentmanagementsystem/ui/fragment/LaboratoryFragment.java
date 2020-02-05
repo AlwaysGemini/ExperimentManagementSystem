@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
@@ -23,10 +22,8 @@ import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.LaboratoryView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
@@ -50,12 +47,6 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryPresenter> implements LaboratoryView, View.OnClickListener {
 
-    @BindView(R.id.button_setting_query_condition)
-    RoundButton buttonSettingQueryCondition;
-    @BindView(R.id.button_query)
-    RoundButton buttonQuery;
-    @BindView(R.id.line_query)
-    RelativeLayout lineQuery;
     @BindView(R.id.table)
     SmartTable table;
     @BindView(R.id.ll_stateful)
@@ -67,8 +58,8 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
     FloatingActionButton fabExport;
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
-    @BindView(R.id.fab_menu)
-    FloatingActionsMenu fabMenu;
+    @BindView(R.id.fab_query)
+    FloatingActionButton fabQuery;
 
     private List<LaboratoryTable> list = new ArrayList<>();
 
@@ -151,14 +142,20 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
 
     @Override
     @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
+    @OnClick({R.id.fab_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_setting_query_condition:
+            case R.id.fab_query:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_laboratory, true)
                         .title(R.string.title_set_query_condition)
                         .positiveText("确定")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                getData();
+                            }
+                        })
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
@@ -204,9 +201,6 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                         selected_enable_flag = enableFlagList.get(position);
                     }
                 });
-                break;
-            case R.id.button_query:
-                getData();
                 break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
@@ -271,8 +265,6 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
-                break;
-            case R.id.fab_menu:
                 break;
         }
     }

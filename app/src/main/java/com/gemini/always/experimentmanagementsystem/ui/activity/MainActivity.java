@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
-        /*if (!User.isLogin()) {
+        if (!User.isLogin()) {
             FragmentSelectActivity.startFragmentSelecter(this, "LoginFragment");
             finish();
             return;
-        }*/
+        }
         initSlidingMenu(savedInstanceState);
 
         initView();
@@ -276,6 +276,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "实验耗材管理":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalConsumablesManagementFragment");
+                        break;
+                    case "实验项目管理":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalProjectManagementFragment");
+                        break;
+                    case "课程实验大纲":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "CourseExperimentOutlineFragment");
                         break;
                 }
             }

@@ -70,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实验分室名称:" />
+            android:text="实验房间名称:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_laboratory_room_name"
@@ -89,14 +89,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实验分室名称:" />
+            android:text="是否可搬动:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_is_movable"
             style="@style/Material.SpinnerStyle"
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginStart="20dp"
-            app:es_hint="实验房间名称"
+            app:es_hint="是否可搬动"
             app:ms_in_dialog="true" />
 
     </LinearLayout>
@@ -108,14 +108,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实验分室名称:" />
+            android:text="仪器设备名称:" />
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_experimental_equipment_name"
             style="@style/Material.SpinnerStyle"
             android:layout_width="@dimen/dialog_custom_course_experiment_project_spinner_width"
             android:layout_marginStart="20dp"
-            app:es_hint="实验房间名称"
+            app:es_hint="仪器设备名称"
             app:ms_in_dialog="true" />
 
     </LinearLayout>

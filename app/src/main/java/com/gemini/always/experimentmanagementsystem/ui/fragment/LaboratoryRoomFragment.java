@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
@@ -25,7 +24,6 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
@@ -46,12 +44,6 @@ import butterknife.Unbinder;
 
 public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, LaboratoryRoomPresenter> implements LaboratoryRoomView, View.OnClickListener {
 
-    @BindView(R.id.button_setting_query_condition)
-    RoundButton buttonSettingQueryCondition;
-    @BindView(R.id.button_query)
-    RoundButton buttonQuery;
-    @BindView(R.id.line_query)
-    RelativeLayout lineQuery;
     @BindView(R.id.table)
     SmartTable table;
     @BindView(R.id.ll_stateful)
@@ -65,6 +57,8 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
     FloatingActionButton fabAdd;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
+    @BindView(R.id.fab_query)
+    FloatingActionButton fabQuery;
 
     private List<LaboratoryRoomTable> list = new ArrayList<>();
 
@@ -174,14 +168,20 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
     }
 
     @Override
-    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
+    @OnClick({R.id.fab_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_setting_query_condition:
+            case R.id.fab_query:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_laboratory_room, true)
                         .title(R.string.title_set_query_condition)
                         .positiveText("确定")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                getData();
+                            }
+                        })
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
@@ -288,9 +288,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                     }
                 });
                 break;
-            case R.id.button_query:
-                getData();
-                break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
                     @Override
@@ -362,8 +359,6 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
-                break;
-            case R.id.fab_menu:
                 break;
         }
     }

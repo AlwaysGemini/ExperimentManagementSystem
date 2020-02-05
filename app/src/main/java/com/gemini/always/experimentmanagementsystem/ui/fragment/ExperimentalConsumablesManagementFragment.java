@@ -25,7 +25,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
@@ -49,10 +48,6 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
-    @BindView(R.id.button_setting_query_condition)
-    RoundButton buttonSettingQueryCondition;
-    @BindView(R.id.button_query)
-    RoundButton buttonQuery;
     @BindView(R.id.table)
     SmartTable table;
     @BindView(R.id.ll_stateful)
@@ -63,6 +58,8 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
     FloatingActionButton fabExport;
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
+    @BindView(R.id.fab_query)
+    FloatingActionButton fabQuery;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
     Unbinder unbinder;
@@ -115,7 +112,7 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_no_fuzzy_query, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_title_bar, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -247,14 +244,24 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
         });
     }
 
-    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
+    @OnClick({R.id.fab_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_setting_query_condition:
+            case R.id.fab_query:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_experimental_consumables_management, true)
                         .title(R.string.title_set_query_condition)
                         .positiveText("确定")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                if (edit_model_specification_for_query != null) {
+                                    edited_model_specification_for_query = edit_model_specification_for_query.getText().toString();
+                                    edited_experimental_consumables_name_for_query = edit_experimental_consumables_name_for_query.getText().toString();
+                                }
+                                getData();
+                            }
+                        })
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
@@ -309,13 +316,6 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
                 });
                 edit_model_specification_for_query = dialog.findViewById(R.id.edit_model_specification_for_query);
                 edit_experimental_consumables_name_for_query = dialog.findViewById(R.id.edit_experimental_consumables_name_for_query);
-                break;
-            case R.id.button_query:
-                if (edit_model_specification_for_query != null) {
-                    edited_model_specification_for_query = edit_model_specification_for_query.getText().toString();
-                    edited_experimental_consumables_name_for_query = edit_experimental_consumables_name_for_query.getText().toString();
-                }
-                getData();
                 break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {

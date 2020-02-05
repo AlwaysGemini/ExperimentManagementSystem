@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.table.TableData;
-import com.gemini.always.experimentmanagementsystem.DataProvider;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
@@ -29,12 +27,8 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
-import com.xuexiang.xui.adapter.simple.AdapterItem;
-import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
-import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
@@ -56,12 +50,6 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCompartmentView, ExperimentalCompartmentPresenter> implements ExperimentalCompartmentView, View.OnClickListener {
 
-    @BindView(R.id.button_setting_query_condition)
-    RoundButton buttonSettingQueryCondition;
-    @BindView(R.id.button_query)
-    RoundButton buttonQuery;
-    @BindView(R.id.line_query)
-    RelativeLayout lineQuery;
     @BindView(R.id.table)
     SmartTable table;
     @BindView(R.id.ll_stateful)
@@ -75,6 +63,8 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
     FloatingActionButton fabAdd;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
+    @BindView(R.id.fab_query)
+    FloatingActionButton fabQuery;
 
     private List<ExperimentalCompartmentTable> list = new ArrayList<>();
 
@@ -222,15 +212,39 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                     table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
                         @Override
                         public void onClick(Column column, Object o, int col, int row) {
-                            new XUISimplePopup(Objects.requireNonNull(getContext()), DataProvider.items)
-                                    .create(new XUISimplePopup.OnPopupItemClickListener() {
+
+                            new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
+                                    .customView(R.layout.dialog_custom_experiment_compartment, true)
+                                    .title("修改或者删除数据此条数据")
+                                    .positiveText("修改")
+                                    .positiveColorRes(R.color.colorPrimary)
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
-                                        public void onItemClick(XUISimpleAdapter adapter, AdapterItem item, int position) {
-                                            XToastUtils.toast(item.getTitle().toString());
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                                            edit_experimental_compartment_code = dialog.findViewById(R.id.edit_experimental_compartment_code);
+                                            edit_experimental_compartment_name = dialog.findViewById(R.id.edit_experimental_compartment_name);
+                                            edit_affiliated_laboratory = dialog.findViewById(R.id.edit_affiliated_laboratory);
+                                            edit_remarks = dialog.findViewById(R.id.edit_remarks);
+                                            edit_enable_flag = dialog.findViewById(R.id.edit_enable_flag);
+
+                                            edited_experimental_compartment_code = edit_experimental_compartment_code.getText().toString();
+                                            edited_experimental_compartment_name = edit_experimental_compartment_name.getText().toString();
+                                            edited_affiliated_laboratory = edit_affiliated_laboratory.getText().toString();
+                                            edited_remarks = edit_remarks.getText().toString();
+                                            edited_enable_flag = edit_enable_flag.getText().toString();
                                         }
                                     })
-                                    .setHasDivider(true)
-                                    .showDown(getView());
+                                    .neutralText("删除")
+                                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            XToastUtils.error("删除");
+                                        }
+                                    })
+                                    .negativeText("取消")
+                                    .negativeColorRes(R.color.colorPrimary)
+                                    .show();
                         }
                     });
                 } catch (JSONException e) {
@@ -249,14 +263,20 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
 
     @Override
     @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-    @OnClick({R.id.button_setting_query_condition, R.id.button_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
+    @OnClick({R.id.fab_query, R.id.fab_import, R.id.fab_export, R.id.fab_add})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_setting_query_condition:
+            case R.id.fab_query:
                 MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                         .customView(R.layout.dialog_custom_query_condition_experimental_compartment, true)
                         .title(R.string.title_set_query_condition)
                         .positiveText("确定")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                getData();
+                            }
+                        })
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
@@ -302,9 +322,6 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                         selected_enable_flag = enableFlagList.get(position);
                     }
                 });
-                break;
-            case R.id.button_query:
-                getData();
                 break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
@@ -365,9 +382,6 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                         .negativeText("取消")
                         .negativeColorRes(R.color.colorPrimary)
                         .show();
-                break;
-            case R.id.fab_menu:
-
                 break;
         }
     }
