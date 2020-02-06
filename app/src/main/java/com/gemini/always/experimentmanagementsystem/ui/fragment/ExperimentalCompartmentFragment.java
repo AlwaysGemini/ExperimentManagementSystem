@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
@@ -16,6 +14,7 @@ import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
+import com.gemini.always.experimentmanagementsystem.custom.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalCompartmentPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -27,9 +26,6 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
-import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
-import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONArray;
@@ -37,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,33 +64,9 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
     FloatingActionButton fabQuery;
 
     private List<ExperimentalCompartmentTable> list = new ArrayList<>();
-
-    private EditText edit_experimental_compartment_code;
-    private EditText edit_experimental_compartment_name;
-    private EditText edit_affiliated_laboratory;
-    private EditText edit_remarks;
-    private EditText edit_enable_flag;
-
-    private String edited_experimental_compartment_code = "";
-    private String edited_experimental_compartment_name = "";
-    private String edited_affiliated_laboratory = "";
-    private String edited_remarks = "";
-    private String edited_enable_flag = "";
-
-    private MaterialSpinner spinner_affiliated_teaching_experiment_center;
-    private MaterialSpinner spinner_affiliated_laboratory_name;
-    private MaterialSpinner spinner_enable_flag;
-
-    private String selected_affiliated_teaching_experiment_center = "全部";
-    private String selected_affiliated_laboratory = "全部";
-    private String selected_enable_flag = "全部";
-
-    private ArrayAdapter<String> spinnerAffiliatedTeachingExperimentCenterArrayAdapter;
-    private List<String> affiliatedTeachingExperimentCenterList = new ArrayList<>();
-    private ArrayAdapter<String> spinnerAffiliatedLaboratoryNameArrayAdapter;
-    private List<String> affiliatedLaboratoryNameList = new ArrayList<>();
-    private ArrayAdapter<String> spinnerEnableFlagArrayAdapter;
-    private List<String> enableFlagList = new ArrayList<>();
+    private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
+    private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
+    private List<String> selected_and_edited_list_for_query = new ArrayList<>();
 
     @Nullable
     @Override
@@ -146,11 +119,12 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         new Thread() {
             @Override
             public void run() {
-                getPresenter().insertData(edited_experimental_compartment_code,
-                        edited_experimental_compartment_name,
-                        edited_affiliated_laboratory,
-                        edited_remarks,
-                        edited_enable_flag);
+                int count = 0;
+                getPresenter().insertData(selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++));
             }
         }.start();
     }
@@ -168,9 +142,10 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         new Thread() {
             @Override
             public void run() {
-                getPresenter().getData(selected_affiliated_teaching_experiment_center,
-                        selected_affiliated_laboratory,
-                        selected_enable_flag);
+                int count = 0;
+                getPresenter().getData(selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++));
             }
         }.start();
     }
@@ -191,9 +166,13 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "affiliated_teaching_experiment_center", affiliatedTeachingExperimentCenterList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "affiliated_laboratory", affiliatedLaboratoryNameList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "enable_flag", enableFlagList);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    spinnerDataListForQuery.add(new ArrayList<>());
+                }
+                int count = 0;
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "affiliated_teaching_experiment_center", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "affiliated_laboratory", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "enable_flag", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -213,38 +192,6 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                         @Override
                         public void onClick(Column column, Object o, int col, int row) {
 
-                            new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                                    .customView(R.layout.dialog_custom_experiment_compartment, true)
-                                    .title("修改或者删除数据此条数据")
-                                    .positiveText("修改")
-                                    .positiveColorRes(R.color.colorPrimary)
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                                            edit_experimental_compartment_code = dialog.findViewById(R.id.edit_experimental_compartment_code);
-                                            edit_experimental_compartment_name = dialog.findViewById(R.id.edit_experimental_compartment_name);
-                                            edit_affiliated_laboratory = dialog.findViewById(R.id.edit_affiliated_laboratory);
-                                            edit_remarks = dialog.findViewById(R.id.edit_remarks);
-                                            edit_enable_flag = dialog.findViewById(R.id.edit_enable_flag);
-
-                                            edited_experimental_compartment_code = edit_experimental_compartment_code.getText().toString();
-                                            edited_experimental_compartment_name = edit_experimental_compartment_name.getText().toString();
-                                            edited_affiliated_laboratory = edit_affiliated_laboratory.getText().toString();
-                                            edited_remarks = edit_remarks.getText().toString();
-                                            edited_enable_flag = edit_enable_flag.getText().toString();
-                                        }
-                                    })
-                                    .neutralText("删除")
-                                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            XToastUtils.error("删除");
-                                        }
-                                    })
-                                    .negativeText("取消")
-                                    .negativeColorRes(R.color.colorPrimary)
-                                    .show();
                         }
                     });
                 } catch (JSONException e) {
@@ -267,61 +214,21 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_query:
-                MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                        .customView(R.layout.dialog_custom_query_condition_experimental_compartment, true)
-                        .title(R.string.title_set_query_condition)
-                        .positiveText("确定")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                new CustomDialog.Builder(getContext())
+                        .setTitle("查询")
+                        .setSpinnerTextList(Arrays.asList(getResources().getStringArray(R.array.experimentalCompartmentSpinnerTextListForQuery)))
+                        .setSpinnerDataList(spinnerDataListForQuery)
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_query = list;
                                 getData();
+                                dialog.dismiss();
                             }
                         })
-                        .positiveColorRes(R.color.colorPrimary)
-                        .negativeText("取消")
-                        .negativeColorRes(R.color.colorPrimary)
+                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create()
                         .show();
-
-                selected_affiliated_teaching_experiment_center = "全部";
-                selected_affiliated_laboratory = "全部";
-                selected_enable_flag = "全部";
-
-                spinner_affiliated_teaching_experiment_center = dialog.getWindow().findViewById(R.id.spinner_affiliated_teaching_experiment_center);
-                spinner_affiliated_laboratory_name = dialog.getWindow().findViewById(R.id.spinner_affiliated_laboratory_name);
-                spinner_enable_flag = dialog.getWindow().findViewById(R.id.spinner_enable_flag);
-
-                spinnerAffiliatedTeachingExperimentCenterArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, affiliatedTeachingExperimentCenterList);
-                spinnerAffiliatedLaboratoryNameArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, affiliatedLaboratoryNameList);
-                spinnerEnableFlagArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, enableFlagList);
-
-                spinnerAffiliatedTeachingExperimentCenterArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-                spinnerAffiliatedLaboratoryNameArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-                spinnerEnableFlagArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-
-                spinner_affiliated_teaching_experiment_center.setAdapter(spinnerAffiliatedTeachingExperimentCenterArrayAdapter);
-                spinner_affiliated_laboratory_name.setAdapter(spinnerAffiliatedLaboratoryNameArrayAdapter);
-                spinner_enable_flag.setAdapter(spinnerEnableFlagArrayAdapter);
-
-                spinner_affiliated_teaching_experiment_center.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selected_affiliated_teaching_experiment_center = affiliatedTeachingExperimentCenterList.get(position);
-                    }
-                });
-
-                spinner_affiliated_laboratory_name.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selected_affiliated_laboratory = affiliatedLaboratoryNameList.get(position);
-                    }
-                });
-
-                spinner_enable_flag.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selected_enable_flag = enableFlagList.get(position);
-                    }
-                });
                 break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
@@ -355,32 +262,19 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                 }.start();
                 break;
             case R.id.fab_add:
-                new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                        .customView(R.layout.dialog_custom_experiment_compartment, true)
-                        .title("增加")
-                        .positiveText("确定")
-                        .positiveColorRes(R.color.colorPrimary)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                new CustomDialog.Builder(getContext())
+                        .setTitle("增加")
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.experimentalCompartmentTextListForInsert)))
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                                edit_experimental_compartment_code = dialog.findViewById(R.id.edit_experimental_compartment_code);
-                                edit_experimental_compartment_name = dialog.findViewById(R.id.edit_experimental_compartment_name);
-                                edit_affiliated_laboratory = dialog.findViewById(R.id.edit_affiliated_laboratory);
-                                edit_remarks = dialog.findViewById(R.id.edit_remarks);
-                                edit_enable_flag = dialog.findViewById(R.id.edit_enable_flag);
-
-                                edited_experimental_compartment_code = edit_experimental_compartment_code.getText().toString();
-                                edited_experimental_compartment_name = edit_experimental_compartment_name.getText().toString();
-                                edited_affiliated_laboratory = edit_affiliated_laboratory.getText().toString();
-                                edited_remarks = edit_remarks.getText().toString();
-                                edited_enable_flag = edit_enable_flag.getText().toString();
-
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_insert = list;
                                 insertData();
+                                dialog.dismiss();
                             }
                         })
-                        .negativeText("取消")
-                        .negativeColorRes(R.color.colorPrimary)
+                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create()
                         .show();
                 break;
         }

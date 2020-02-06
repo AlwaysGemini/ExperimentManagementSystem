@@ -6,24 +6,21 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
+import com.gemini.always.experimentmanagementsystem.custom.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.CourseExperimentProjectView;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
-import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONArray;
@@ -31,57 +28,43 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class CourseExperimentProjectFragment extends BaseFragment<CourseExperimentProjectView, CourseExperimentProjectPresenter> implements CourseExperimentProjectView, View.OnClickListener {
 
     @BindView(R.id.table)
-    SmartTable tableCourseExperimentProject;
+    SmartTable table;
     Unbinder unbinder;
     @BindView(R.id.titlebar)
     TitleBar titlebar;
-    @BindView(R.id.button_setting_query_condition)
-    RoundButton buttonSettingQueryCondition;
-    @BindView(R.id.edit_fuzzy_query)
-    EditText editFuzzyQuery;
-    @BindView(R.id.button_query)
-    RoundButton buttonQuery;
-    @BindView(R.id.line_query)
-    RelativeLayout lineQuery;
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
+    @BindView(R.id.fab_import)
+    FloatingActionButton fabImport;
+    @BindView(R.id.fab_export)
+    FloatingActionButton fabExport;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
+    @BindView(R.id.fab_query)
+    FloatingActionButton fabQuery;
+    @BindView(R.id.fab_menu)
+    FloatingActionsMenu fabMenu;
 
     private List<CourseExperimentProjectTable> list = new ArrayList<>();
-
-    private MaterialSpinner spinnerInstructionalSchool;
-    private MaterialSpinner spinnerCourseCategory;
-    private MaterialSpinner spinnerCourseAssignment;
-    private MaterialSpinner spinnerCourseEnablingGrade;
-
-    private ArrayAdapter<String> spinnerInstructionalSchoolArrayAdapter;
-    private List<String> instructionalSchoolList = new ArrayList<>();
-    private ArrayAdapter<String> spinnerCourseCategoryArrayAdapter;
-    private List<String> courseCategoryList = new ArrayList<>();
-    private ArrayAdapter<String> spinnerCourseAssignmentArrayAdapter;
-    private List<String> courseAssignmentList = new ArrayList<>();
-    private ArrayAdapter<String> spinnerCourseEnablingGradeArrayAdapter;
-    private List<String> courseEnablingGradeList = new ArrayList<>();
-
-    private String selectedInstructionalSchool = "全部";
-    private String selectedCourseCategory = "全部";
-    private String selectedCourseAssignment = "全部";
-    private String selectedCourseEnablingGrade = "全部";
-    private String selectedCourse = "";
+    private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
+    private List<String> selected_and_edited_list_for_query = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_fuzzy_query, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_title_bar, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -96,14 +79,6 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     }
 
     private void initView() {
-        tableCourseExperimentProject.getConfig().setShowXSequence(false);
-        tableCourseExperimentProject.getConfig().setShowYSequence(false);
-        tableCourseExperimentProject.getConfig().setShowTableTitle(false);
-        tableCourseExperimentProject.setZoom(true);
-
-        buttonSettingQueryCondition.setOnClickListener(this);
-        buttonQuery.setOnClickListener(this);
-
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,22 +89,25 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                 }
             }
         });
+        fabMenu.removeButton(fabAdd);
+        fabMenu.removeButton(fabExport);
+        fabMenu.removeButton(fabImport);
+        table.getConfig().setShowXSequence(false);
+        table.getConfig().setShowYSequence(false);
+        table.getConfig().setShowTableTitle(false);
+        table.setZoom(true);
     }
 
-    private void initData() {
+    private void getData() {
         new Thread() {
             @Override
             public void run() {
-                if (editFuzzyQuery.getText().toString() != null) {
-                    selectedCourse = editFuzzyQuery.getText().toString();
-                } else {
-                    selectedCourse = "";
-                }
-                getPresenter().getData(selectedInstructionalSchool,
-                        selectedCourseCategory,
-                        selectedCourseAssignment,
-                        selectedCourseEnablingGrade,
-                        selectedCourse);
+                int count = 0;
+                getPresenter().getData(selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++));
             }
         }.start();
     }
@@ -149,11 +127,10 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             if (isSuccess) {
                 try {
-
                     llStateful.showContent();
                     list.clear();
                     list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
-                    tableCourseExperimentProject.setData(list);
+                    table.setData(list);
                 } catch (JSONException e) {
                     Logger.e(e, "JSONException");
                 }
@@ -173,10 +150,14 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "instructional_school", instructionalSchoolList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "course_category", courseCategoryList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "course_assignment", courseAssignmentList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(3), "course_enabling_grade", courseEnablingGradeList);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    spinnerDataListForQuery.add(new ArrayList<>());
+                }
+                int count = 0;
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "instructional_school", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "course_category", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "course_assignment", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "course_enabling_grade", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -189,75 +170,6 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         unbinder.unbind();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_setting_query_condition:
-                MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                        .customView(R.layout.dialog_custom_course_experiment_project, true)
-                        .title(R.string.title_set_query_condition)
-                        .positiveText("确定")
-                        .positiveColorRes(R.color.colorPrimary)
-                        .negativeText("取消")
-                        .negativeColorRes(R.color.colorPrimary)
-                        .show();
-
-                selectedInstructionalSchool = "全部";
-                selectedCourseCategory = "全部";
-                selectedCourseAssignment = "全部";
-                selectedCourseEnablingGrade = "全部";
-
-                spinnerInstructionalSchool = dialog.getWindow().findViewById(R.id.spinner_instructional_school);
-                spinnerCourseCategory = dialog.getWindow().findViewById(R.id.spinner_course_category);
-                spinnerCourseAssignment = dialog.getWindow().findViewById(R.id.spinner_course_assignment);
-                spinnerCourseEnablingGrade = dialog.getWindow().findViewById(R.id.spinner_course_enabling_grade);
-
-                spinnerInstructionalSchoolArrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, instructionalSchoolList);
-                spinnerCourseCategoryArrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, courseCategoryList);
-                spinnerCourseAssignmentArrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, courseAssignmentList);
-                spinnerCourseEnablingGradeArrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, courseEnablingGradeList);
-
-                spinnerInstructionalSchoolArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-                spinnerCourseCategoryArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-                spinnerCourseAssignmentArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-                spinnerCourseEnablingGradeArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-
-                spinnerInstructionalSchool.setAdapter(spinnerInstructionalSchoolArrayAdapter);
-                spinnerCourseCategory.setAdapter(spinnerCourseCategoryArrayAdapter);
-                spinnerCourseAssignment.setAdapter(spinnerCourseAssignmentArrayAdapter);
-                spinnerCourseEnablingGrade.setAdapter(spinnerCourseEnablingGradeArrayAdapter);
-
-                spinnerInstructionalSchool.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selectedInstructionalSchool = instructionalSchoolList.get(position);
-                    }
-                });
-                spinnerCourseCategory.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selectedCourseCategory = courseCategoryList.get(position);
-                    }
-                });
-                spinnerCourseAssignment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selectedCourseAssignment = courseAssignmentList.get(position);
-                    }
-                });
-                spinnerCourseEnablingGrade.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selectedCourseEnablingGrade = courseEnablingGradeList.get(position);
-                    }
-                });
-                break;
-            case R.id.button_query:
-                initData();
-                break;
-        }
-    }
-
     private void getListData() {
         new Thread() {
             @Override
@@ -265,5 +177,29 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                 getPresenter().getQueryConditionList();
             }
         }.start();
+    }
+
+    @OnClick(R.id.fab_query)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fab_query:
+                new CustomDialog.Builder(getContext())
+                        .setTitle("查询")
+                        .setSpinnerTextList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentProjectTextListForInsert)))
+                        .setSpinnerDataList(spinnerDataListForQuery)
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentProjectTextListForQuery)))
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
+                            @Override
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_query = list;
+                                getData();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create()
+                        .show();
+                break;
+        }
     }
 }

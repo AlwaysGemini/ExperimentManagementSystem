@@ -8,7 +8,7 @@ public class LaboratoryPersonnelManagementTable {
     @SmartColumn(id = 1, name = "工号")
     private String job_number;
     @SmartColumn(id = 2, name = "姓名")
-    private String full_name;
+    private String name;
     @SmartColumn(id = 3, name = "性别")
     private String sex;
     @SmartColumn(id = 4, name = "职称")
@@ -26,14 +26,6 @@ public class LaboratoryPersonnelManagementTable {
 
     public void setJob_number(String job_number) {
         this.job_number = job_number;
-    }
-
-    public String getFull_name() {
-        return full_name;
-    }
-
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
     }
 
     public String getSex() {
@@ -74,5 +66,13 @@ public class LaboratoryPersonnelManagementTable {
 
     public void setIncumbency(String incumbency) {
         this.incumbency = incumbency;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

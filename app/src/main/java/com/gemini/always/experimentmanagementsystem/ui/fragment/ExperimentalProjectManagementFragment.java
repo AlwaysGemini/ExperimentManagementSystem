@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
@@ -15,6 +13,7 @@ import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalProjectTable;
+import com.gemini.always.experimentmanagementsystem.custom.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalProjectManagementPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -27,9 +26,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
-import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONArray;
@@ -37,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,45 +63,9 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     Unbinder unbinder;
 
     private List<ExperimentalProjectTable> list = new ArrayList<>();
-
-    private EditText edit_experimental_project_code;
-    private EditText edit_experimental_project_name;
-    private EditText edit_experimental_content;
-    private EditText edit_experimental_hours;
-    private EditText edit_experimental_credits;
-    private EditText edit_experimental_properties;
-    private EditText edit_experimental_type;
-    private EditText edit_experimental_category;
-    private EditText edit_affiliation;
-    private EditText edit_subject;
-
-    private String edited_experimental_project_code = "";
-    private String edited_experimental_project_name = "";
-    private String edited_experimental_content = "";
-    private String edited_experimental_hours = "";
-    private String edited_experimental_credits = "";
-    private String edited_experimental_properties = "";
-    private String edited_experimental_type = "";
-    private String edited_experimental_category = "";
-    private String edited_affiliation = "";
-    private String edited_subject = "";
-
-    private MaterialSpinner spinner_experimental_properties;
-    private MaterialSpinner spinner_experimental_type;
-    private MaterialSpinner spinner_experimental_category;
-    private EditText edit_experimental_project_name_for_query;
-
-    private String selected_experimental_properties = "全部";
-    private String selected_experimental_type = "全部";
-    private String selected_experimental_category = "全部";
-    private String edited_experimental_project_name_for_query = "";
-
-    private ArrayAdapter<String> spinnerExperimentalPropertiesCenterArrayAdapter;
-    private List<String> experimentalPropertiesList = new ArrayList<>();
-    private ArrayAdapter<String> spinnerExperimentalTypeArrayAdapter;
-    private List<String> experimentalTypeList = new ArrayList<>();
-    private ArrayAdapter<String> spinnerExperimentalCategoryArrayAdapter;
-    private List<String> experimentalCategoryList = new ArrayList<>();
+    private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
+    private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
+    private List<String> selected_and_edited_list_for_query = new ArrayList<>();
 
     @Nullable
     @Override
@@ -155,16 +116,16 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
         new Thread() {
             @Override
             public void run() {
-                getPresenter().insertData(edited_experimental_project_code,
-                        edited_experimental_project_name,
-                        edited_experimental_content,
-                        edited_experimental_hours,
-                        edited_experimental_credits,
-                        edited_experimental_properties,
-                        edited_experimental_type,
-                        edited_experimental_category,
-                        edited_affiliation,
-                        edited_subject);
+                getPresenter().insertData(selected_and_edited_list_for_insert.get(0),
+                        selected_and_edited_list_for_insert.get(1),
+                        selected_and_edited_list_for_insert.get(2),
+                        selected_and_edited_list_for_insert.get(3),
+                        selected_and_edited_list_for_insert.get(4),
+                        selected_and_edited_list_for_insert.get(5),
+                        selected_and_edited_list_for_insert.get(6),
+                        selected_and_edited_list_for_insert.get(7),
+                        selected_and_edited_list_for_insert.get(8),
+                        selected_and_edited_list_for_insert.get(9));
             }
         }.start();
     }
@@ -179,14 +140,14 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     }
 
     private void getData() {
-        edited_experimental_project_name_for_query = edit_experimental_project_name_for_query.getText().toString();
+        //edited_experimental_project_name_for_query = edit_experimental_project_name_for_query.getText().toString();
         new Thread() {
             @Override
             public void run() {
-                getPresenter().getData(selected_experimental_properties,
-                        selected_experimental_type,
-                        selected_experimental_category,
-                        edited_experimental_project_name_for_query);
+                getPresenter().getData(selected_and_edited_list_for_query.get(0),
+                        selected_and_edited_list_for_query.get(1),
+                        selected_and_edited_list_for_query.get(2),
+                        selected_and_edited_list_for_query.get(3));
             }
         }.start();
     }
@@ -207,9 +168,13 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "experimental_properties", experimentalPropertiesList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "experimental_type", experimentalTypeList);
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "experimental_category", experimentalCategoryList);
+                int count = 0;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    spinnerDataListForQuery.add(new ArrayList<>());
+                }
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_properties", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_type", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_category", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -229,21 +194,6 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                         @Override
                         public void onClick(Column column, Object o, int col, int row) {
 
-                            new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                                    .customView(R.layout.dialog_custom_experiment_compartment, true)
-                                    .title("修改或者删除数据此条数据")
-                                    .positiveText("修改")
-                                    .positiveColorRes(R.color.colorPrimary)
-                                    .neutralText("删除")
-                                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            XToastUtils.error("删除");
-                                        }
-                                    })
-                                    .negativeText("取消")
-                                    .negativeColorRes(R.color.colorPrimary)
-                                    .show();
                         }
                     });
                 } catch (JSONException e) {
@@ -270,63 +220,22 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_query:
-                MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                        .customView(R.layout.dialog_custom_query_condition_experimental_project, true)
-                        .title(R.string.title_set_query_condition)
-                        .positiveText("确定")
-                        .positiveColorRes(R.color.colorPrimary)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                new CustomDialog.Builder(getContext())
+                        .setTitle("查询")
+                        .setSpinnerTextList(Arrays.asList(getResources().getStringArray(R.array.experimentalProjectManagementSpinnerTextListForQuery)))
+                        .setSpinnerDataList(spinnerDataListForQuery)
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.experimentalProjectManagementTextListForQuery)))
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_query = list;
                                 getData();
+                                dialog.dismiss();
                             }
                         })
-                        .negativeText("取消")
-                        .negativeColorRes(R.color.colorPrimary)
+                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create()
                         .show();
-
-                selected_experimental_properties = "全部";
-                selected_experimental_type = "全部";
-                selected_experimental_category = "全部";
-                edited_experimental_project_name_for_query = "";
-
-                spinner_experimental_properties = dialog.getWindow().findViewById(R.id.spinner_experimental_properties);
-                spinner_experimental_type = dialog.getWindow().findViewById(R.id.spinner_experimental_type);
-                spinner_experimental_category = dialog.getWindow().findViewById(R.id.spinner_experimental_category);
-                edit_experimental_project_name_for_query = dialog.getWindow().findViewById(R.id.edit_experimental_project_name);
-
-                spinnerExperimentalPropertiesCenterArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, experimentalPropertiesList);
-                spinnerExperimentalTypeArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, experimentalTypeList);
-                spinnerExperimentalCategoryArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.module_spinner_item, experimentalCategoryList);
-
-                spinnerExperimentalPropertiesCenterArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-                spinnerExperimentalTypeArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-                spinnerExperimentalCategoryArrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
-
-                spinner_experimental_properties.setAdapter(spinnerExperimentalPropertiesCenterArrayAdapter);
-                spinner_experimental_type.setAdapter(spinnerExperimentalTypeArrayAdapter);
-                spinner_experimental_category.setAdapter(spinnerExperimentalCategoryArrayAdapter);
-
-                spinner_experimental_properties.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selected_experimental_properties = experimentalPropertiesList.get(position);
-                    }
-                });
-
-                spinner_experimental_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selected_experimental_type = experimentalTypeList.get(position);
-                    }
-                });
-
-                spinner_experimental_category.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                        selected_experimental_category = experimentalCategoryList.get(position);
-                    }
-                });
                 break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
@@ -360,42 +269,19 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                 }.start();
                 break;
             case R.id.fab_add:
-                new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                        .customView(R.layout.dialog_custom_experiment_project, true)
-                        .title("增加")
-                        .positiveText("确定")
-                        .positiveColorRes(R.color.colorPrimary)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                new CustomDialog.Builder(getContext())
+                        .setTitle("增加")
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.experimentalProjectManagementTextListForInsert)))
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                                edit_experimental_project_code = dialog.findViewById(R.id.edit_experimental_project_code);
-                                edit_experimental_project_name = dialog.findViewById(R.id.edit_experimental_project_name);
-                                edit_experimental_content = dialog.findViewById(R.id.edit_experimental_content);
-                                edit_experimental_hours = dialog.findViewById(R.id.edit_experimental_hours);
-                                edit_experimental_credits = dialog.findViewById(R.id.edit_experimental_credits);
-                                edit_experimental_properties = dialog.findViewById(R.id.edit_experimental_properties);
-                                edit_experimental_type = dialog.findViewById(R.id.edit_experimental_type);
-                                edit_experimental_category = dialog.findViewById(R.id.edit_experimental_category);
-                                edit_affiliation = dialog.findViewById(R.id.edit_affiliation);
-                                edit_subject = dialog.findViewById(R.id.edit_subject);
-
-                                edited_experimental_project_code = edit_experimental_project_code.getText().toString();
-                                edited_experimental_project_name = edit_experimental_project_name.getText().toString();
-                                edited_experimental_content = edit_experimental_content.getText().toString();
-                                edited_experimental_hours = edit_experimental_hours.getText().toString();
-                                edited_experimental_credits = edit_experimental_credits.getText().toString();
-                                edited_experimental_properties = edit_experimental_properties.getText().toString();
-                                edited_experimental_type = edit_experimental_type.getText().toString();
-                                edited_experimental_category = edit_experimental_category.getText().toString();
-                                edited_affiliation = edit_affiliation.getText().toString();
-                                edited_subject = edit_subject.getText().toString();
-
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_insert = list;
                                 insertData();
+                                dialog.dismiss();
                             }
                         })
-                        .negativeText("取消")
-                        .negativeColorRes(R.color.colorPrimary)
+                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create()
                         .show();
                 break;
             case R.id.fab_menu:

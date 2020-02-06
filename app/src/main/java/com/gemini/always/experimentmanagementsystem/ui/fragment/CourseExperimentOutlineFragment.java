@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
@@ -14,6 +13,7 @@ import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentOutlineTable;
+import com.gemini.always.experimentmanagementsystem.custom.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentOutlinePresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -25,14 +25,13 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,18 +62,8 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
 
     private List<CourseExperimentOutlineTable> list = new ArrayList<>();
 
-    private EditText edit_course_code;
-    private EditText edit_course_name;
-    private EditText edit_proportion_of_experimental_results;
-    private EditText edit_experimental_project_name;
-
-    private String edited_course_code = "";
-    private String edited_course_name = "";
-    private String edited_proportion_of_experimental_results = "";
-    private String edited_experimental_project_name = "";
-
-    private EditText edit_course;
-    private String edited_course = "";
+    private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
+    private List<String> selected_and_edited_list_for_query = new ArrayList<>();
 
     @Nullable
     @Override
@@ -124,20 +113,19 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
         new Thread() {
             @Override
             public void run() {
-                getPresenter().insertData(edited_course_code,
-                        edited_course_name,
-                        edited_proportion_of_experimental_results,
-                        edited_experimental_project_name);
+                getPresenter().insertData(selected_and_edited_list_for_insert.get(0),
+                        selected_and_edited_list_for_insert.get(1),
+                        selected_and_edited_list_for_insert.get(2),
+                        selected_and_edited_list_for_insert.get(3));
             }
         }.start();
     }
 
     private void getData() {
-        edited_course = edit_course.getText().toString();
         new Thread() {
             @Override
             public void run() {
-                getPresenter().getData(edited_course);
+                getPresenter().getData(selected_and_edited_list_for_query.get(0));
             }
         }.start();
     }
@@ -166,21 +154,6 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                         @Override
                         public void onClick(Column column, Object o, int col, int row) {
 
-                            new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                                    .customView(R.layout.dialog_custom_experiment_compartment, true)
-                                    .title("修改或者删除数据此条数据")
-                                    .positiveText("修改")
-                                    .positiveColorRes(R.color.colorPrimary)
-                                    .neutralText("删除")
-                                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            XToastUtils.error("删除");
-                                        }
-                                    })
-                                    .negativeText("取消")
-                                    .negativeColorRes(R.color.colorPrimary)
-                                    .show();
                         }
                     });
                 } catch (JSONException e) {
@@ -207,22 +180,17 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_query:
-                MaterialDialog dialog = new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                        .customView(R.layout.dialog_custom_query_condition_course_experiment_outline, true)
-                        .title(R.string.title_set_query_condition)
-                        .positiveText("确定")
-                        .positiveColorRes(R.color.colorPrimary)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                new CustomDialog.Builder(getContext())
+                        .setTitle("增加")
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentOutlineTextListForQuery)))
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_query = list;
                                 getData();
+                                dialog.dismiss();
                             }
-                        })
-                        .negativeText("取消")
-                        .negativeColorRes(R.color.colorPrimary)
-                        .show();
-
-                edit_course = Objects.requireNonNull(dialog.getWindow()).findViewById(R.id.edit_course);
+                        }).create().show();
                 break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
@@ -256,31 +224,17 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                 }.start();
                 break;
             case R.id.fab_add:
-                new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
-                        .customView(R.layout.dialog_custom_course_experiment_outline, true)
-                        .title("增加")
-                        .positiveText("确定")
-                        .positiveColorRes(R.color.colorPrimary)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                new CustomDialog.Builder(getContext())
+                        .setTitle("增加")
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentOutlineTextListForInsert)))
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                                edit_course_code = dialog.findViewById(R.id.edit_course_code);
-                                edit_course_name = dialog.findViewById(R.id.edit_course_name);
-                                edit_proportion_of_experimental_results = dialog.findViewById(R.id.edit_proportion_of_experimental_results);
-                                edit_experimental_project_name = dialog.findViewById(R.id.edit_experimental_project_name);
-
-                                edited_course_code = edit_course_code.getText().toString();
-                                edited_course_name = edit_course_name.getText().toString();
-                                edited_proportion_of_experimental_results = edit_proportion_of_experimental_results.getText().toString();
-                                edited_experimental_project_name = edit_experimental_project_name.getText().toString();
-
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_insert = list;
                                 insertData();
+                                dialog.dismiss();
                             }
-                        })
-                        .negativeText("取消")
-                        .negativeColorRes(R.color.colorPrimary)
-                        .show();
+                        }).create().show();
                 break;
             case R.id.fab_menu:
 
