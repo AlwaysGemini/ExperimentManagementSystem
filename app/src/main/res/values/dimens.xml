@@ -13,5 +13,7 @@
     <dimen name="item_expandable_lv0_height">50dp</dimen>
     <dimen name="item_expandable_lv1_height">30dp</dimen>
     <dimen name="module_fragment_base_query_table_line_query_margin_top">10dp</dimen>
+
     <dimen name="dialog_custom_add_edit_text_height">25dp</dimen>
+    <dimen name="dialog_item_text_width">70dp</dimen>
 </resources>

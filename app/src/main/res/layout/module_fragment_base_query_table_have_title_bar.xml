@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/white"
-            app:fab_icon="@drawable/icon_import"
+            app:fab_icon="@drawable/icon_export"
             app:fab_size="normal"
             app:fab_title="导出" />
 

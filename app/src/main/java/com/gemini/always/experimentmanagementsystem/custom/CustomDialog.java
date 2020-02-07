@@ -10,8 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gemini.always.experimentmanagementsystem.R;
-import com.gemini.always.experimentmanagementsystem.adapter.DialogListAdapter;
-import com.gemini.always.experimentmanagementsystem.bean.DialogListItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +35,7 @@ public class CustomDialog extends Dialog {
         private List<String> editList = new ArrayList<>();
         private List<String> spinnerTextList = new ArrayList<>();
         private List<List<String>> spinnerDataList = new ArrayList<>();
+        private List<DialogListItem> dialogListItems = new ArrayList<>();
         private View contentView;
         private DialogInterface.OnClickListener positiveButtonClickListener;
         private DialogInterface.OnClickListener negativeButtonClickListener;
@@ -143,20 +142,19 @@ public class CustomDialog extends Dialog {
             ((TextView) layout.findViewById(R.id.title)).setText(title);
             // set the confirm button
 
-            List<DialogListItem> list = new ArrayList<>();
-            for (int i = 0; i < spinnerTextList.size(); i++) {
-                DialogListItem dialogListItem = new DialogListItem(spinnerTextList.get(i), null);
-                dialogListItem.setType(0);
-                dialogListItem.setDataList(spinnerDataList.get(i));
-                list.add(dialogListItem);
+            if (dialogListItems.size() == 0){
+                for (int i = 0; i < spinnerTextList.size(); i++) {
+                    DialogListItem dialogListItem = new DialogListItem(new DialogListSpinnerItem(spinnerTextList.get(i), spinnerDataList.get(i)));
+                    dialogListItems.add(dialogListItem);
+                }
+                for (String string : editList) {
+                    DialogListItem dialogListItem = new DialogListItem(new DialogListEditTextItem(string, ""));
+                    dialogListItems.add(dialogListItem);
+                }
             }
-            for (String string : editList) {
-                DialogListItem dialogListItem = new DialogListItem(string, null);
-                dialogListItem.setType(1);
-                list.add(dialogListItem);
-            }
+
             ListView listView = layout.findViewById(R.id.list_view);
-            DialogListAdapter adapter = new DialogListAdapter(context, R.layout.item_dialog_custom_have_edit_text, list);
+            DialogListAdapter adapter = new DialogListAdapter(context, R.layout.item_dialog_custom_have_edit_text, dialogListItems);
             listView.setAdapter(adapter);
 
             if (dialogIF != null) {
@@ -215,6 +213,14 @@ public class CustomDialog extends Dialog {
             }
             dialog.setContentView(layout);
             return dialog;
+        }
+
+        public List<DialogListItem> getDialogListItems() {
+            return dialogListItems;
+        }
+
+        public void setDialogListItems(List<DialogListItem> dialogListItems) {
+            this.dialogListItems = dialogListItems;
         }
     }
 }

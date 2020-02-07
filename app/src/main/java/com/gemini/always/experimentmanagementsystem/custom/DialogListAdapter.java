@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.adapter;
+package com.gemini.always.experimentmanagementsystem.custom;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,8 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gemini.always.experimentmanagementsystem.R;
-import com.gemini.always.experimentmanagementsystem.bean.DialogListItem;
+import com.gemini.always.experimentmanagementsystem.custom.DialogListEditTextItem;
+import com.gemini.always.experimentmanagementsystem.custom.DialogListItem;
+import com.gemini.always.experimentmanagementsystem.custom.DialogListSpinnerItem;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
+import com.xuexiang.xui.widget.textview.autofit.AutoFitTextView;
 
 import java.util.List;
 
@@ -32,28 +35,31 @@ public class DialogListAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         DialogListItem dialogListItem = list.get(position);
         View view = null;
-        if (dialogListItem.getType() == 0) {
+        if (dialogListItem.getType() == DialogListItem.TYPE_SPINNER) {
+            DialogListSpinnerItem spinnerItem = dialogListItem.getSpinnerItem();
             view = LayoutInflater.from(getContext()).inflate(R.layout.item_dialog_custom_have_spinner, null);//实例化一个对象
-            TextView itemText = view.findViewById(R.id.text);//获取该布局内的文本视图
+            AutoFitTextView itemText = view.findViewById(R.id.text);//获取该布局内的文本视图
             MaterialSpinner spinner = view.findViewById(R.id.spinner);
-            itemText.setText(dialogListItem.getText() + ":");//为文本视图设置文本内容
-            dialogListItem.setSpinner(spinner);
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.module_spinner_item, list.get(position).getDataList());
+            itemText.setText(spinnerItem.getText() + ":");//为文本视图设置文本内容
+            spinnerItem.setSpinner(spinner);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.module_spinner_item, spinnerItem.getSpinnerDataList());
             arrayAdapter.setDropDownViewResource(R.layout.module_spinner_item);
             spinner.setAdapter(arrayAdapter);
             spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                    dialogListItem.setSelected(dialogListItem.getDataList().get(position));
+                    spinnerItem.setSelected(spinnerItem.getSpinnerDataList().get(position));
                 }
             });
-        } else if (dialogListItem.getType() == 1) {
+        } else if (dialogListItem.getType() == DialogListItem.TYPE_EDITTEXT) {
+            DialogListEditTextItem editTextItem = dialogListItem.getEditTextItem();
             view = LayoutInflater.from(getContext()).inflate(R.layout.item_dialog_custom_have_edit_text, null);//实例化一个对象
-            TextView itemText = view.findViewById(R.id.text);//获取该布局内的文本视图
+            AutoFitTextView itemText = view.findViewById(R.id.text);//获取该布局内的文本视图
             EditText editText = view.findViewById(R.id.edit_text);
-            itemText.setText(dialogListItem.getText() + ":");//为文本视图设置文本内容
-            editText.setText(dialogListItem.getEditedText());
-            dialogListItem.setEditText(editText);
+            itemText.setText(editTextItem.getText() + ":");//为文本视图设置文本内容
+            editText.setText(editTextItem.getEdited());
+            editText.setHint(editTextItem.getHint());
+            editTextItem.setEditText(editText);
             if (editText.getTag() != null && editText.getTag() instanceof TextWatcher) {
                 editText.removeTextChangedListener((TextWatcher) editText.getTag());
             }
@@ -70,7 +76,7 @@ public class DialogListAdapter extends ArrayAdapter {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    dialogListItem.setEditedText(s.toString());
+                    editTextItem.setEdited(s.toString());
                 }
             };
             editText.addTextChangedListener(textWatcher);
@@ -80,10 +86,10 @@ public class DialogListAdapter extends ArrayAdapter {
     }
 
     public String getEditText(int position) {
-        return list.get(position).getEditedText() == null ? "" : list.get(position).getEditedText();
+        return list.get(position).getEditTextItem().getEdited() == null ? "" : list.get(position).getEditTextItem().getEdited();
     }
 
     public String getSpinnerSelected(int position) {
-        return list.get(position).getSelected() == null ? "全部" : list.get(position).getSelected();
+        return list.get(position).getSpinnerItem().getSelected() == null ? "全部" : list.get(position).getSpinnerItem().getSelected();
     }
 }

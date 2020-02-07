@@ -15,6 +15,7 @@ import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrga
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalProjectManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryPersonnelManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.MaintenanceOfTeachingExperimentalClassFragment;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
 import com.orhanobut.logger.Logger;
@@ -84,6 +85,10 @@ public class FragmentSelectActivity extends AppCompatActivity {
             case "CourseExperimentOutlineFragment":
                 CourseExperimentOutlineFragment courseExperimentOutlineFragment = new CourseExperimentOutlineFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, courseExperimentOutlineFragment).commitAllowingStateLoss();
+                break;
+            case "MaintenanceOfTeachingExperimentalClassFragment":
+                MaintenanceOfTeachingExperimentalClassFragment maintenanceOfTeachingExperimentalClassFragment = new MaintenanceOfTeachingExperimentalClassFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, maintenanceOfTeachingExperimentalClassFragment).commitAllowingStateLoss();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");

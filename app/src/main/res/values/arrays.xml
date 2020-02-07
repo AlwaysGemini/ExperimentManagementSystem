@@ -79,7 +79,7 @@
     <array name="laboratoryTextListForInsert">
         <item>实验室代码</item>
         <item>实验室名称</item>
-        <item>隶属实验教学实验中心</item>
+        <item>隶属教学实验中心</item>
         <item>实验室负责人</item>
         <item>规章制度</item>
         <item>备注</item>
@@ -188,6 +188,26 @@
     <array name="experimentalConsumablesManagementTextListForQuery">
         <item>型号规格</item>
         <item>实验耗材名称</item>
+    </array>
+
+    <array name="maintenanceOfTeachingExperimentalClassEditTextListForInsert">
+        <item>学年</item>
+        <item>学期</item>
+        <item>教学班名称</item>
+        <item>教学班组成</item>
+        <item>开课学院</item>
+        <item>课程名称</item>
+    </array>
+
+    <array name="maintenanceOfTeachingExperimentalClassSpinnerTextListForQuery">
+        <item>学年</item>
+        <item>学期</item>
+        <item>开课学院</item>
+    </array>
+
+    <array name="maintenanceOfTeachingExperimentalClassEditTextListForQuery">
+        <item>教学班名称</item>
+        <item>课程</item>
     </array>
 
 </resources>

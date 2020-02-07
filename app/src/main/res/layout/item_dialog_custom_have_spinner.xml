@@ -12,12 +12,12 @@
         android:layout_marginBottom="@dimen/dp_10"
         android:orientation="horizontal">
 
-        <TextView
+        <com.xuexiang.xui.widget.textview.autofit.AutoFitTextView
             android:id="@+id/text"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dialog_item_text_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="text:" />
+            android:text="text:"/>
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner"
