@@ -10,6 +10,14 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.adapter.FragmentAdapter.java
+ * @Description:Fragment适配器
+ * @author: 周清
+ * @date: 2020-02-07 21:40
+ */
 public class FragmentAdapter<T extends Fragment> extends FragmentPagerAdapter {
 
     private List<T> mFragmentList = new ArrayList<>();

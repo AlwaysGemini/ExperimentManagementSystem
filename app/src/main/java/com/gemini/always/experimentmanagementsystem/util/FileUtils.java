@@ -4,6 +4,14 @@ import com.gemini.always.experimentmanagementsystem.R;
 import com.thl.filechooser.FileChooser;
 import com.thl.filechooser.FileInfo;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.util.FileUtils.java
+ * @Description:
+ * @author: 周清
+ * @date: 2020-02-07 21:37
+ */
 public class FileUtils {
     /**
      * 获取文件格式名
@@ -18,6 +26,11 @@ public class FileUtils {
         return "";
     }
 
+    /**
+     * 初始化FileChooser
+     *
+     * @param fileChooser
+     */
     public static void initFileChooser(FileChooser fileChooser) {
         fileChooser.setTitle("选择导入的表格文件");
         fileChooser.setDoneText("确定");

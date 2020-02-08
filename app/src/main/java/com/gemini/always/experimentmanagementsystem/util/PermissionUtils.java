@@ -12,9 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <pre>
- *     desc  : 权限相关工具类
- * </pre>
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.util.PermissionUtils.java
+ * @Description:
+ * @author: 周清
+ * @date: 2020-02-07 21:38
  */
 public final class PermissionUtils {
 

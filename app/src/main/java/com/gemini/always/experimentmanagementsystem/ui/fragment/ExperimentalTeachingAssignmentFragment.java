@@ -8,17 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bin.david.form.core.SmartTable;
+import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.table.TableData;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.MaintenanceOfTeachingExperimentalClassTable;
+import com.gemini.always.experimentmanagementsystem.bean.ExperimentalTeachingAssignmentTable;
 import com.gemini.always.experimentmanagementsystem.custom.CustomDialog;
-import com.gemini.always.experimentmanagementsystem.presenter.MaintenanceOfTeachingExperimentalClassPresenter;
+import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalTeachingAssignmentPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
-import com.gemini.always.experimentmanagementsystem.view.MaintenanceOfTeachingExperimentalClassView;
+import com.gemini.always.experimentmanagementsystem.view.ExperimentalTeachingAssignmentView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
@@ -41,14 +43,11 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * @version V1.0
- * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.MaintenanceOfTeachingExperimentalClassFragment.java
- * @Description:教学实验班维护模块
- * @author: 周清
- * @date: 2020-02-07 21:48
+ * @Author: 周清
+ * @Description:
+ * @Date: Created in 9:45 2020/2/8
  */
-public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment<MaintenanceOfTeachingExperimentalClassView, MaintenanceOfTeachingExperimentalClassPresenter> implements MaintenanceOfTeachingExperimentalClassView {
+public class ExperimentalTeachingAssignmentFragment extends BaseFragment<ExperimentalTeachingAssignmentView, ExperimentalTeachingAssignmentPresenter> implements ExperimentalTeachingAssignmentView {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -68,8 +67,7 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
     FloatingActionsMenu fabMenu;
     Unbinder unbinder;
 
-
-    private List<MaintenanceOfTeachingExperimentalClassTable> list = new ArrayList<>();
+    private List<ExperimentalTeachingAssignmentTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
     private List<String> selected_and_edited_list_for_query = new ArrayList<>();
@@ -92,7 +90,7 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
     }
 
     private void initView() {
-        titlebar.setTitle("教学实验班维护");
+        titlebar.setTitle("实验教学任务书");
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,14 +107,22 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
         table.setZoom(true);
     }
 
+    @Override
+    public ExperimentalTeachingAssignmentPresenter createPresenter() {
+        return new ExperimentalTeachingAssignmentPresenter();
+    }
+
+    @Override
+    public ExperimentalTeachingAssignmentView createView() {
+        return this;
+    }
+
     private void insertData() {
         new Thread() {
             @Override
             public void run() {
                 int count = 0;
                 getPresenter().insertData(selected_and_edited_list_for_insert.get(count++),
-                        selected_and_edited_list_for_insert.get(count++),
-                        selected_and_edited_list_for_insert.get(count++),
                         selected_and_edited_list_for_insert.get(count++),
                         selected_and_edited_list_for_insert.get(count++),
                         selected_and_edited_list_for_insert.get(count++));
@@ -134,12 +140,12 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
     }
 
     private void getData() {
+        //edited_experimental_project_name_for_query = edit_experimental_project_name_for_query.getText().toString();
         new Thread() {
             @Override
             public void run() {
                 int count = 0;
                 getPresenter().getData(selected_and_edited_list_for_query.get(count++),
-                        selected_and_edited_list_for_query.get(count++),
                         selected_and_edited_list_for_query.get(count++),
                         selected_and_edited_list_for_query.get(count++),
                         selected_and_edited_list_for_query.get(count++));
@@ -183,8 +189,14 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
                 try {
                     llStateful.showContent();
                     list.clear();
-                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), MaintenanceOfTeachingExperimentalClassTable.class));
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), ExperimentalTeachingAssignmentTable.class));
                     table.setData(list);
+                    table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
+                        @Override
+                        public void onClick(Column column, Object o, int col, int row) {
+
+                        }
+                    });
                 } catch (JSONException e) {
                     Logger.e(e, "JSONException");
                 }
@@ -205,19 +217,27 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
         unbinder.unbind();
     }
 
-    @Override
-    public MaintenanceOfTeachingExperimentalClassPresenter createPresenter() {
-        return new MaintenanceOfTeachingExperimentalClassPresenter();
-    }
-
-    @Override
-    public MaintenanceOfTeachingExperimentalClassView createView() {
-        return this;
-    }
-
     @OnClick({R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_query, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.fab_query:
+                new CustomDialog.Builder(getContext())
+                        .setTitle("查询")
+                        .setSpinnerTextList(Arrays.asList(getResources().getStringArray(R.array.experimentalTeachingAssignmentSpinnerTextListForQuery)))
+                        .setSpinnerDataList(spinnerDataListForQuery)
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.experimentalTeachingAssignmentEditTextListForQuery)))
+                        .serOnPositive("确定", new CustomDialog.DialogIF() {
+                            @Override
+                            public void onPositive(CustomDialog dialog, List<String> list) {
+                                selected_and_edited_list_for_query = list;
+                                getData();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create()
+                        .show();
+                break;
             case R.id.fab_import:
                 FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
                     @Override
@@ -226,10 +246,10 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
                             @Override
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
-                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("文件保存在:" + filePath));
-                                    List<MaintenanceOfTeachingExperimentalClassTable> list = ExcelUtils.readExcelContent(filePath, MaintenanceOfTeachingExperimentalClassTable.class);
-                                    for (MaintenanceOfTeachingExperimentalClassTable maintenanceOfTeachingExperimentalClassTable : list) {
-                                        getPresenter().insertData(maintenanceOfTeachingExperimentalClassTable);
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
+                                    List<ExperimentalTeachingAssignmentTable> list = ExcelUtils.readExcelContent(filePath, ExperimentalTeachingAssignmentTable.class);
+                                    for (ExperimentalTeachingAssignmentTable experimentalTeachingAssignmentTable : list) {
+                                        getPresenter().insertData(experimentalTeachingAssignmentTable);
                                     }
                                 } else {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
@@ -244,7 +264,7 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "教学实验班维护表格", list, MaintenanceOfTeachingExperimentalClassTable.class);
+                        ExcelUtils.createExcel(getContext(), "实验教学任务书表格", list, ExperimentalTeachingAssignmentTable.class);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -252,7 +272,7 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
             case R.id.fab_add:
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
-                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.maintenanceOfTeachingExperimentalClassEditTextListForInsert)))
+                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.experimentalTeachingAssignmentEditTextListForInsert)))
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
@@ -265,25 +285,8 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
                         .create()
                         .show();
                 break;
-            case R.id.fab_query:
-                new CustomDialog.Builder(getContext())
-                        .setTitle("查询")
-                        .setSpinnerTextList(Arrays.asList(getResources().getStringArray(R.array.maintenanceOfTeachingExperimentalClassSpinnerTextListForQuery)))
-                        .setSpinnerDataList(spinnerDataListForQuery)
-                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.maintenanceOfTeachingExperimentalClassEditTextListForQuery)))
-                        .serOnPositive("确定", new CustomDialog.DialogIF() {
-                            @Override
-                            public void onPositive(CustomDialog dialog, List<String> list) {
-                                selected_and_edited_list_for_query = list;
-                                getData();
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
-                        .create()
-                        .show();
-                break;
             case R.id.fab_menu:
+
                 break;
         }
     }

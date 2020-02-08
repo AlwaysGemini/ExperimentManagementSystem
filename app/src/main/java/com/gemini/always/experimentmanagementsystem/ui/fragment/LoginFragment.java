@@ -30,6 +30,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment.java
+ * @Description:登陆模块
+ * @author: 周清
+ * @date: 2020-02-07 21:48
+ */
 public class LoginFragment extends BaseFragment<LoginView, LoginPresenter> implements LoginView, View.OnClickListener {
 
 

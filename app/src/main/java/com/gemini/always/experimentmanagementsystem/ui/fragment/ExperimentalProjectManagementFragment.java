@@ -42,6 +42,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalProjectManagementFragment.java
+ * @Description:教学项目管理模块
+ * @author: 周清
+ * @date: 2020-02-07 21:47
+ */
 public class ExperimentalProjectManagementFragment extends BaseFragment<ExperimentalProjectManagementView, ExperimentalProjectManagementPresenter> implements ExperimentalProjectManagementView {
 
     @BindView(R.id.titlebar)

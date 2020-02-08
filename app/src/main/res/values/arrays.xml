@@ -210,4 +210,21 @@
         <item>课程</item>
     </array>
 
+    <array name="experimentalTeachingAssignmentEditTextListForInsert">
+        <item>教学班名称</item>
+        <item>任课老师</item>
+        <item>包含实验项目</item>
+        <item>选修项目数</item>
+    </array>
+
+    <array name="experimentalTeachingAssignmentSpinnerTextListForQuery">
+        <item>学年</item>
+        <item>学期</item>
+        <item>开课学院</item>
+    </array>
+
+    <array name="experimentalTeachingAssignmentEditTextListForQuery">
+        <item>课程名称</item>
+    </array>
+
 </resources>

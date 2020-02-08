@@ -44,6 +44,14 @@ import butterknife.Unbinder;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalCompartmentFragment.java
+ * @Description:实验分室模块
+ * @author: 周清
+ * @date: 2020-02-07 21:47
+ */
 @RuntimePermissions
 public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCompartmentView, ExperimentalCompartmentPresenter> implements ExperimentalCompartmentView, View.OnClickListener {
 

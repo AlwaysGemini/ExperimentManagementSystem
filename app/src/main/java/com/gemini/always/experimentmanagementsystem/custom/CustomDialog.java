@@ -14,6 +14,14 @@ import com.gemini.always.experimentmanagementsystem.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.CustomDialog.java
+ * @Description:自定义Dialog，嵌套了ConstraintHeightListView，从而可以限制最大高度，主要解决的是动态生成EditText和Spinner的问题
+ * @author: 周清
+ * @date: 2020-02-07 21:40
+ */
 public class CustomDialog extends Dialog {
     public CustomDialog(Context context) {
         super(context);
@@ -26,6 +34,7 @@ public class CustomDialog extends Dialog {
     public interface DialogIF {
         void onPositive(CustomDialog dialog, List<String> list);
     }
+
 
     public static class Builder {
         private Context context;
@@ -142,7 +151,7 @@ public class CustomDialog extends Dialog {
             ((TextView) layout.findViewById(R.id.title)).setText(title);
             // set the confirm button
 
-            if (dialogListItems.size() == 0){
+            if (dialogListItems.size() == 0) {
                 for (int i = 0; i < spinnerTextList.size(); i++) {
                     DialogListItem dialogListItem = new DialogListItem(new DialogListSpinnerItem(spinnerTextList.get(i), spinnerDataList.get(i)));
                     dialogListItems.add(dialogListItem);

@@ -13,6 +13,7 @@ import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalCons
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalEquipmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalProjectManagementFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalTeachingAssignmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryPersonnelManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.MaintenanceOfTeachingExperimentalClassFragment;
@@ -20,9 +21,22 @@ import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
 import com.orhanobut.logger.Logger;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.activity.FragmentSelectActivity.java
+ * @Description:Fragment选择器，用于做为整个应用的Fragment的容器
+ * @author: 周清
+ * @date: 2020-02-07 21:45
+ */
 public class FragmentSelectActivity extends AppCompatActivity {
 
-    //仅仅启动FragmentSelecter
+    /**
+     * 仅仅启动FragmentSelecter
+     *
+     * @param context
+     * @param fragmentName
+     */
     public static void startFragmentSelecter(Context context, String fragmentName) {
         Intent intent = new Intent(context, FragmentSelectActivity.class);
         intent.putExtra("Fragment", fragmentName);
@@ -30,7 +44,13 @@ public class FragmentSelectActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    //启动FragmentSelecter并附带参数
+    /**
+     * 启动FragmentSelecter并附带参数
+     *
+     * @param context
+     * @param fragmentName
+     * @param otherInformations
+     */
     public static void startFragmentSelecter(Context context, String fragmentName, String... otherInformations) {
         if (otherInformations.length % 2 != 0) {
             Logger.e("输入参数数量错误");
@@ -44,6 +64,11 @@ public class FragmentSelectActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
+    /**
+     * 想要通过Fragment选择器启动Fragment，必须在这里进行注册
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +114,10 @@ public class FragmentSelectActivity extends AppCompatActivity {
             case "MaintenanceOfTeachingExperimentalClassFragment":
                 MaintenanceOfTeachingExperimentalClassFragment maintenanceOfTeachingExperimentalClassFragment = new MaintenanceOfTeachingExperimentalClassFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, maintenanceOfTeachingExperimentalClassFragment).commitAllowingStateLoss();
+                break;
+            case "ExperimentalTeachingAssignmentFragment":
+                ExperimentalTeachingAssignmentFragment experimentalTeachingAssignmentFragment = new ExperimentalTeachingAssignmentFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalTeachingAssignmentFragment).commitAllowingStateLoss();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");

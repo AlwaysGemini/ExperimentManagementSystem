@@ -50,6 +50,14 @@ import java.util.Objects;
 
 import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.activity.MainActivity.java
+ * @Description:MainActivity，显示主界面，在没有登陆的情况下会自动跳转到登录界面
+ * @author: 周清
+ * @date: 2020-02-07 21:46
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final int POS_CHANGE_ROLE = 0;
@@ -66,7 +74,11 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableItemAdapter adapter;
     private List<MultiItemEntity> data = new ArrayList<>();
 
-    //仅仅启动MainActivity
+    /**
+     * 启动MainActivity
+     *
+     * @param context
+     */
     public static void startMainActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
@@ -190,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDragEnd(boolean isMenuOpened) {
                 if (isMenuOpened) {
-                    if (!GuideCaseView.isShowOnce(MainActivity.this, "guide_key_sliding_root_navigation")) {
+                    if (GuideCaseView.isShowOnce(MainActivity.this, "guide_key_sliding_root_navigation")) {
                         final GuideCaseView guideStep1 = new GuideCaseView.Builder(MainActivity.this)
                                 .title("点击进入，可切换主题样式哦～～")
                                 .titleSize(18, TypedValue.COMPLEX_UNIT_SP)
@@ -222,8 +234,10 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectedTextTint(ThemeUtils.resolveColor(this, R.attr.colorAccent));
     }
 
+    /**
+     * 初始化布局
+     */
     private void initView() {
-
         titleBar = findViewById(R.id.titlebar);
         titleBar.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -259,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
         //设置不重复执行动画
         adapter.isFirstOnly(true);
         adapter.setUpFetchEnable(true);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {//为列表设置点击事件，通过Fragment选择器跳转对应的Fragment
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onItemClick(final BaseQuickAdapter adapter, View view, final int position) {
@@ -286,6 +300,9 @@ public class MainActivity extends AppCompatActivity {
                     case "实验教学班维护":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "MaintenanceOfTeachingExperimentalClassFragment");
                         break;
+                    case "实验教学任务书":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalTeachingAssignmentFragment");
+                        break;
                 }
             }
         });
@@ -293,6 +310,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * 初始化主界面的列表数据
+     */
     private void initData() {
         level0Item[0] = new Level0Item("实验课程项目");
         data.add(level0Item[0]);

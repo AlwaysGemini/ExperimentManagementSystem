@@ -39,6 +39,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryRoomFragment.java
+ * @Description:实验房间模块
+ * @author: 周清
+ * @date: 2020-02-07 21:48
+ */
 public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, LaboratoryRoomPresenter> implements LaboratoryRoomView, View.OnClickListener {
 
     @BindView(R.id.table)

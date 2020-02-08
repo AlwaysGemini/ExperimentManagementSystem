@@ -40,6 +40,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalEquipmentFragment.java
+ * @Description:教学器材设备模块
+ * @author: 周清
+ * @date: 2020-02-07 21:47
+ */
 public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEquipmentView, ExperimentalEquipmentPresenter> implements ExperimentalEquipmentView {
 
     @BindView(R.id.titlebar)

@@ -9,17 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.gemini.always.experimentmanagementsystem.R;
-import com.gemini.always.experimentmanagementsystem.custom.DialogListEditTextItem;
-import com.gemini.always.experimentmanagementsystem.custom.DialogListItem;
-import com.gemini.always.experimentmanagementsystem.custom.DialogListSpinnerItem;
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 import com.xuexiang.xui.widget.textview.autofit.AutoFitTextView;
 
 import java.util.List;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.DialogListAdapter.java
+ * @Description:自定义Dialog中的ConstraintHeightListView的Item的适配器，对Item进行加载
+ * @author: 周清
+ * @date: 2020-02-07 21:42
+ */
 public class DialogListAdapter extends ArrayAdapter {
 
     private Context context;
@@ -31,6 +35,12 @@ public class DialogListAdapter extends ArrayAdapter {
         this.list = objects;
     }
 
+    /**
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return view
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         DialogListItem dialogListItem = list.get(position);

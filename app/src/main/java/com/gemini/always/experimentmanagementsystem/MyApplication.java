@@ -9,6 +9,14 @@ import com.orhanobut.logger.Logger;
 import com.tencent.mmkv.MMKV;
 import com.xuexiang.xui.XUI;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.MyApplication.java
+ * @Description:
+ * @author: 周清
+ * @date: 2020-02-07 21:39
+ */
 public class MyApplication extends Application {
 
     private static Context context;

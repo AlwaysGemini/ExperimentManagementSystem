@@ -21,8 +21,25 @@ import okhttp3.Response;
 import static com.gemini.always.experimentmanagementsystem.Constants.JSON;
 import static com.gemini.always.experimentmanagementsystem.Constants.OCTET_STREAM;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.util.OkHttpUtils.java
+ * @Description:
+ * @author: 周清
+ * @date: 2020-02-07 21:38
+ */
 public class OkHttpUtils {
 
+    /**
+     * 上传文件的方法
+     *
+     * @param url
+     * @param file
+     * @param fileName
+     * @param params
+     * @return
+     */
     public static JSONObject upload(String url, File file, String fileName, Map<String, String> params) {
         OkHttpClient client = new OkHttpClient();
         MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -80,6 +97,13 @@ public class OkHttpUtils {
         return responseJson;
     }
 
+    /**
+     * get方法
+     *
+     * @param url
+     * @param onOkHttpUtilsListener
+     * @return
+     */
     public static JSONObject get(String url, OnOkHttpUtilsListener onOkHttpUtilsListener) {
 
         OkHttpClient client = new OkHttpClient();
@@ -111,6 +135,13 @@ public class OkHttpUtils {
         return responseJson;
     }
 
+    /**
+     * 以Json字符串的形式通过POST方法向接口请求数据
+     *
+     * @param requestJson
+     * @param url
+     * @param onOkHttpUtilsListener
+     */
     public static void post1(JSONObject requestJson, String url, OnOkHttpUtilsListener onOkHttpUtilsListener) {
 
         Logger.json(requestJson.toString());
@@ -143,6 +174,13 @@ public class OkHttpUtils {
         Logger.json(responseJson.toString());
     }
 
+    /**
+     * 以表单的形式通过POST方法向接口请求数据
+     *
+     * @param formBody
+     * @param url
+     * @param onOkHttpUtilsListener
+     */
     public static void postByFormBody(FormBody formBody, String url, OnOkHttpUtilsListener onOkHttpUtilsListener) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

@@ -39,6 +39,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryPersonnelManagementFragment.java
+ * @Description:实验室人员管理模块
+ * @author: 周清
+ * @date: 2020-02-07 21:48
+ */
 public class LaboratoryPersonnelManagementFragment extends BaseFragment<LaboratoryPersonnelManagementView, LaboratoryPersonnelManagementPresenter> implements LaboratoryPersonnelManagementView, View.OnClickListener {
 
     @BindView(R.id.titlebar)

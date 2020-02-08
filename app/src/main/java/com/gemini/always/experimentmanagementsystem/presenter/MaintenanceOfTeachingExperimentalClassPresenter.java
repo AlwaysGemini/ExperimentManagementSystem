@@ -1,7 +1,6 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
 import com.gemini.always.experimentmanagementsystem.bean.MaintenanceOfTeachingExperimentalClassTable;
 import com.gemini.always.experimentmanagementsystem.model.MaintenanceOfTeachingExperimentalClassModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
@@ -12,7 +11,7 @@ import org.json.JSONObject;
 public class MaintenanceOfTeachingExperimentalClassPresenter extends BasePresenter<MaintenanceOfTeachingExperimentalClassView> {
     private MaintenanceOfTeachingExperimentalClassModel maintenanceOfTeachingExperimentalClassModel;
 
-    public MaintenanceOfTeachingExperimentalClassPresenter(){
+    public MaintenanceOfTeachingExperimentalClassPresenter() {
         this.maintenanceOfTeachingExperimentalClassModel = new MaintenanceOfTeachingExperimentalClassModel();
     }
 

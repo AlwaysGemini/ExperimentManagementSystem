@@ -14,6 +14,14 @@ import com.gemini.always.experimentmanagementsystem.ui.activity.MainActivity;
 
 import java.util.List;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.adapter.ExpandableItemAdapter.java
+ * @Description:主界面的列表适配器
+ * @author: 周清
+ * @date: 2020-02-07 21:39
+ */
 public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
 
     private static final int TYPE_LEVEL_0 = 0;

@@ -13,9 +13,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Created by ${zyj} on 2016/8/24.
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.util.JsonUtil.java
+ * @Description:
+ * @author: 周清
+ * @date: 2020-02-07 21:38
  */
 public class JsonUtil {
 
@@ -61,6 +65,13 @@ public class JsonUtil {
         return list;
     }
 
+    /**
+     * 把json 数组转化成list
+     *
+     * @param jsonArray
+     * @param fieldName
+     * @return
+     */
     public static List<String> jsonArrayToStringList(JSONArray jsonArray, String fieldName) {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {

@@ -7,6 +7,14 @@ import android.widget.ListView;
 
 import com.gemini.always.experimentmanagementsystem.R;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.ConstraintHeightListView.java
+ * @Description:自定义的可以设置最大高度的ListView
+ * @author: 周清
+ * @date: 2020-02-07 21:45
+ */
 public class ConstraintHeightListView extends ListView {
     private float mMaxHeight = 100;//默认100px
 

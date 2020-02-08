@@ -28,10 +28,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 侧滑栏的列表适配器
- *
- * @author xuexiang
- * @since 2019/1/6 上午12:28
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.adapter.DrawerAdapter.java
+ * @Description:侧滑栏的列表适配器
+ * @author: 周清
+ * @date: 2020-02-07 21:39
  */
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
 

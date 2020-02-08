@@ -16,7 +16,7 @@
             android:layout_width="@dimen/dialog_item_text_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="text:"/>
+            android:text="text:" />
 
         <EditText
             android:id="@+id/edit_text"

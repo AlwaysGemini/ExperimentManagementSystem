@@ -27,6 +27,14 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @version V1.0
+ * @Title:表格工具类
+ * @ClassName: com.gemini.always.experimentmanagementsystem.util.ExcelUtils.java
+ * @Description:
+ * @author: 周清
+ * @date: 2020-02-07 21:11
+ */
 public class ExcelUtils {
 
     static private Workbook wb;
@@ -34,6 +42,14 @@ public class ExcelUtils {
     static private Row row;
     static private Cell cell;
 
+    /**
+     * 创建表格
+     *
+     * @param context  上下文
+     * @param fileName 指定所创建的文件名
+     * @param list     表格数据
+     * @param clazz    给定表格的类，进而通过反射获得类的get方法获取数据
+     */
     public static <T> void createExcel(Context context, String fileName, List<T> list, Class<T> clazz) {
 
         Field[] fields = clazz.getDeclaredFields();
@@ -75,6 +91,14 @@ public class ExcelUtils {
         }
     }
 
+    /**
+     * 创建表格
+     *
+     * @param fileName 指定所创建的文件名
+     * @param clazz    给定表格的类，进而通过反射获得类的set方法
+     * @param <T>      泛型
+     * @return
+     */
     public static <T> List<T> readExcelContent(String fileName, Class<T> clazz) {
         List<T> list = new ArrayList<>();
         Field[] fields = clazz.getDeclaredFields();
@@ -126,6 +150,13 @@ public class ExcelUtils {
         return list;
     }
 
+    /**
+     * 通过类名和字段名，通过反射获取对象的get方法
+     *
+     * @param objectClass
+     * @param fieldName
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static Method getGetMethod(Class objectClass, String fieldName) {
         StringBuffer sb = new StringBuffer();
@@ -140,6 +171,13 @@ public class ExcelUtils {
         return null;
     }
 
+    /**
+     * 通过类名和字段名，通过反射获取对象的set方法
+     *
+     * @param objectClass
+     * @param fieldName
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static Method getSetMethod(Class objectClass, String fieldName) {
         try {
@@ -158,6 +196,13 @@ public class ExcelUtils {
         return null;
     }
 
+    /**
+     * 调用getSetMethod，直接使用对象的set方法
+     *
+     * @param o
+     * @param fieldName
+     * @param value
+     */
     public static void invokeSet(Object o, String fieldName, Object value) {
         Method method = getSetMethod(o.getClass(), fieldName);
         try {
@@ -167,6 +212,13 @@ public class ExcelUtils {
         }
     }
 
+    /**
+     * 调用getGetMethod，直接使用对象的set方法
+     *
+     * @param o
+     * @param fieldName
+     * @return
+     */
     public static Object invokeGet(Object o, String fieldName) {
         Method method = getGetMethod(o.getClass(), fieldName);
         try {

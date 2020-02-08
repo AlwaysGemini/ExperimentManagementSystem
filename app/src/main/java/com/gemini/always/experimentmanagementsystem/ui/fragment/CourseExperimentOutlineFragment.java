@@ -40,6 +40,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentOutlineFragment.java
+ * @Description:课程实验大纲模块
+ * @author: 周清
+ * @date: 2020-02-07 21:46
+ */
 public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperimentOutlineView, CourseExperimentOutlinePresenter> implements CourseExperimentOutlineView {
 
     @BindView(R.id.titlebar)

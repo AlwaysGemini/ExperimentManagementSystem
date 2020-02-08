@@ -9,6 +9,14 @@ import androidx.annotation.ArrayRes;
 
 import static com.xuexiang.xui.utils.ResUtils.getResources;
 
+/**
+ * @version V1.0
+ * @Title:
+ * @ClassName: com.gemini.always.experimentmanagementsystem.util.OtherUtils.java
+ * @Description:
+ * @author: 周清
+ * @date: 2020-02-07 21:38
+ */
 public class OtherUtils {
     /**
      * 获取Drawable的数组
