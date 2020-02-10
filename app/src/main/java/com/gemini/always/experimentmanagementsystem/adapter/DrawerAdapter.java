@@ -31,7 +31,7 @@ import java.util.Map;
  * @version V1.0
  * @Title:
  * @ClassName: com.gemini.always.experimentmanagementsystem.adapter.DrawerAdapter.java
- * @Description:侧滑栏的列表适配器
+ * @Description: 侧滑栏的列表适配器
  * @author: 周清
  * @date: 2020-02-07 21:39
  */

@@ -1,23 +1,37 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+import java.util.ArrayList;
+import java.util.List;
+
+@Table
 public class ExperimentalCompartmentTable {
 
-    @SmartColumn(id = 1, name = "实验分室代码")
+    @TableColumn(id = 1, name = "实验分室代码")
     private String experimental_compartment_code;
-    @SmartColumn(id = 2, name = "实验分室名称")
+    @TableColumn(id = 2, name = "实验分室名称")
     private String experimental_compartment_name;
-    @SmartColumn(id = 3, name = "隶属教学实验中心")
+    @TableColumn(id = 3, name = "隶属教学实验中心")
     private String affiliated_teaching_experiment_center;
-    @SmartColumn(id = 4, name = "隶属实验室")
+    @TableColumn(id = 4, name = "隶属实验室")
     private String affiliated_laboratory;
-    @SmartColumn(id = 5, name = "备注")
+    @TableColumn(id = 5, name = "备注")
     private String remarks;
-    @SmartColumn(id = 6, name = "启用标志")
+    @TableColumn(id = 6, name = "启用标志")
     private String enable_flag;
+
+    public List<String> toList() {
+        List<String> list = new ArrayList<>();
+        list.add(experimental_compartment_code);
+        list.add(experimental_compartment_name);
+        list.add(affiliated_teaching_experiment_center);
+        list.add(affiliated_laboratory);
+        list.add(remarks);
+        list.add(enable_flag);
+        return list;
+    }
 
     public String getExperimental_compartment_code() {
         return experimental_compartment_code;

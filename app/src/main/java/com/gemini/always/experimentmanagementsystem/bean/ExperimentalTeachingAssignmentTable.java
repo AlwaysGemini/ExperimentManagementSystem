@@ -1,33 +1,33 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
 /**
  * @Author: 周清
  * @Description:
  * @Date: Created in 9:34 2020/2/8
  */
-@SmartTable
+@Table
 public class ExperimentalTeachingAssignmentTable {
 
-    @SmartColumn(id = 1, name = "学年")
+    @TableColumn(id = 1, name = "学年")
     private String school_year;
-    @SmartColumn(id = 2, name = "学期")
+    @TableColumn(id = 2, name = "学期")
     private String semester;
-    @SmartColumn(id = 3, name = "开课学院")
+    @TableColumn(id = 3, name = "开课学院")
     private String school_of_commencement;
-    @SmartColumn(id = 4, name = "课程代码")
+    @TableColumn(id = 4, name = "课程代码")
     private String course_code;
-    @SmartColumn(id = 5, name = "课程名称")
+    @TableColumn(id = 5, name = "课程名称")
     private String course_name;
-    @SmartColumn(id = 6, name = "教学班名称")
+    @TableColumn(id = 6, name = "教学班名称")
     private String name_of_teaching_class;
-    @SmartColumn(id = 7, name = "任课老师")
+    @TableColumn(id = 7, name = "任课老师")
     private String teacher;
-    @SmartColumn(id = 8, name = "包含实验项目")
+    @TableColumn(id = 8, name = "包含实验项目")
     private String including_experimental_items;
-    @SmartColumn(id = 9, name = "选修项目数")
+    @TableColumn(id = 9, name = "选修项目数")
     private String number_of_electives;
 
     public String getSchool_year() {

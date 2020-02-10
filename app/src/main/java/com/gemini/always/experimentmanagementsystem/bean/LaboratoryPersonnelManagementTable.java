@@ -1,23 +1,23 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+@Table
 public class LaboratoryPersonnelManagementTable {
-    @SmartColumn(id = 1, name = "工号")
+    @TableColumn(id = 1, name = "工号")
     private String job_number;
-    @SmartColumn(id = 2, name = "姓名")
+    @TableColumn(id = 2, name = "姓名")
     private String name;
-    @SmartColumn(id = 3, name = "性别")
+    @TableColumn(id = 3, name = "性别")
     private String sex;
-    @SmartColumn(id = 4, name = "职称")
+    @TableColumn(id = 4, name = "职称")
     private String title;
-    @SmartColumn(id = 5, name = "实验教学中心")
+    @TableColumn(id = 5, name = "实验教学中心")
     private String teaching_experiment_center_name;
-    @SmartColumn(id = 6, name = "实验室")
+    @TableColumn(id = 6, name = "实验室")
     private String laboratory_name;
-    @SmartColumn(id = 7, name = "在职状态")
+    @TableColumn(id = 7, name = "在职状态")
     private String incumbency;
 
     public String getJob_number() {

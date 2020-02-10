@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.custom;
+package com.gemini.always.experimentmanagementsystem.custom.customDialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * @version V1.0
  * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.custom.CustomDialog.java
- * @Description:自定义Dialog，嵌套了ConstraintHeightListView，从而可以限制最大高度，主要解决的是动态生成EditText和Spinner的问题
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.ustomDialog.CustomDialog.java
+ * @Description: 自定义Dialog，嵌套了ConstraintHeightListView，从而可以限制最大高度，主要解决的是动态生成EditText和Spinner的问题
  * @author: 周清
  * @date: 2020-02-07 21:40
  */
@@ -42,6 +42,7 @@ public class CustomDialog extends Dialog {
         private String positiveButtonText;
         private String negativeButtonText;
         private List<String> editList = new ArrayList<>();
+        private List<String> editTextDataList = new ArrayList<>();
         private List<String> spinnerTextList = new ArrayList<>();
         private List<List<String>> spinnerDataList = new ArrayList<>();
         private List<DialogListItem> dialogListItems = new ArrayList<>();
@@ -144,7 +145,7 @@ public class CustomDialog extends Dialog {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
             final CustomDialog dialog = new CustomDialog(context, R.style.Dialog);
-            View layout = inflater.inflate(R.layout.dialog_custom_base_add, null);
+            View layout = inflater.inflate(R.layout.dialog_custom_base, null);
             dialog.addContentView(layout, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             // set the dialog title
@@ -156,9 +157,12 @@ public class CustomDialog extends Dialog {
                     DialogListItem dialogListItem = new DialogListItem(new DialogListSpinnerItem(spinnerTextList.get(i), spinnerDataList.get(i)));
                     dialogListItems.add(dialogListItem);
                 }
-                for (String string : editList) {
-                    DialogListItem dialogListItem = new DialogListItem(new DialogListEditTextItem(string, ""));
+                for (int i = 0; i < editList.size(); i++) {
+                    DialogListItem dialogListItem = new DialogListItem(new DialogListEditTextItem(editList.get(i), ""));
                     dialogListItems.add(dialogListItem);
+                }
+                for (int i = 0; i < editTextDataList.size(); i++) {
+                    dialogListItems.get(i).getEditTextItem().setEdited(editTextDataList.get(i));
                 }
             }
 
@@ -230,6 +234,15 @@ public class CustomDialog extends Dialog {
 
         public void setDialogListItems(List<DialogListItem> dialogListItems) {
             this.dialogListItems = dialogListItems;
+        }
+
+        public List<String> getEditTextDataList() {
+            return editTextDataList;
+        }
+
+        public Builder setEditTextDataList(List<String> editTextDataList) {
+            this.editTextDataList = editTextDataList;
+            return this;
         }
     }
 }

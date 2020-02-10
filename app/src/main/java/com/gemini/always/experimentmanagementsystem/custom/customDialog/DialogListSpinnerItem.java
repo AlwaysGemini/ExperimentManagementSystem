@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.custom;
+package com.gemini.always.experimentmanagementsystem.custom.customDialog;
 
 import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 
@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * @version V1.0
  * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.custom.DialogListEditTextItem.java
- * @Description:自定义的Dialog中的Spinner
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.ustomDialog.DialogListEditTextItem.java
+ * @Description: 自定义的Dialog中的Spinner
  * @author: 周清
  * @date: 2020-02-07 21:43
  */

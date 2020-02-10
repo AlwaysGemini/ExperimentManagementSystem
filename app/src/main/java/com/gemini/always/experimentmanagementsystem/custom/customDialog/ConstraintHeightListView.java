@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.custom;
+package com.gemini.always.experimentmanagementsystem.custom.customDialog;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,8 +10,8 @@ import com.gemini.always.experimentmanagementsystem.R;
 /**
  * @version V1.0
  * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.custom.ConstraintHeightListView.java
- * @Description:自定义的可以设置最大高度的ListView
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.ustomDialog.ConstraintHeightListView.java
+ * @Description: 自定义的可以设置最大高度的ListView
  * @author: 周清
  * @date: 2020-02-07 21:45
  */

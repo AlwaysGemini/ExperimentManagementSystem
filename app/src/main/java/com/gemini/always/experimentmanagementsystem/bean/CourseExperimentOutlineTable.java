@@ -1,18 +1,18 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+@Table
 public class CourseExperimentOutlineTable {
 
-    @SmartColumn(id = 1, name = "课程代码")
+    @TableColumn(id = 1, name = "课程代码")
     private String course_code;
-    @SmartColumn(id = 2, name = "课程名称")
+    @TableColumn(id = 2, name = "课程名称")
     private String course_name;
-    @SmartColumn(id = 3, name = "实验成绩占比(%)")
+    @TableColumn(id = 3, name = "实验成绩占比(%)")
     private String proportion_of_experimental_results;
-    @SmartColumn(id = 4, name = "实验项目")
+    @TableColumn(id = 4, name = "实验项目")
     private String experimental_project_name;
 
     public String getCourse_code() {

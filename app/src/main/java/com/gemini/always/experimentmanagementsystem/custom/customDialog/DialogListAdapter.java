@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.custom;
+package com.gemini.always.experimentmanagementsystem.custom.customDialog;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -19,8 +19,8 @@ import java.util.List;
 /**
  * @version V1.0
  * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.custom.DialogListAdapter.java
- * @Description:自定义Dialog中的ConstraintHeightListView的Item的适配器，对Item进行加载
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.ustomDialog.DialogListAdapter.java
+ * @Description: 自定义Dialog中的ConstraintHeightListView的Item的适配器，对Item进行加载
  * @author: 周清
  * @date: 2020-02-07 21:42
  */
@@ -66,6 +66,7 @@ public class DialogListAdapter extends ArrayAdapter {
             view = LayoutInflater.from(getContext()).inflate(R.layout.item_dialog_custom_have_edit_text, null);//实例化一个对象
             AutoFitTextView itemText = view.findViewById(R.id.text);//获取该布局内的文本视图
             EditText editText = view.findViewById(R.id.edit_text);
+            editText.setEnabled(editTextItem.isEnabled());
             itemText.setText(editTextItem.getText() + ":");//为文本视图设置文本内容
             editText.setText(editTextItem.getEdited());
             editText.setHint(editTextItem.getHint());

@@ -6,14 +6,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.ScaleAnimation;
 
-import com.bin.david.form.core.SmartTable;
-import com.bin.david.form.data.column.Column;
-import com.bin.david.form.data.table.TableData;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalTeachingAssignmentTable;
-import com.gemini.always.experimentmanagementsystem.custom.CustomDialog;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalTeachingAssignmentPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -26,6 +26,8 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONArray;
@@ -52,7 +54,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
-    SmartTable table;
+    MyTableView table;
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
     @BindView(R.id.fab_import)
@@ -66,6 +68,8 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
     Unbinder unbinder;
+    @BindView(R.id.fab_delete)
+    FloatingActionButton fabDelete;
 
     private List<ExperimentalTeachingAssignmentTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
@@ -75,7 +79,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_title_bar, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_base_my_table, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -101,10 +105,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                 }
             }
         });
-        table.getConfig().setShowXSequence(false);
-        table.getConfig().setShowYSequence(false);
-        table.getConfig().setShowTableTitle(false);
-        table.setZoom(true);
+        fabDelete.setVisibility(View.GONE);
     }
 
     @Override
@@ -190,11 +191,27 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                     llStateful.showContent();
                     list.clear();
                     list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), ExperimentalTeachingAssignmentTable.class));
-                    table.setData(list);
-                    table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener() {
+                    table.setData(list, ExperimentalTeachingAssignmentTable.class);
+                    table.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
-                        public void onClick(Column column, Object o, int col, int row) {
-
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            if (table.getIsShowCheckBox()) {
+                                table.setCheckedPosition(position, !table.getIsCheckPosition(position));
+                            }
+                        }
+                    });
+                    table.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                            if (!table.getIsShowCheckBox()) {
+                                table.setIsShowCheckBox(true);
+                                table.setCheckedPosition(position, true);
+                                ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0, 1.0f, 100, 100);
+                                scaleAnimation.setDuration(500);
+                                fabDelete.setVisibility(View.VISIBLE);
+                                fabDelete.startAnimation(scaleAnimation);
+                            }
+                            return false;
                         }
                     });
                 } catch (JSONException e) {
@@ -287,6 +304,23 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                 break;
             case R.id.fab_menu:
 
+                break;
+            case R.id.fab_delete:
+                if (table.getCheckedList().size() > 0)
+                    new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
+                            .content("确定要删除这" + table.getCheckedList().size() + "项吗？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    table.setIsShowCheckBox(false);
+                                    table.setHeadIsChecked(false);
+                                    table.notifyDataSetChanged();
+                                    fabDelete.setVisibility(View.GONE);
+                                }
+                            })
+                            .negativeText("取消")
+                            .show();
                 break;
         }
     }

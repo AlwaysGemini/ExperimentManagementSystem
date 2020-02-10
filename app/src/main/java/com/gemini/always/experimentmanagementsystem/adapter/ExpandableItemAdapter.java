@@ -2,6 +2,7 @@ package com.gemini.always.experimentmanagementsystem.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,7 +19,7 @@ import java.util.List;
  * @version V1.0
  * @Title:
  * @ClassName: com.gemini.always.experimentmanagementsystem.adapter.ExpandableItemAdapter.java
- * @Description:主界面的列表适配器
+ * @Description: 主界面的列表适配器
  * @author: 周清
  * @date: 2020-02-07 21:39
  */
@@ -43,14 +44,21 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                 //set view content
                 final Level0Item item0 = (Level0Item) item;
                 holder.setText(R.id.item_name, item0.getItemName());
+                ImageView arrow = holder.getView(R.id.arrow);
+
+                if (item0.isExpanded()) {
+                    arrow.setImageResource(R.drawable.icon_arrow_down);
+                } else {
+                    arrow.setImageResource(R.drawable.icon_arrow_right);
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         if (MainActivity.getSlidingRootNav().isMenuOpened()) {
                             MainActivity.getSlidingRootNav().closeMenu();
                         } else {
                             int pos = holder.getAdapterPosition();
-                            //ToastUtil.showToast(context,((Level0Item) item).getItemName());
                             if (pos == 0) {
                                 FragmentSelectActivity.startFragmentSelecter(context, "CourseExperimentProjectFragment");
                             }

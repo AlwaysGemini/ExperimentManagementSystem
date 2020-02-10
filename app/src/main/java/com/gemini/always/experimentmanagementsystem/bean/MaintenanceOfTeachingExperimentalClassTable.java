@@ -1,26 +1,26 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+@Table
 public class MaintenanceOfTeachingExperimentalClassTable {
 
-    @SmartColumn(id = 1, name = "学年")
+    @TableColumn(id = 1, name = "学年")
     private String school_year;
-    @SmartColumn(id = 2, name = "学期")
+    @TableColumn(id = 2, name = "学期")
     private String semester;
-    @SmartColumn(id = 3, name = "教学班名称")
+    @TableColumn(id = 3, name = "教学班名称")
     private String name_of_teaching_class;
-    @SmartColumn(id = 4, name = "教学班组成")
+    @TableColumn(id = 4, name = "教学班组成")
     private String composition_of_teaching_class;
-    @SmartColumn(id = 5, name = "开课学院")
+    @TableColumn(id = 5, name = "开课学院")
     private String school_of_commencement;
-    @SmartColumn(id = 6, name = "课程代码")
+    @TableColumn(id = 6, name = "课程代码")
     private String course_code;
-    @SmartColumn(id = 7, name = "课程名称")
+    @TableColumn(id = 7, name = "课程名称")
     private String course_name;
-    @SmartColumn(id = 8, name = "实验成绩占比(%)")
+    @TableColumn(id = 8, name = "实验成绩占比(%)")
     private String proportion_of_experimental_results;
 
     public String getSchool_year() {

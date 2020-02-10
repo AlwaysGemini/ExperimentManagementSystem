@@ -6,7 +6,7 @@ import okhttp3.MediaType;
  * @version V1.0
  * @Title:
  * @ClassName: com.gemini.always.experimentmanagementsystem.Constants.java
- * @Description:存放常量
+ * @Description: 存放常量
  * @author: 周清
  * @date: 2020-02-07 21:38
  */

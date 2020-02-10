@@ -1,34 +1,34 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+@Table
 public class ExperimentalConsumablesManagementTable {
 
-    @SmartColumn(id = 1, name = "实验耗材代码")
+    @TableColumn(id = 1, name = "实验耗材代码")
     private String id;
-    @SmartColumn(id = 2, name = "实验耗材名称")
+    @TableColumn(id = 2, name = "实验耗材名称")
     private String experimental_consumables_name;
-    @SmartColumn(id = 3, name = "当前库存量")
+    @TableColumn(id = 3, name = "当前库存量")
     private String current_inventory;
-    @SmartColumn(id = 4, name = "最大库存量")
+    @TableColumn(id = 4, name = "最大库存量")
     private String maximum_inventory;
-    @SmartColumn(id = 5, name = "最小库存量")
+    @TableColumn(id = 5, name = "最小库存量")
     private String minimum_inventory;
-    @SmartColumn(id = 6, name = "型号规格")
+    @TableColumn(id = 6, name = "型号规格")
     private String model_specification;
-    @SmartColumn(id = 7, name = "单位")
+    @TableColumn(id = 7, name = "单位")
     private String unit;
-    @SmartColumn(id = 8, name = "单价")
+    @TableColumn(id = 8, name = "单价")
     private String unit_price;
-    @SmartColumn(id = 9, name = "教学实验中心")
+    @TableColumn(id = 9, name = "教学实验中心")
     private String teaching_experiment_center_name;
-    @SmartColumn(id = 10, name = "实验室")
+    @TableColumn(id = 10, name = "实验室")
     private String laboratory_name;
-    @SmartColumn(id = 11, name = "实验分室")
+    @TableColumn(id = 11, name = "实验分室")
     private String experimental_compartment_name;
-    @SmartColumn(id = 12, name = "实验房间")
+    @TableColumn(id = 12, name = "实验房间")
     private String laboratory_room_name;
 
     public String getId() {

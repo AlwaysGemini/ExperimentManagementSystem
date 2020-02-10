@@ -25,7 +25,7 @@ import com.orhanobut.logger.Logger;
  * @version V1.0
  * @Title:
  * @ClassName: com.gemini.always.experimentmanagementsystem.ui.activity.FragmentSelectActivity.java
- * @Description:Fragment选择器，用于做为整个应用的Fragment的容器
+ * @Description: Fragment选择器，用于做为整个应用的Fragment的容器
  * @author: 周清
  * @date: 2020-02-07 21:45
  */

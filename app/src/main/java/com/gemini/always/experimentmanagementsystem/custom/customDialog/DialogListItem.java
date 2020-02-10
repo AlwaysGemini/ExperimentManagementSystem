@@ -1,10 +1,10 @@
-package com.gemini.always.experimentmanagementsystem.custom;
+package com.gemini.always.experimentmanagementsystem.custom.customDialog;
 
 /**
  * @version V1.0
  * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.custom.DialogListItem.java
- * @Description:自定义Dialog的直接Item，用于存放EditText或者Spinner
+ * @ClassName: com.gemini.always.experimentmanagementsystem.custom.ustomDialog.DialogListItem.java
+ * @Description: 自定义Dialog的直接Item，用于存放EditText或者Spinner
  * @author: 周清
  * @date: 2020-02-07 21:44
  */

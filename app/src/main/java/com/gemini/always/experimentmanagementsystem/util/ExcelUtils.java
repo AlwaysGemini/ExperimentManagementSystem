@@ -2,7 +2,7 @@ package com.gemini.always.experimentmanagementsystem.util;
 
 import android.content.Context;
 
-import com.bin.david.form.annotation.SmartColumn;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 import com.orhanobut.logger.Logger;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -23,15 +23,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gemini.always.experimentmanagementsystem.util.ReflectUtil.invokeGet;
+import static com.gemini.always.experimentmanagementsystem.util.ReflectUtil.invokeSet;
+
 /**
  * @version V1.0
- * @Title:表格工具类
+ * @Title:
  * @ClassName: com.gemini.always.experimentmanagementsystem.util.ExcelUtils.java
- * @Description:
+ * @Description: 表格工具类
  * @author: 周清
  * @date: 2020-02-07 21:11
  */
@@ -60,9 +62,9 @@ public class ExcelUtils {
         row = sheet.createRow(0);
         for (Field field : fields) {
             field.setAccessible(true);
-            Annotation fieldAnnotation = field.getAnnotation(SmartColumn.class);
+            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
             if (fieldAnnotation != null) {
-                SmartColumn smartColumn = (SmartColumn) fieldAnnotation;
+                TableColumn smartColumn = (TableColumn) fieldAnnotation;
                 cell = row.createCell(smartColumn.id() - 1);
                 cell.setCellValue(smartColumn.name());
             }
@@ -71,9 +73,9 @@ public class ExcelUtils {
             row = sheet.createRow(i);
             for (Field field : fields) {
                 field.setAccessible(true);
-                Annotation fieldAnnotation = field.getAnnotation(SmartColumn.class);
+                Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
                 if (fieldAnnotation != null) {
-                    SmartColumn smartColumn = (SmartColumn) fieldAnnotation;
+                    TableColumn smartColumn = (TableColumn) fieldAnnotation;
                     cell = row.createCell(smartColumn.id() - 1);
                     cell.setCellValue((String) invokeGet(list.get(i - 1), field.getName()));
                 }
@@ -138,9 +140,9 @@ public class ExcelUtils {
             }
             for (Field field : fields) {
                 field.setAccessible(true);
-                Annotation fieldAnnotation = field.getAnnotation(SmartColumn.class);
+                Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
                 if (fieldAnnotation != null) {
-                    SmartColumn smartColumn = (SmartColumn) fieldAnnotation;
+                    TableColumn smartColumn = (TableColumn) fieldAnnotation;
                     cell = row.getCell(smartColumn.id() - 1);
                     invokeSet(temp, field.getName(), cell.getStringCellValue());
                 }
@@ -148,84 +150,5 @@ public class ExcelUtils {
             list.add(temp);
         }
         return list;
-    }
-
-    /**
-     * 通过类名和字段名，通过反射获取对象的get方法
-     *
-     * @param objectClass
-     * @param fieldName
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public static Method getGetMethod(Class objectClass, String fieldName) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("get");
-        sb.append(fieldName.substring(0, 1).toUpperCase());
-        sb.append(fieldName.substring(1));
-        try {
-            return objectClass.getMethod(sb.toString());
-        } catch (Exception e) {
-            Logger.e(e, "Exception:");
-        }
-        return null;
-    }
-
-    /**
-     * 通过类名和字段名，通过反射获取对象的set方法
-     *
-     * @param objectClass
-     * @param fieldName
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public static Method getSetMethod(Class objectClass, String fieldName) {
-        try {
-            Class[] parameterTypes = new Class[1];
-            Field field = objectClass.getDeclaredField(fieldName);
-            parameterTypes[0] = field.getType();
-            StringBuffer sb = new StringBuffer();
-            sb.append("set");
-            sb.append(fieldName.substring(0, 1).toUpperCase());
-            sb.append(fieldName.substring(1));
-            Method method = objectClass.getMethod(sb.toString(), parameterTypes);
-            return method;
-        } catch (Exception e) {
-            Logger.e(e, "Exception:");
-        }
-        return null;
-    }
-
-    /**
-     * 调用getSetMethod，直接使用对象的set方法
-     *
-     * @param o
-     * @param fieldName
-     * @param value
-     */
-    public static void invokeSet(Object o, String fieldName, Object value) {
-        Method method = getSetMethod(o.getClass(), fieldName);
-        try {
-            method.invoke(o, new Object[]{value});
-        } catch (Exception e) {
-            Logger.e(e, "Exception:");
-        }
-    }
-
-    /**
-     * 调用getGetMethod，直接使用对象的set方法
-     *
-     * @param o
-     * @param fieldName
-     * @return
-     */
-    public static Object invokeGet(Object o, String fieldName) {
-        Method method = getGetMethod(o.getClass(), fieldName);
-        try {
-            return method.invoke(o, new Object[0]);
-        } catch (Exception e) {
-            Logger.e(e, "Exception:");
-        }
-        return null;
     }
 }

@@ -1,30 +1,30 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+@Table
 public class ExperimentalProjectTable {
 
-    @SmartColumn(id = 1, name = "实验项目代码")
+    @TableColumn(id = 1, name = "实验项目代码")
     private String experimental_project_code;
-    @SmartColumn(id = 2, name = "实验项目名称")
+    @TableColumn(id = 2, name = "实验项目名称")
     private String experimental_project_name;
-    @SmartColumn(id = 3, name = "实验内容")
+    @TableColumn(id = 3, name = "实验内容")
     private String experimental_content;
-    @SmartColumn(id = 4, name = "实验学时")
+    @TableColumn(id = 4, name = "实验学时")
     private String experimental_hours;
-    @SmartColumn(id = 5, name = "实验学分")
+    @TableColumn(id = 5, name = "实验学分")
     private String experimental_credits;
-    @SmartColumn(id = 6, name = "实验属性")
+    @TableColumn(id = 6, name = "实验属性")
     private String experimental_properties;
-    @SmartColumn(id = 7, name = "实验类别")
+    @TableColumn(id = 7, name = "实验类别")
     private String experimental_type;
-    @SmartColumn(id = 8, name = "实验类型")
+    @TableColumn(id = 8, name = "实验类型")
     private String experimental_category;
-    @SmartColumn(id = 9, name = "所属单位")
+    @TableColumn(id = 9, name = "所属单位")
     private String affiliation;
-    @SmartColumn(id = 10, name = "所属单位学科")
+    @TableColumn(id = 10, name = "所属单位学科")
     private String subject;
 
     public String getExperimental_project_code() {

@@ -8,7 +8,6 @@
     <string name="title_set_query_condition">设置查询条件</string>
     <string name="title_add">增加</string>
     <string name="all">全部</string>
-    <string name="empty"></string>
     <string name="btn_confirm">确定</string>
     <string name="btn_cancel">取消</string>
 </resources>

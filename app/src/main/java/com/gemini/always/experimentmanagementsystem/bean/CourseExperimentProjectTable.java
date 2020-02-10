@@ -1,34 +1,34 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+@Table
 public class CourseExperimentProjectTable {
 
-    @SmartColumn(id = 1, name = "课程代码")
+    @TableColumn(id = 1, name = "课程代码")
     private String course_code;
-    @SmartColumn(id = 2, name = "课程中文名称")
+    @TableColumn(id = 2, name = "课程中文名称")
     private String course_chinese_name;
-    @SmartColumn(id = 3, name = "课程英文名称")
+    @TableColumn(id = 3, name = "课程英文名称")
     private String course_english_name;
-    @SmartColumn(id = 4, name = "课程视频")
+    @TableColumn(id = 4, name = "课程视频")
     private String course_video;
-    @SmartColumn(id = 5, name = "开课学院")
+    @TableColumn(id = 5, name = "开课学院")
     private String instructional_school;
-    @SmartColumn(id = 6, name = "学分")
+    @TableColumn(id = 6, name = "学分")
     private String credit;
-    @SmartColumn(id = 7, name = "总学时")
+    @TableColumn(id = 7, name = "总学时")
     private String total_hours;
-    @SmartColumn(id = 8, name = "周学时")
+    @TableColumn(id = 8, name = "周学时")
     private String week_hours;
-    @SmartColumn(id = 9, name = "实验项目数")
+    @TableColumn(id = 9, name = "实验项目数")
     private String number_of_experimental_items;
-    @SmartColumn(id = 10, name = "课程类别")
+    @TableColumn(id = 10, name = "课程类别")
     private String course_category;
-    @SmartColumn(id = 11, name = "课程归属")
+    @TableColumn(id = 11, name = "课程归属")
     private String course_assignment;
-    @SmartColumn(id = 12, name = "课程启用年级")
+    @TableColumn(id = 12, name = "课程启用年级")
     private String course_enabling_grade;
 
     public String getCourse_code() {

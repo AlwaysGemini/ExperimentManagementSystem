@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bin.david.form.core.SmartTable;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
-import com.gemini.always.experimentmanagementsystem.custom.CustomDialog;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
@@ -41,14 +41,14 @@ import butterknife.Unbinder;
  * @version V1.0
  * @Title:
  * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment.java
- * @Description:教学实验项目模块
+ * @Description: 教学实验项目模块
  * @author: 周清
  * @date: 2020-02-07 21:47
  */
 public class CourseExperimentProjectFragment extends BaseFragment<CourseExperimentProjectView, CourseExperimentProjectPresenter> implements CourseExperimentProjectView, View.OnClickListener {
 
     @BindView(R.id.table)
-    SmartTable table;
+    MyTableView table;
     Unbinder unbinder;
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -64,6 +64,8 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     FloatingActionButton fabQuery;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
+    @BindView(R.id.fab_delete)
+    FloatingActionButton fabDelete;
 
     private List<CourseExperimentProjectTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
@@ -72,7 +74,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_base_query_table_have_title_bar, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_base_my_table, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -87,6 +89,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     }
 
     private void initView() {
+        titlebar.setTitle("教学实验项目");
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,10 +103,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
         fabMenu.removeButton(fabAdd);
         fabMenu.removeButton(fabExport);
         fabMenu.removeButton(fabImport);
-        table.getConfig().setShowXSequence(false);
-        table.getConfig().setShowYSequence(false);
-        table.getConfig().setShowTableTitle(false);
-        table.setZoom(true);
+        fabDelete.setVisibility(View.GONE);
     }
 
     private void getData() {
@@ -138,7 +138,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                     llStateful.showContent();
                     list.clear();
                     list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
-                    table.setData(list);
+                    table.setData(list, CourseExperimentProjectTable.class);
                 } catch (JSONException e) {
                     Logger.e(e, "JSONException");
                 }

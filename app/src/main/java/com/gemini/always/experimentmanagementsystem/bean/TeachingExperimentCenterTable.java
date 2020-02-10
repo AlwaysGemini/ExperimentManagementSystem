@@ -1,26 +1,26 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@SmartTable
+@Table
 public class TeachingExperimentCenterTable {
 
-    @SmartColumn(id = 1, name = "教学实验中心代码")
+    @TableColumn(id = 1, name = "教学实验中心代码")
     private String teaching_experiment_center_code;
-    @SmartColumn(id = 2, name = "教学实验中心名称")
+    @TableColumn(id = 2, name = "教学实验中心名称")
     private String teaching_experiment_center_name;
-    @SmartColumn(id = 3, name = "实验室类型")
+    @TableColumn(id = 3, name = "实验室类型")
     private String laboratory_type;
-    @SmartColumn(id = 4, name = "所属单位")
+    @TableColumn(id = 4, name = "所属单位")
     private String subordinate_unit;
-    @SmartColumn(id = 5, name = "所属学科")
+    @TableColumn(id = 5, name = "所属学科")
     private String subordinate_discipline;
-    @SmartColumn(id = 6, name = "建立年份")
+    @TableColumn(id = 6, name = "建立年份")
     private String year_of_establishment;
-    @SmartColumn(id = 7, name = "备注")
+    @TableColumn(id = 7, name = "备注")
     private String remarks;
-    @SmartColumn(id = 8, name = "启用标志")
+    @TableColumn(id = 8, name = "启用标志")
     private String enable_flag;
 
     public String getLaboratory_type() {

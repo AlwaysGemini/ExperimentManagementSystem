@@ -9,7 +9,7 @@ import com.xuexiang.xui.widget.toast.XToast;
 
 /**
  * @version V1.0
- * @Title:xtoast 工具类
+ * @Title: XToast 工具类
  * @ClassName: com.gemini.always.experimentmanagementsystem.util.XToastUtils.java
  * @Description:
  * @author: 周清
