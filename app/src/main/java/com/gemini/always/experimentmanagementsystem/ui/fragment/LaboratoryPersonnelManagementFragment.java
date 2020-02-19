@@ -36,7 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -118,9 +117,9 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
             case R.id.fab_query:
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
-                        .setSpinnerTextList(Arrays.asList(getResources().getStringArray(R.array.laboratoryPersonnelManagementSpinnerTextListForQuery)))
+                        .setType(CustomDialog.TYPE_QUERY)
+                        .setClazz(tableClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
-                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.laboratoryPersonnelManagementTextListForQuery)))
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
@@ -167,7 +166,8 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
             case R.id.fab_add:
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
-                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.laboratoryPersonnelManagementTextListForInsert)))
+                        .setType(CustomDialog.TYPE_ADD)
+                        .setClazz(tableClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

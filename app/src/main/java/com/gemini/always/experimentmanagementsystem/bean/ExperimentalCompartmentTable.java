@@ -1,5 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
@@ -10,16 +12,29 @@ import java.util.List;
 public class ExperimentalCompartmentTable {
 
     @TableColumn(id = 1, name = "实验分室代码")
+    @AddItem(id = 0, name = "实验分室代码")
     private String experimental_compartment_code;
+
     @TableColumn(id = 2, name = "实验分室名称")
+    @AddItem(id = 1, name = "实验分室名称")
     private String experimental_compartment_name;
+
     @TableColumn(id = 3, name = "隶属教学实验中心")
+    @QueryItem(id = 0, name = "隶属教学实验中心", type = QueryItem.TYPE_SPINNER)
     private String affiliated_teaching_experiment_center;
+
     @TableColumn(id = 4, name = "隶属实验室")
+    @QueryItem(id = 1, name = "隶属实验室", type = QueryItem.TYPE_SPINNER)
+    @AddItem(id = 2, name = "隶属实验室")
     private String affiliated_laboratory;
+
     @TableColumn(id = 5, name = "备注")
+    @AddItem(id = 3, name = "备注")
     private String remarks;
+
     @TableColumn(id = 6, name = "启用标志")
+    @QueryItem(id = 2, name = "启用标志", type = QueryItem.TYPE_SPINNER)
+    @AddItem(id = 4, name = "启用标志")
     private String enable_flag;
 
     public List<String> toList() {

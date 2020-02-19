@@ -287,6 +287,9 @@ public class MainActivity extends AppCompatActivity {
                     case "实验教学任务书":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalTeachingAssignmentFragment");
                         break;
+                    case "实验项目教学任务书":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "TeachingAssignmentOfExperimentalProjectFragment");
+                        break;
                 }
             }
         });

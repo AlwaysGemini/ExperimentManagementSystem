@@ -29,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,6 +67,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
+    private String title = "课程实验大纲";
     private Class tableClass = CourseExperimentProjectTable.class;
     private List<CourseExperimentProjectTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
@@ -91,7 +91,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     }
 
     private void initView() {
-        titlebar.setTitle("教学实验项目");
+        titlebar.setTitle(title);
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,9 +195,9 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
             case R.id.fab_query:
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
-                        .setSpinnerTextList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentProjectTextListForInsert)))
+                        .setType(CustomDialog.TYPE_QUERY)
+                        .setClazz(tableClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
-                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentProjectTextListForQuery)))
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

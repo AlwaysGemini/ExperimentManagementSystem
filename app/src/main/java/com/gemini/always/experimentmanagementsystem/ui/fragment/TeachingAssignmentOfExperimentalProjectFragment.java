@@ -12,16 +12,16 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.ExperimentalProjectTable;
+import com.gemini.always.experimentmanagementsystem.bean.TeachingAssignmentOfExperimentalProjectTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
-import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalProjectManagementPresenter;
+import com.gemini.always.experimentmanagementsystem.presenter.TeachingAssignmentOfExperimentalProjectPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
-import com.gemini.always.experimentmanagementsystem.view.ExperimentalProjectManagementView;
+import com.gemini.always.experimentmanagementsystem.view.BaseCURDView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
@@ -44,15 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-/**
- * @version V1.0
- * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalProjectManagementFragment.java
- * @Description: 教学项目管理模块
- * @author: 周清
- * @date: 2020-02-07 21:47
- */
-public class ExperimentalProjectManagementFragment extends BaseFragment<ExperimentalProjectManagementView, ExperimentalProjectManagementPresenter> implements ExperimentalProjectManagementView {
+public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragment<BaseCURDView, TeachingAssignmentOfExperimentalProjectPresenter> implements BaseCURDView, View.OnClickListener {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -60,6 +52,8 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     MyTableView table;
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
+    @BindView(R.id.fab_delete)
+    FloatingActionButton fabDelete;
     @BindView(R.id.fab_import)
     FloatingActionButton fabImport;
     @BindView(R.id.fab_export)
@@ -71,11 +65,10 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
     Unbinder unbinder;
-    @BindView(R.id.fab_delete)
-    FloatingActionButton fabDelete;
 
-    private Class tableClass = ExperimentalProjectTable.class;
-    private List<ExperimentalProjectTable> list = new ArrayList<>();
+    private String title = "实验项目教学任务书";
+    private Class tableClass = TeachingAssignmentOfExperimentalProjectTable.class;
+    private List<TeachingAssignmentOfExperimentalProjectTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
     private List<String> selected_and_edited_list_for_query = new ArrayList<>();
@@ -92,13 +85,38 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         initView();
         getQueryConditionList();
     }
 
+    private void initTable() {
+        table.setData(list, tableClass);
+        table.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (table.getIsShowCheckBox()) {
+                    table.setCheckedPosition(position, !table.getIsCheckPosition(position));
+                }
+            }
+        });
+        table.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!table.getIsShowCheckBox()) {
+                    table.setIsShowCheckBox(true);
+                    table.setCheckedPosition(position, true);
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0, 1.0f, 100, 100);
+                    scaleAnimation.setDuration(500);
+                    fabDelete.setVisibility(View.VISIBLE);
+                    fabDelete.startAnimation(scaleAnimation);
+                }
+                return false;
+            }
+        });
+    }
+
     private void initView() {
-        titlebar.setTitle("实验项目管理");
+        titlebar.setTitle(title);
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,127 +131,13 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     }
 
     @Override
-    public ExperimentalProjectManagementPresenter createPresenter() {
-        return new ExperimentalProjectManagementPresenter();
+    public TeachingAssignmentOfExperimentalProjectPresenter createPresenter() {
+        return new TeachingAssignmentOfExperimentalProjectPresenter();
     }
 
     @Override
-    public ExperimentalProjectManagementView createView() {
+    public BaseCURDView createView() {
         return this;
-    }
-
-    private void insertData() {
-        new Thread() {
-            @Override
-            public void run() {
-                getPresenter().insertData(selected_and_edited_list_for_insert.get(0),
-                        selected_and_edited_list_for_insert.get(1),
-                        selected_and_edited_list_for_insert.get(2),
-                        selected_and_edited_list_for_insert.get(3),
-                        selected_and_edited_list_for_insert.get(4),
-                        selected_and_edited_list_for_insert.get(5),
-                        selected_and_edited_list_for_insert.get(6),
-                        selected_and_edited_list_for_insert.get(7),
-                        selected_and_edited_list_for_insert.get(8),
-                        selected_and_edited_list_for_insert.get(9));
-            }
-        }.start();
-    }
-
-    private void getQueryConditionList() {
-        new Thread() {
-            @Override
-            public void run() {
-                getPresenter().getQueryConditionList();
-            }
-        }.start();
-    }
-
-    private void getData() {
-        //edited_experimental_project_name_for_query = edit_experimental_project_name_for_query.getText().toString();
-        new Thread() {
-            @Override
-            public void run() {
-                getPresenter().getData(selected_and_edited_list_for_query.get(0),
-                        selected_and_edited_list_for_query.get(1),
-                        selected_and_edited_list_for_query.get(2),
-                        selected_and_edited_list_for_query.get(3));
-            }
-        }.start();
-    }
-
-    @Override
-    public void onInsertDataResult(Boolean isSuccess, JSONObject responseJson) {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            try {
-                XToastUtils.toast(responseJson.getString("msg"));
-            } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
-            }
-        });
-    }
-
-    @Override
-    public void onGetQueryConditionListResult(Boolean isSuccess, JSONObject responseJson) {
-        if (isSuccess) {
-            try {
-                JSONArray jsonArray = responseJson.getJSONArray("data");
-                int count = 0;
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    spinnerDataListForQuery.add(new ArrayList<>());
-                }
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_properties", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_type", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_category", spinnerDataListForQuery.get(count++));
-            } catch (JSONException e) {
-                XToastUtils.toast(e.getMessage());
-            }
-        }
-    }
-
-    @Override
-    public void onGetDataResult(Boolean isSuccess, JSONObject responseJson) {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            if (isSuccess) {
-                try {
-                    llStateful.showContent();
-                    list.clear();
-                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), tableClass));
-                    table.setData(list, tableClass);
-                    table.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            if (table.getIsShowCheckBox()) {
-                                table.setCheckedPosition(position, !table.getIsCheckPosition(position));
-                            }
-                        }
-                    });
-                    table.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-                        @Override
-                        public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                            if (!table.getIsShowCheckBox()) {
-                                table.setIsShowCheckBox(true);
-                                table.setCheckedPosition(position, true);
-                                ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0, 1.0f, 100, 100);
-                                scaleAnimation.setDuration(500);
-                                fabDelete.setVisibility(View.VISIBLE);
-                                fabDelete.startAnimation(scaleAnimation);
-                            }
-                            return false;
-                        }
-                    });
-                } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
-                }
-            } else {
-                try {
-                    XToastUtils.toast(responseJson.getString("msg"));
-                } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
-                }
-                llStateful.showEmpty();
-            }
-        });
     }
 
     @Override
@@ -242,7 +146,8 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_query, R.id.fab_menu, R.id.fab_delete})
+    @Override
+    @OnClick({R.id.fab_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_query:
@@ -272,9 +177,9 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<ExperimentalProjectTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
-                                    for (ExperimentalProjectTable experimentalProjectTable : list) {
-                                        getPresenter().insertData(experimentalProjectTable);
+                                    List<TeachingAssignmentOfExperimentalProjectTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
+                                    for (TeachingAssignmentOfExperimentalProjectTable tableItem : list) {
+                                        getPresenter().insertData(tableItem);
                                     }
                                 } else {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
@@ -289,7 +194,7 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "实验分室表格", list, tableClass);
+                        ExcelUtils.createExcel(getContext(), title + "表格", list, tableClass);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -311,9 +216,6 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                         .create()
                         .show();
                 break;
-            case R.id.fab_menu:
-
-                break;
             case R.id.fab_delete:
                 if (table.getCheckedList().size() > 0)
                     new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
@@ -323,7 +225,6 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     table.setIsShowCheckBox(false);
-                                    table.setHeadIsChecked(false);
                                     table.notifyDataSetChanged();
                                     fabDelete.setVisibility(View.GONE);
                                 }
@@ -332,5 +233,100 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                             .show();
                 break;
         }
+    }
+
+    private void insertData() {
+        new Thread() {
+            @Override
+            public void run() {
+                int count = 0;
+                getPresenter().insertData(selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++));
+            }
+        }.start();
+    }
+
+    private void getQueryConditionList() {
+        new Thread() {
+            @Override
+            public void run() {
+                getPresenter().getQueryConditionList();
+            }
+        }.start();
+    }
+
+    private void getData() {
+        new Thread() {
+            @Override
+            public void run() {
+                int count = 0;
+                getPresenter().getData(selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++),
+                        selected_and_edited_list_for_query.get(count++));
+            }
+        }.start();
+    }
+
+    @Override
+    public void onInsertDataResult(Boolean isSuccess, JSONObject responseJson) {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            try {
+                XToastUtils.toast(responseJson.getString("msg"));
+            } catch (JSONException e) {
+                Logger.e(e, "JSONException:");
+            }
+        });
+    }
+
+    @Override
+    public void onGetQueryConditionListResult(Boolean isSuccess, JSONObject responseJson) {
+        if (isSuccess) {
+            try {
+                JSONArray jsonArray = responseJson.getJSONArray("data");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    spinnerDataListForQuery.add(new ArrayList<>());
+                }
+                int count = 0;
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_year", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "semester", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_of_commencement", spinnerDataListForQuery.get(count++));
+            } catch (JSONException e) {
+                XToastUtils.toast(e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void onGetDataResult(Boolean isSuccess, JSONObject responseJson) {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            if (isSuccess) {
+                try {
+                    llStateful.showContent();
+                    list.clear();
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), tableClass));
+                    initTable();
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException");
+                }
+            } else {
+                try {
+                    XToastUtils.toast(responseJson.getString("msg"));
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException:");
+                }
+                llStateful.showEmpty();
+            }
+        });
+    }
+
+    @Override
+    public void onUpdateResult(Boolean isSuccess, JSONObject responseJson) {
+
+    }
+
+    @Override
+    public void onDeleteResult(Boolean isSuccess, JSONObject responseJson) {
+
     }
 }

@@ -1,5 +1,6 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
@@ -7,28 +8,44 @@ import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table
 public class CourseExperimentProjectTable {
 
     @TableColumn(id = 1, name = "课程代码")
+    @QueryItem(id = 4, name = "课程", type = QueryItem.TYPE_EDITTEXT, hint = "按课程代码、名称模糊查询")
     private String course_code;
+
     @TableColumn(id = 2, name = "课程中文名称")
     private String course_chinese_name;
+
     @TableColumn(id = 3, name = "课程英文名称")
     private String course_english_name;
+
     @TableColumn(id = 4, name = "课程视频")
     private String course_video;
+
     @TableColumn(id = 5, name = "开课学院")
+    @QueryItem(id = 0, name = "开课学院", type = QueryItem.TYPE_SPINNER)
     private String instructional_school;
+
     @TableColumn(id = 6, name = "学分")
     private String credit;
+
     @TableColumn(id = 7, name = "总学时")
     private String total_hours;
+
     @TableColumn(id = 8, name = "周学时")
     private String week_hours;
+
     @TableColumn(id = 9, name = "实验项目数")
     private String number_of_experimental_items;
+
     @TableColumn(id = 10, name = "课程类别")
+    @QueryItem(id = 1, name = "课程类别", type = QueryItem.TYPE_SPINNER)
     private String course_category;
+
     @TableColumn(id = 11, name = "课程归属")
+    @QueryItem(id = 2, name = "课程归属", type = QueryItem.TYPE_SPINNER)
     private String course_assignment;
+
     @TableColumn(id = 12, name = "课程启用年级")
+    @QueryItem(id = 3, name = "启用年级", type = QueryItem.TYPE_SPINNER)
     private String course_enabling_grade;
 
     public String getCourse_code() {

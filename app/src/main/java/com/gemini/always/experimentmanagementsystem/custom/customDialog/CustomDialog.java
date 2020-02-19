@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.gemini.always.experimentmanagementsystem.R;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,10 @@ import java.util.List;
  * @date: 2020-02-07 21:40
  */
 public class CustomDialog extends Dialog {
+
+    public static final int TYPE_ADD = 1;
+    public static final int TYPE_QUERY = 2;
+
     public CustomDialog(Context context) {
         super(context);
     }
@@ -41,6 +47,8 @@ public class CustomDialog extends Dialog {
         private String title;
         private String positiveButtonText;
         private String negativeButtonText;
+        private int type;
+        private Class clazz;
         private List<String> editList = new ArrayList<>();
         private List<String> editTextDataList = new ArrayList<>();
         private List<String> spinnerTextList = new ArrayList<>();
@@ -152,6 +160,60 @@ public class CustomDialog extends Dialog {
             ((TextView) layout.findViewById(R.id.title)).setText(title);
             // set the confirm button
 
+
+            if (type == TYPE_ADD) {
+                Field[] fields = clazz.getDeclaredFields();
+                int addItemNum = 0;
+                for (int i = 0; i < fields.length; i++) {
+                    Field field = fields[i];
+                    field.setAccessible(true);
+                    Annotation fieldAnnotation = field.getAnnotation(AddItem.class);
+                    if (fieldAnnotation != null) {
+                        addItemNum++;
+                    }
+                }
+                DialogListItem[] listItems = new DialogListItem[addItemNum];
+                for (int i = 0; i < fields.length; i++) {
+                    Field field = fields[i];
+                    field.setAccessible(true);
+                    Annotation fieldAnnotation = field.getAnnotation(AddItem.class);
+                    if (fieldAnnotation != null) {
+                        AddItem addItem = (AddItem) fieldAnnotation;
+                        listItems[addItem.id()] = new DialogListItem(new DialogListEditTextItem(addItem.name(), ""));
+                    }
+                }
+                for (int i = 0; i < addItemNum; i++)
+                    dialogListItems.add(listItems[i]);
+            } else if (type == TYPE_QUERY) {
+                Field[] fields = clazz.getDeclaredFields();
+                int queryItemNum = 0;
+                for (int i = 0; i < fields.length; i++) {
+                    Field field = fields[i];
+                    field.setAccessible(true);
+                    Annotation fieldAnnotation = field.getAnnotation(QueryItem.class);
+                    if (fieldAnnotation != null) {
+                        queryItemNum++;
+                    }
+                }
+                DialogListItem[] listItems = new DialogListItem[queryItemNum];
+                int spinnerNum = 0;
+                for (int i = 0; i < fields.length; i++) {
+                    Field field = fields[i];
+                    field.setAccessible(true);
+                    Annotation fieldAnnotation = field.getAnnotation(QueryItem.class);
+                    if (fieldAnnotation != null) {
+                        QueryItem queryItem = (QueryItem) fieldAnnotation;
+                        if (queryItem.type() == QueryItem.TYPE_SPINNER) {
+                            listItems[queryItem.id()] = new DialogListItem(new DialogListSpinnerItem(queryItem.name(), spinnerDataList.get(spinnerNum++)));
+                        } else if (queryItem.type() == QueryItem.TYPE_EDITTEXT) {
+                            listItems[queryItem.id()] = new DialogListItem(new DialogListEditTextItem(queryItem.name(), queryItem.hint()));
+                        }
+                    }
+                }
+                for (int i = 0; i < queryItemNum; i++)
+                    dialogListItems.add(listItems[i]);
+            }
+
             if (dialogListItems.size() == 0) {
                 for (int i = 0; i < spinnerTextList.size(); i++) {
                     DialogListItem dialogListItem = new DialogListItem(new DialogListSpinnerItem(spinnerTextList.get(i), spinnerDataList.get(i)));
@@ -177,12 +239,12 @@ public class CustomDialog extends Dialog {
                         .setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 List<String> list = new ArrayList<>();
-                                for (int i = 0; i < spinnerTextList.size() + editList.size(); i++) {
-                                    if (i < spinnerTextList.size()) {
+                                for (int i = 0; i < dialogListItems.size(); i++) {
+                                    DialogListItem dialogListItem = dialogListItems.get(i);
+                                    if (dialogListItem.getType() == DialogListItem.TYPE_SPINNER)
                                         list.add(adapter.getSpinnerSelected(i));
-                                    } else {
+                                    else if (dialogListItem.getType() == DialogListItem.TYPE_EDITTEXT)
                                         list.add(adapter.getEditText(i));
-                                    }
                                 }
                                 dialogIF.onPositive(dialog, list);
                             }
@@ -242,6 +304,24 @@ public class CustomDialog extends Dialog {
 
         public Builder setEditTextDataList(List<String> editTextDataList) {
             this.editTextDataList = editTextDataList;
+            return this;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public Builder setType(int type) {
+            this.type = type;
+            return this;
+        }
+
+        public Class getClazz() {
+            return clazz;
+        }
+
+        public Builder setClazz(Class clazz) {
+            this.clazz = clazz;
             return this;
         }
     }

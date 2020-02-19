@@ -1,5 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
@@ -7,24 +9,47 @@ import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table
 public class ExperimentalProjectTable {
 
     @TableColumn(id = 1, name = "实验项目代码")
+    @AddItem(id = 0, name = "实验项目代码")
     private String experimental_project_code;
+
     @TableColumn(id = 2, name = "实验项目名称")
+    @QueryItem(id = 3, name = "实验项目名称", type = QueryItem.TYPE_EDITTEXT)
+    @AddItem(id = 1, name = "实验项目名称")
     private String experimental_project_name;
+
     @TableColumn(id = 3, name = "实验内容")
+    @AddItem(id = 2, name = "实验内容")
     private String experimental_content;
+
     @TableColumn(id = 4, name = "实验学时")
+    @AddItem(id = 3, name = "实验学时")
     private String experimental_hours;
+
     @TableColumn(id = 5, name = "实验学分")
+    @AddItem(id = 4, name = "实验学分")
     private String experimental_credits;
+
     @TableColumn(id = 6, name = "实验属性")
+    @QueryItem(id = 0, name = "实验属性", type = QueryItem.TYPE_SPINNER)
+    @AddItem(id = 5, name = "实验属性")
     private String experimental_properties;
+
     @TableColumn(id = 7, name = "实验类别")
+    @QueryItem(id = 1, name = "实验类别", type = QueryItem.TYPE_SPINNER)
+    @AddItem(id = 6, name = "实验类别")
     private String experimental_type;
+
     @TableColumn(id = 8, name = "实验类型")
+    @QueryItem(id = 2, name = "实验类型", type = QueryItem.TYPE_SPINNER)
+    @AddItem(id = 7, name = "实验类型")
     private String experimental_category;
+
     @TableColumn(id = 9, name = "所属单位")
+    @AddItem(id = 8, name = "所属单位")
     private String affiliation;
+
     @TableColumn(id = 10, name = "所属单位学科")
+    @AddItem(id = 9, name = "所属学科")
     private String subject;
 
     public String getExperimental_project_code() {

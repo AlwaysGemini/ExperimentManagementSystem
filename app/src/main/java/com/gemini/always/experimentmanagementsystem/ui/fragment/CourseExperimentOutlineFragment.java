@@ -34,7 +34,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,6 +72,7 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
+    private String title = "课程实验大纲";
     private Class tableClass = CourseExperimentOutlineTable.class;
     private List<CourseExperimentOutlineTable> list = new ArrayList<>();
 
@@ -97,7 +97,7 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
 
     private void initView() {
         fabDelete.setVisibility(View.GONE);
-        titlebar.setTitle("课程实验大纲");
+        titlebar.setTitle(title);
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -209,7 +209,8 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
             case R.id.fab_query:
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
-                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentOutlineTextListForQuery)))
+                        .setType(CustomDialog.TYPE_QUERY)
+                        .setClazz(tableClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
@@ -245,7 +246,7 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "课程实验大纲表格", list, tableClass);
+                        ExcelUtils.createExcel(getContext(), title + "表格", list, tableClass);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -253,7 +254,8 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
             case R.id.fab_add:
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
-                        .setEditList(Arrays.asList(getResources().getStringArray(R.array.courseExperimentOutlineTextListForInsert)))
+                        .setType(CustomDialog.TYPE_ADD)
+                        .setClazz(tableClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

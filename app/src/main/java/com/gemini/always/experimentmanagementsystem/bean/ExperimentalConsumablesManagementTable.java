@@ -1,5 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
@@ -7,28 +9,54 @@ import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table
 public class ExperimentalConsumablesManagementTable {
 
     @TableColumn(id = 1, name = "实验耗材代码")
+    @AddItem(id = 0, name = "实验耗材代码")
     private String id;
+
     @TableColumn(id = 2, name = "实验耗材名称")
+    @QueryItem(id = 5, name = "实验耗材", type = QueryItem.TYPE_EDITTEXT, hint = "按实验耗材代码、名称模糊查询")
+    @AddItem(id = 1, name = "实验耗材名称")
     private String experimental_consumables_name;
+
     @TableColumn(id = 3, name = "当前库存量")
+    @AddItem(id = 2, name = "当前库存量")
     private String current_inventory;
+
     @TableColumn(id = 4, name = "最大库存量")
+    @AddItem(id = 3, name = "最大库存量")
     private String maximum_inventory;
+
     @TableColumn(id = 5, name = "最小库存量")
+    @AddItem(id = 4, name = "最小库存量")
     private String minimum_inventory;
+
     @TableColumn(id = 6, name = "型号规格")
+    @QueryItem(id = 4, name = "型号规格", type = QueryItem.TYPE_EDITTEXT, hint = "按型号规格模糊查询")
+    @AddItem(id = 5, name = "型号规格")
     private String model_specification;
+
     @TableColumn(id = 7, name = "单位")
+    @AddItem(id = 6, name = "单位")
     private String unit;
+
     @TableColumn(id = 8, name = "单价")
+    @AddItem(id = 7, name = "单价")
     private String unit_price;
+
     @TableColumn(id = 9, name = "教学实验中心")
+    @QueryItem(id = 0, name = "教学实验中心", type = QueryItem.TYPE_SPINNER)
     private String teaching_experiment_center_name;
+
     @TableColumn(id = 10, name = "实验室")
+    @QueryItem(id = 1, name = "实验室", type = QueryItem.TYPE_SPINNER)
+    @AddItem(id = 8, name = "实验室名称")
     private String laboratory_name;
+
     @TableColumn(id = 11, name = "实验分室")
+    @QueryItem(id = 2, name = "实验分室", type = QueryItem.TYPE_SPINNER)
     private String experimental_compartment_name;
+
     @TableColumn(id = 12, name = "实验房间")
+    @QueryItem(id = 3, name = "实验房间", type = QueryItem.TYPE_SPINNER)
     private String laboratory_room_name;
 
     public String getId() {

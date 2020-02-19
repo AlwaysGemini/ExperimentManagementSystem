@@ -1,5 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.bean;
 
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
@@ -7,12 +9,20 @@ import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table
 public class CourseExperimentOutlineTable {
 
     @TableColumn(id = 1, name = "课程代码")
+    @AddItem(id = 0, name = "课程代码")
     private String course_code;
+
     @TableColumn(id = 2, name = "课程名称")
+    @QueryItem(id = 0, name = "课程", type = QueryItem.TYPE_EDITTEXT, hint = "按课程代码或名称模糊查询")
+    @AddItem(id = 1, name = "课程名称")
     private String course_name;
+
     @TableColumn(id = 3, name = "实验成绩占比(%)")
+    @AddItem(id = 2, name = "实验成绩占比(%)")
     private String proportion_of_experimental_results;
+
     @TableColumn(id = 4, name = "实验项目")
+    @AddItem(id = 3, name = "实验项目")
     private String experimental_project_name;
 
     public String getCourse_code() {
