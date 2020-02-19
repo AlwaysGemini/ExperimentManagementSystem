@@ -1,15 +1,15 @@
 package com.gemini.always.experimentmanagementsystem.custom.customTableView;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -39,6 +39,7 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
     private int HEAD_CHECKBOX = 1;
     private int HEAD_CHECKBOX_CONTAINER = 0;
     private int width = 150;
+    private int height = 25;
     /**
      * 防止Checkbox错乱 做setTag  getTag操作
      */
@@ -57,6 +58,8 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
         Field[] fields = clazz.getDeclaredFields();
         LinearLayout[] cell = new LinearLayout[fields.length];
         LinearLayout mContainer = helper.getView(R.id.item);
+        //LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, DensityUtils.dip2px(height));
+        //mContainer.setLayoutParams(LP_MM);
         mContainer.setTag(position);
         mContainer.removeAllViews();
         LinearLayout checkBoxContainer = new LinearLayout(context);
@@ -71,8 +74,8 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
         checkBoxContainer.addView(checkBox);
         mContainer.addView(checkBoxContainer);
         if (isDisplayCheckBox) {
-            this.getHeaderLayout().getRootView().findViewById(HEAD_CHECKBOX_CONTAINER).setVisibility(View.VISIBLE);
-            CheckBox headerCheckBox = getHeaderLayout().getRootView().findViewById(HEAD_CHECKBOX);
+            this.getHeaderLayout().findViewById(HEAD_CHECKBOX_CONTAINER).setVisibility(View.VISIBLE);
+            CheckBox headerCheckBox = getHeaderLayout().findViewById(HEAD_CHECKBOX);
             headerCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -102,7 +105,7 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
                 }
             });
         } else {
-            this.getHeaderLayout().getRootView().findViewById(HEAD_CHECKBOX_CONTAINER).setVisibility(View.GONE);
+            this.getHeaderLayout().findViewById(HEAD_CHECKBOX_CONTAINER).setVisibility(View.GONE);
             checkBox.setVisibility(View.GONE);
             //取消掉Checkbox后不再保存当前选择的状态
             checkBox.setChecked(false);
@@ -137,24 +140,19 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
     }
 
     public void addHeaderView() {
-        LinearLayout mContainer = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.item_table, this.getFooterLayout(), true);
+        LinearLayout mContainer = new LinearLayout(context);
+        LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, DensityUtils.dip2px(height));
+        mContainer.setLayoutParams(LP_MM);
         LinearLayout checkBoxContainer = new LinearLayout(context);
         checkBoxContainer.setId(HEAD_CHECKBOX_CONTAINER);
         checkBoxContainer.setBackground(context.getDrawable(R.drawable.linearlayout_border));
-        LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
         checkBoxContainer.setLayoutParams(LP_MM);
         headCheckBox = new CheckBox(context);
         headCheckBox.setId(HEAD_CHECKBOX);
         headCheckBox.setGravity(Gravity.CENTER);
         checkBoxContainer.addView(headCheckBox);
         mContainer.addView(checkBoxContainer);
-        /*LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        checkBoxContainer.setLayoutParams(LP_MM);
-        CheckBox checkBox = new CheckBox(context);
-        checkBox.setId(HEAD_CHECKBOX);
-        checkBox.setGravity(Gravity.CENTER);
-        checkBoxContainer.addView(checkBox);
-        mContainer.addView(checkBoxContainer);*/
         checkBoxContainer.setVisibility(View.GONE);
         Field[] fields = clazz.getDeclaredFields();
         LinearLayout[] cell = new LinearLayout[fields.length];

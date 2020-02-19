@@ -16,10 +16,11 @@
 
 package com.gemini.always.experimentmanagementsystem.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gemini.always.experimentmanagementsystem.bean.DrawerItem;
 

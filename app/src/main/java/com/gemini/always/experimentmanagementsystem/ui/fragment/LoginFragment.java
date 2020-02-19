@@ -1,15 +1,15 @@
 package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
@@ -18,6 +18,7 @@ import com.gemini.always.experimentmanagementsystem.presenter.LoginPresenter;
 import com.gemini.always.experimentmanagementsystem.ui.activity.MainActivity;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.LoginView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.orhanobut.logger.Logger;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 

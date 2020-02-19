@@ -3,9 +3,9 @@ package com.gemini.always.experimentmanagementsystem.util;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 
 import androidx.annotation.ArrayRes;
+import androidx.core.content.ContextCompat;
 
 import static com.xuexiang.xui.utils.ResUtils.getResources;
 

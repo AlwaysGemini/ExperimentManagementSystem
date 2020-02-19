@@ -1,19 +1,20 @@
 package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.ExperimentalEquipmentTable;
-import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalEquipmentPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -74,6 +75,7 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
+    private Class tableClass = ExperimentalEquipmentTable.class;
     private List<ExperimentalEquipmentTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -204,7 +206,7 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
                 try {
                     llStateful.showContent();
                     list.clear();
-                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), ExperimentalEquipmentTable.class));
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), tableClass));
                     table.setData(list, ExperimentalEquipmentTable.class);
                     table.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
@@ -271,7 +273,7 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<ExperimentalEquipmentTable> list = ExcelUtils.readExcelContent(filePath, ExperimentalEquipmentTable.class);
+                                    List<ExperimentalEquipmentTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
                                     for (ExperimentalEquipmentTable experimentalEquipmentTable : list) {
                                         getPresenter().insertData(experimentalEquipmentTable);
                                     }
@@ -288,7 +290,7 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "实验仪器设备管理表格", list, ExperimentalEquipmentTable.class);
+                        ExcelUtils.createExcel(getContext(), "实验仪器设备管理表格", list, tableClass);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();

@@ -1,17 +1,18 @@
 package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
-import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
@@ -67,6 +68,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
+    private Class tableClass = CourseExperimentProjectTable.class;
     private List<CourseExperimentProjectTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_query = new ArrayList<>();
@@ -137,7 +139,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                 try {
                     llStateful.showContent();
                     list.clear();
-                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), CourseExperimentProjectTable.class));
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), tableClass));
                     table.setData(list, CourseExperimentProjectTable.class);
                 } catch (JSONException e) {
                     Logger.e(e, "JSONException");

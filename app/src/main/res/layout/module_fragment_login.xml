@@ -17,7 +17,7 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/ahjzu_badge" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tl_account"
             android:layout_width="@dimen/module_fragment_login_edittext_width"
             android:layout_height="@dimen/module_fragment_login_edittext_height"
@@ -38,9 +38,9 @@
                 android:textColor="@color/module_fragment_login_edittext_color"
                 android:textSize="@dimen/module_fragment_login_edittext_textsize" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tl_password"
             android:layout_width="@dimen/module_fragment_login_edittext_width"
             android:layout_height="@dimen/module_fragment_login_edittext_height"
@@ -61,7 +61,7 @@
                 android:textColor="@color/module_fragment_login_edittext_color"
                 android:textSize="@dimen/module_fragment_login_edittext_textsize" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/edit_forget_password"

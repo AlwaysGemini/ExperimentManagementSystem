@@ -2,19 +2,20 @@ package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
-import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -78,6 +79,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
+    private Class tableClass = LaboratoryTable.class;
     private List<LaboratoryTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -112,7 +114,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
     }
 
     private void initTable() {
-        table.setData(list, LaboratoryTable.class);
+        table.setData(list, tableClass);
         table.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -184,7 +186,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<LaboratoryTable> list = ExcelUtils.readExcelContent(filePath, LaboratoryTable.class);
+                                    List<LaboratoryTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
                                     for (LaboratoryTable laboratoryTable : list) {
                                         getPresenter().insertData(laboratoryTable);
                                     }
@@ -201,7 +203,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "实验室表格", list, LaboratoryTable.class);
+                        ExcelUtils.createExcel(getContext(), "实验室表格", list, tableClass);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -314,7 +316,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 try {
                     llStateful.showContent();
                     list.clear();
-                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryTable.class));
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), tableClass));
                     initTable();
                 } catch (JSONException e) {
                     Logger.e(e, "JSONException");

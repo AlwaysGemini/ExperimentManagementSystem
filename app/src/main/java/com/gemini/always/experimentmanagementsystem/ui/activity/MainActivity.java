@@ -1,22 +1,20 @@
 package com.gemini.always.experimentmanagementsystem.ui.activity;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -36,6 +34,8 @@ import com.githang.statusbar.StatusBarCompat;
 import com.xuexiang.xui.utils.ResUtils;
 import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 import com.yarolegovich.slidingrootnav.callback.DragStateListener;
@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     Level0Item[] level0Item = new Level0Item[8];
     private TitleBar titleBar;
     private RelativeLayout container;
-    private LinearLayout mLLMenu;
     private String[] mMenuTitles;
     private Drawable[] mMenuIcons;
     private DrawerAdapter mAdapter;
@@ -113,23 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .inject();
 
-        mLLMenu = mSlidingRootNav.getLayout().findViewById(R.id.ll_menu);
-        final AppCompatImageView ivQrcode = mSlidingRootNav.getLayout().findViewById(R.id.iv_qrcode);
-        ivQrcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        final AppCompatImageView ivSetting = mSlidingRootNav.getLayout().findViewById(R.id.iv_setting);
-        ivSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         mAdapter = new DrawerAdapter(Arrays.asList(
                 createItemFor(POS_CHANGE_ROLE).setChecked(true),
                 createItemFor(POS_SETTING),
@@ -146,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case POS_LOGOUT:
-                        new AlertDialog.Builder(MainActivity.this)
+                        /*new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("确定退出登录吗？")
                                 .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
                                     @Override
@@ -165,20 +147,25 @@ public class MainActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dialogInterface.dismiss();
                                     }
-                                }).show();
-                        /*new MaterialDialog.Builder(getBaseContext())
+                                }).show();*/
+                        new MaterialDialog.Builder(MainActivity.this)
                                 .content("确定退出登录吗？")
                                 .positiveText("确定")
                                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        mSlidingRootNav.closeMenu();
                                         User.logout();
+                                        XToastUtils.toast("成功退出登录");
+                                        if (!User.isLogin()) {
+                                            FragmentSelectActivity.startFragmentSelecter(MyApplication.getContext(), "LoginFragment");
+                                            finish();
+                                            return;
+                                        }
                                     }
                                 })
                                 .negativeText("取消")
                                 .show();
-                        break;*/
+                        break;
                 }
             }
         });

@@ -1,19 +1,20 @@
 package com.gemini.always.experimentmanagementsystem.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
-import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
+import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryRoomPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
@@ -74,6 +75,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
+    private Class tableClass = LaboratoryRoomTable.class;
     private List<LaboratoryRoomTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -99,7 +101,33 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
     @Override
     public void onResume() {
         super.onResume();
-        table.setData(list, LaboratoryRoomTable.class);
+        initTable();
+    }
+
+    private void initTable() {
+        table.setData(list, tableClass);
+        table.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (table.getIsShowCheckBox()) {
+                    table.setCheckedPosition(position, !table.getIsCheckPosition(position));
+                }
+            }
+        });
+        table.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!table.getIsShowCheckBox()) {
+                    table.setIsShowCheckBox(true);
+                    table.setCheckedPosition(position, true);
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0, 1.0f, 100, 100);
+                    scaleAnimation.setDuration(500);
+                    fabDelete.setVisibility(View.VISIBLE);
+                    fabDelete.startAnimation(scaleAnimation);
+                }
+                return false;
+            }
+        });
     }
 
     private void initView() {
@@ -153,7 +181,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("文件保存在:" + filePath));
-                                    List<LaboratoryRoomTable> list = ExcelUtils.readExcelContent(filePath, LaboratoryRoomTable.class);
+                                    List<LaboratoryRoomTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
                                     for (LaboratoryRoomTable laboratoryRoomTable : list) {
                                         getPresenter().insertData(laboratoryRoomTable);
                                     }
@@ -170,7 +198,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 new Thread() {
                     @Override
                     public void run() {
-                        ExcelUtils.createExcel(getContext(), "实验房间表格", list, LaboratoryRoomTable.class);
+                        ExcelUtils.createExcel(getContext(), "实验房间表格", list, tableClass);
                         Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                     }
                 }.start();
@@ -286,7 +314,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "campus", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "enable_flag", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
-                XToastUtils.toast(e.getMessage());
+                Logger.e(e, "JSONException:");
             }
         }
     }
@@ -298,30 +326,8 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 try {
                     llStateful.showContent();
                     list.clear();
-                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), LaboratoryRoomTable.class));
-                    table.setData(list, LaboratoryRoomTable.class);
-                    table.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            if (table.getIsShowCheckBox()) {
-                                table.setCheckedPosition(position, !table.getIsCheckPosition(position));
-                            }
-                        }
-                    });
-                    table.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-                        @Override
-                        public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                            if (!table.getIsShowCheckBox()) {
-                                table.setIsShowCheckBox(true);
-                                table.setCheckedPosition(position, true);
-                                ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0, 1.0f, 100, 100);
-                                scaleAnimation.setDuration(500);
-                                fabDelete.setVisibility(View.VISIBLE);
-                                fabDelete.startAnimation(scaleAnimation);
-                            }
-                            return false;
-                        }
-                    });
+                    list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), tableClass));
+                    initTable();
                 } catch (JSONException e) {
                     Logger.e(e, "JSONException");
                 }

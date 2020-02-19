@@ -1,12 +1,13 @@
 package com.gemini.always.experimentmanagementsystem.custom.customTableView;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
@@ -51,7 +52,10 @@ public class MyTableView extends RelativeLayout {
         //创建适配器
         adapter = new TableAdapter(context, R.layout.item_table, list, clazz);
         adapter.setUpFetchEnable(true);
-        adapter.addHeaderView();
+        if (list.size() != 0) {
+            adapter.removeAllHeaderView();
+            adapter.addHeaderView();
+        }
         recyclerView.setAdapter(adapter);
     }
 
@@ -69,6 +73,7 @@ public class MyTableView extends RelativeLayout {
 
     public void setIsShowCheckBox(boolean isShowCheckBox) {
         adapter.showCheckBox(isShowCheckBox);
+        adapter.setHeadIsChecked(false);
     }
 
     public void setCheckedPosition(int position, boolean isChecked) {
