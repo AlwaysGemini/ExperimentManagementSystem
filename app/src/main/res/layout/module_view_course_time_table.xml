@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/module_view_course_time_table_course_time_width"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/module_view_course_time_table_course_time_width"
+            android:layout_height="@dimen/module_view_course_time_table_course_time_width">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/linearlayout_border"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="一">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="二">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="三">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="四">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="五">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="六">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="七">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/module_view_course_time_table_course_time_width"
+            android:layout_height="match_parent"
+            android:background="@drawable/linearlayout_border"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="一">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="二">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="三">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="四">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="五">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="六">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:gravity="center"
+                android:text="七">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="八">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="九">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="十">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="十一">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/module_view_course_time_table_course_time_height"
+                android:background="@drawable/linearlayout_border"
+                android:gravity="center"
+                android:text="十二">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/line_Monday"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/line_Tuesday"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/line_Wednesday"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/line_Thursday"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/line_Friday"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/line_Saturday"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/line_Sunday"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/linearlayout_border">
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

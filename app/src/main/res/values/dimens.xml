@@ -16,4 +16,9 @@
 
     <dimen name="dialog_custom_add_edit_text_height">25dp</dimen>
     <dimen name="dialog_item_text_width">70dp</dimen>
+    <dimen name="module_view_course_time_table_course_time_width">25dp</dimen>
+    <dimen name="module_view_course_time_table_course_time_height">75dp</dimen>
+    <dimen name="module_item_allocation_experiment_height">40dp</dimen>
+    <dimen name="module_item_allocation_experiment_cell_width">100dp</dimen>
+    <dimen name="module_item_allocation_experiment_experiment_name_width">150dp</dimen>
 </resources>
