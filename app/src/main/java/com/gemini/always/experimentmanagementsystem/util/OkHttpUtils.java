@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -182,37 +184,40 @@ public class OkHttpUtils {
      * @param onOkHttpUtilsListener
      */
     public static void postByFormBody(FormBody formBody, String url, OnOkHttpUtilsListener onOkHttpUtilsListener) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < formBody.size(); i++) {
+            sb.append(formBody.name(i) + "=" + formBody.value(i) + "\n");
+        }
+        Logger.d(sb.toString());
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(Constants.URL + url)
                 .post(formBody)
                 .build();
 
-        Response response;
-        JSONObject responseJson = null;
-        try {
-            response = client.newCall(request).execute();
-            responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
-        } catch (IOException e) {
-            try {
-                onOkHttpUtilsListener.onResult(false, new JSONObject("{msg:获取数据失败}"));
-            } catch (JSONException e1) {
-                Logger.e(e1, "JSONException:");
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                Logger.e(e, "IOException:");
             }
-            Logger.e(e, "IOException:");
-        } catch (JSONException e) {
-            Logger.e(e, "JSONException:");
-        }
 
-        if (responseJson == null) responseJson = new JSONObject();
-        else {
-            try {
-                onOkHttpUtilsListener.onResult(responseJson.getString("code").equals("200"), responseJson);
-            } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+            @Override
+            public void onResponse(Call call, Response response) {
+                try {
+                    JSONObject responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
+                    Logger.json(responseJson.toString());
+                    onOkHttpUtilsListener.onResult(true, responseJson);
+                } catch (JSONException e) {
+                    call.cancel();
+                    Logger.e(e, "JSONException:");
+                } catch (IOException e) {
+                    call.cancel();
+                    Logger.e(e, "IOException:");
+                }
             }
-        }
-        Logger.json(responseJson.toString());
+        });
     }
 
     public interface OnOkHttpUtilsListener {
