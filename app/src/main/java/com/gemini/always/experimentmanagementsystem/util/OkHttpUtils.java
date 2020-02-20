@@ -154,26 +154,28 @@ public class OkHttpUtils {
                 .post(requestBody)
                 .build();
 
-        Response response;
-        JSONObject responseJson = null;
-        try {
-            response = client.newCall(request).execute();
-            responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
-        } catch (IOException e) {
-            Logger.e(e, "IOException:");
-        } catch (JSONException e) {
-            Logger.e(e, "JSONException:");
-        }
-
-        if (responseJson == null) responseJson = new JSONObject();
-        else {
-            try {
-                onOkHttpUtilsListener.onResult(responseJson.getString("code").equals("200"), responseJson);
-            } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                Logger.e(e, "IOException:");
             }
-        }
-        Logger.json(responseJson.toString());
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                try {
+                    JSONObject responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
+                    Logger.json(responseJson.toString());
+                    onOkHttpUtilsListener.onResult(true, responseJson);
+                } catch (JSONException e) {
+                    call.cancel();
+                    Logger.e(e, "JSONException:");
+                } catch (IOException e) {
+                    call.cancel();
+                    Logger.e(e, "IOException:");
+                }
+            }
+        });
     }
 
     /**
