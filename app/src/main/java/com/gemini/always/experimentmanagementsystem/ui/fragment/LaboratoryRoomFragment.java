@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertLaboratoryRoom;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryLaboratoryRoom;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.LaboratoryRoomTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryRoomPresenter;
@@ -75,6 +77,8 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
     FloatingActionButton fabDelete;
 
     private Class tableClass = LaboratoryRoomTable.class;
+    private Class queryClass = QueryLaboratoryRoom.class;
+    private Class insertClass = InsertLaboratoryRoom.class;
     private List<LaboratoryRoomTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -158,7 +162,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -207,7 +211,7 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
@@ -306,9 +310,9 @@ public class LaboratoryRoomFragment extends BaseFragment<LaboratoryRoomView, Lab
                 for (int i = 0; i < jsonArray.length(); i++) {
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "affiliated_teaching_experiment_center", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "affiliated_laboratory", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "affiliated_experimental_compartment", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "teaching_experiment_center_name", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "laboratory_name", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "laboratory_compartment_name", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "nature_of_experimental_site", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "category_of_scientific_research_base", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "status_of_joint_construction", spinnerDataListForQuery.get(count++));

@@ -71,7 +71,7 @@ public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalO
         }
         adapter.addFragment(new TeachingExperimentCenterFragment(), "实验教学中心");
         adapter.addFragment(new LaboratoryFragment(), "实验室");
-        adapter.addFragment(new ExperimentalCompartmentFragment(), "实验分室");
+        adapter.addFragment(new LaboratoryCompartmentFragment(), "实验分室");
         adapter.addFragment(new LaboratoryRoomFragment(), "实验房间");
 
 

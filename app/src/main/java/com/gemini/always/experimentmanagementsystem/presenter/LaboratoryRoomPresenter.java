@@ -1,7 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryRoomTable;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.LaboratoryRoomTable;
 import com.gemini.always.experimentmanagementsystem.model.LaboratoryRoomModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.LaboratoryRoomView;
@@ -47,9 +47,9 @@ public class LaboratoryRoomPresenter extends BasePresenter<LaboratoryRoomView> {
     }
 
     public void insertData(LaboratoryRoomTable laboratoryRoomTable) {
-        this.laboratoryRoomModel.insertData(laboratoryRoomTable.getLaboratory_room_code(),
+        this.laboratoryRoomModel.insertData(laboratoryRoomTable.getLaboratory_room_id(),
                 laboratoryRoomTable.getLaboratory_room_name(),
-                laboratoryRoomTable.getAffiliated_experimental_compartment(),
+                laboratoryRoomTable.getLaboratory_compartment_name(),
                 laboratoryRoomTable.getNature_of_experimental_site(),
                 laboratoryRoomTable.getCategory_of_scientific_research_base(),
                 laboratoryRoomTable.getPerson_in_charge_of_the_experimental_room(),

@@ -1,8 +1,8 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
-import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
-import com.gemini.always.experimentmanagementsystem.model.ExperimentalCompartmentModel;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.LaboratoryCompartmentTable;
+import com.gemini.always.experimentmanagementsystem.model.LaboratoryCompartmentModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentalCompartmentView;
 
@@ -10,10 +10,10 @@ import org.json.JSONObject;
 
 public class ExperimentalCompartmentPresenter extends BasePresenter<ExperimentalCompartmentView> {
 
-    private ExperimentalCompartmentModel experimentalCompartmentModel;
+    private LaboratoryCompartmentModel laboratoryCompartmentModel;
 
     public ExperimentalCompartmentPresenter() {
-        this.experimentalCompartmentModel = new ExperimentalCompartmentModel();
+        this.laboratoryCompartmentModel = new LaboratoryCompartmentModel();
     }
 
     public void insertData(String experimental_compartment_code,
@@ -21,7 +21,7 @@ public class ExperimentalCompartmentPresenter extends BasePresenter<Experimental
                            String affiliated_laboratory,
                            String remarks,
                            String enable_flag) {
-        this.experimentalCompartmentModel.insertData(experimental_compartment_code,
+        this.laboratoryCompartmentModel.insertData(experimental_compartment_code,
                 experimental_compartment_name,
                 affiliated_laboratory,
                 remarks,
@@ -33,12 +33,12 @@ public class ExperimentalCompartmentPresenter extends BasePresenter<Experimental
                 });
     }
 
-    public void insertData(ExperimentalCompartmentTable experimentalCompartmentTable) {
-        this.experimentalCompartmentModel.insertData(experimentalCompartmentTable.getExperimental_compartment_code(),
-                experimentalCompartmentTable.getExperimental_compartment_name(),
-                experimentalCompartmentTable.getAffiliated_laboratory(),
-                experimentalCompartmentTable.getRemarks(),
-                experimentalCompartmentTable.getEnable_flag(), new OkHttpUtils.OnOkHttpUtilsListener() {
+    public void insertData(LaboratoryCompartmentTable laboratoryCompartmentTable) {
+        this.laboratoryCompartmentModel.insertData(laboratoryCompartmentTable.getLaboratory_compartment_id(),
+                laboratoryCompartmentTable.getLaboratory_compartment_name(),
+                laboratoryCompartmentTable.getLaboratory_name(),
+                laboratoryCompartmentTable.getRemarks(),
+                laboratoryCompartmentTable.getEnable_flag(), new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
                         getView().onInsertDataResult(isSuccess, responseJson);
@@ -47,7 +47,7 @@ public class ExperimentalCompartmentPresenter extends BasePresenter<Experimental
     }
 
     public void getQueryConditionList() {
-        this.experimentalCompartmentModel.getQueryConditionList(new OkHttpUtils.OnOkHttpUtilsListener() {
+        this.laboratoryCompartmentModel.getQueryConditionList(new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
                 getView().onGetQueryConditionListResult(isSuccess, responseJson);
@@ -56,7 +56,7 @@ public class ExperimentalCompartmentPresenter extends BasePresenter<Experimental
     }
 
     public void getData(String affiliated_teaching_experiment_center, String affiliated_laboratory, String enable_flag) {
-        this.experimentalCompartmentModel.getData(affiliated_teaching_experiment_center, affiliated_laboratory, enable_flag, new OkHttpUtils.OnOkHttpUtilsListener() {
+        this.laboratoryCompartmentModel.getData(affiliated_teaching_experiment_center, affiliated_laboratory, enable_flag, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
                 getView().onGetDataResult(isSuccess, responseJson);

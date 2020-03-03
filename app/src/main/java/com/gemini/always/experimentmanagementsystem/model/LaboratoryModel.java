@@ -12,9 +12,9 @@ public class LaboratoryModel {
     private static final String URL_getQueryConditionList = "/experimentalOrganization/laboratory/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = "/experimentalOrganization/laboratory/getData";
 
-    public void insertData(String laboratory_code,
+    public void insertData(String laboratory_id,
                            String laboratory_name,
-                           String affiliated_teaching_experiment_center,
+                           String teaching_experiment_center,
                            String laboratory_director,
                            String rules_and_regulations,
                            String remarks,
@@ -22,9 +22,9 @@ public class LaboratoryModel {
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("laboratory_code", laboratory_code)
+                .add("laboratory_id", laboratory_id)
                 .add("laboratory_name", laboratory_name)
-                .add("affiliated_teaching_experiment_center", affiliated_teaching_experiment_center)
+                .add("teaching_experiment_center", teaching_experiment_center)
                 .add("laboratory_director", laboratory_director)
                 .add("rules_and_regulations", rules_and_regulations)
                 .add("remarks", remarks)
@@ -51,10 +51,10 @@ public class LaboratoryModel {
         });
     }
 
-    public void getData(String affiliated_teaching_experiment_center, String laboratory_name, String enable_flag, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+    public void getData(String teaching_experiment_center, String laboratory_name, String enable_flag, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("affiliated_teaching_experiment_center", affiliated_teaching_experiment_center)
+                .add("teaching_experiment_center_name", teaching_experiment_center)
                 .add("laboratory_name", laboratory_name)
                 .add("enable_flag", enable_flag)
                 .build();

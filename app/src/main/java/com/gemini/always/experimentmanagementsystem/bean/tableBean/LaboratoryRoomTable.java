@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.bean;
+package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
@@ -10,7 +10,7 @@ public class LaboratoryRoomTable {
 
     @TableColumn(id = 1, name = "实验分室代码")
     @AddItem(id = 0, name = "实验分室代码")
-    private String laboratory_room_code;
+    private String laboratory_room_id;
 
     @TableColumn(id = 2, name = "实验分室名称")
     @AddItem(id = 1, name = "实验分室名称")
@@ -18,16 +18,16 @@ public class LaboratoryRoomTable {
 
     @TableColumn(id = 3, name = "隶属教学实验中心")
     @QueryItem(id = 0, name = "隶属教学实验中心", type = QueryItem.TYPE_SPINNER)
-    private String affiliated_teaching_experiment_center;
+    private String teaching_experiment_center_name;
 
     @TableColumn(id = 4, name = "隶属实验室")
     @QueryItem(id = 1, name = "隶属实验室", type = QueryItem.TYPE_SPINNER)
-    private String affiliated_laboratory;
+    private String laboratory_name;
 
     @TableColumn(id = 5, name = "隶属实验分室")
     @QueryItem(id = 2, name = "隶属实验分室", type = QueryItem.TYPE_SPINNER)
     @AddItem(id = 2, name = "隶属实验分室")
-    private String affiliated_experimental_compartment;
+    private String laboratory_compartment_name;
 
     @TableColumn(id = 6, name = "实验场地性质")
     @QueryItem(id = 3, name = "实验场地性质", type = QueryItem.TYPE_SPINNER)
@@ -66,12 +66,12 @@ public class LaboratoryRoomTable {
     @AddItem(id = 10, name = "启用标志")
     private String enable_flag;
 
-    public String getLaboratory_room_code() {
-        return laboratory_room_code;
+    public String getLaboratory_room_id() {
+        return laboratory_room_id;
     }
 
-    public void setLaboratory_room_code(String laboratory_room_code) {
-        this.laboratory_room_code = laboratory_room_code;
+    public void setLaboratory_room_id(String laboratory_room_id) {
+        this.laboratory_room_id = laboratory_room_id;
     }
 
     public String getLaboratory_room_name() {
@@ -82,28 +82,28 @@ public class LaboratoryRoomTable {
         this.laboratory_room_name = laboratory_room_name;
     }
 
-    public String getAffiliated_teaching_experiment_center() {
-        return affiliated_teaching_experiment_center;
+    public String getTeaching_experiment_center_name() {
+        return teaching_experiment_center_name;
     }
 
-    public void setAffiliated_teaching_experiment_center(String affiliated_teaching_experiment_center) {
-        this.affiliated_teaching_experiment_center = affiliated_teaching_experiment_center;
+    public void setTeaching_experiment_center_name(String teaching_experiment_center_name) {
+        this.teaching_experiment_center_name = teaching_experiment_center_name;
     }
 
-    public String getAffiliated_laboratory() {
-        return affiliated_laboratory;
+    public String getLaboratory_name() {
+        return laboratory_name;
     }
 
-    public void setAffiliated_laboratory(String affiliated_laboratory) {
-        this.affiliated_laboratory = affiliated_laboratory;
+    public void setLaboratory_name(String laboratory_name) {
+        this.laboratory_name = laboratory_name;
     }
 
-    public String getAffiliated_experimental_compartment() {
-        return affiliated_experimental_compartment;
+    public String getLaboratory_compartment_name() {
+        return laboratory_compartment_name;
     }
 
-    public void setAffiliated_experimental_compartment(String affiliated_experimental_compartment) {
-        this.affiliated_experimental_compartment = affiliated_experimental_compartment;
+    public void setLaboratory_compartment_name(String laboratory_compartment_name) {
+        this.laboratory_compartment_name = laboratory_compartment_name;
     }
 
     public String getNature_of_experimental_site() {

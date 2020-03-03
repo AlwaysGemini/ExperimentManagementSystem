@@ -10,17 +10,15 @@ public class CourseExperimentOutlineModel {
     private static final String URL_INSERT_DATA = "/courseExperimentOutline/insertData";
     private static final String URL_getTeachingExperimentCenterList = "/courseExperimentOutline/getData";
 
-    public void insertData(String course_code,
-                           String course_name,
+    public void insertData(String allocation_of_courses_id,
                            String proportion_of_experimental_results,
-                           String experimental_project_name,
+                           String experimental_item_id,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("course_code", course_code)
-                .add("course_name", course_name)
+                .add("allocation_of_courses_id", allocation_of_courses_id)
                 .add("proportion_of_experimental_results", proportion_of_experimental_results)
-                .add("experimental_project_name", experimental_project_name)
+                .add("experimental_item_id", experimental_item_id)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override

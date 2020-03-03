@@ -1,6 +1,5 @@
-package com.gemini.always.experimentmanagementsystem.bean;
+package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
@@ -8,8 +7,7 @@ import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table
 public class CourseExperimentProjectTable {
 
     @TableColumn(id = 1, name = "课程代码")
-    @QueryItem(id = 4, name = "课程", type = QueryItem.TYPE_EDITTEXT, hint = "按课程代码、名称模糊查询")
-    private String course_code;
+    private String course_id;
 
     @TableColumn(id = 2, name = "课程中文名称")
     private String course_chinese_name;
@@ -21,39 +19,35 @@ public class CourseExperimentProjectTable {
     private String course_video;
 
     @TableColumn(id = 5, name = "开课学院")
-    @QueryItem(id = 0, name = "开课学院", type = QueryItem.TYPE_SPINNER)
-    private String instructional_school;
+    private String college;
 
     @TableColumn(id = 6, name = "学分")
     private String credit;
 
     @TableColumn(id = 7, name = "总学时")
-    private String total_hours;
+    private String class_hour;
 
     @TableColumn(id = 8, name = "周学时")
-    private String week_hours;
+    private String week_class_hour;
 
     @TableColumn(id = 9, name = "实验项目数")
     private String number_of_experimental_items;
 
     @TableColumn(id = 10, name = "课程类别")
-    @QueryItem(id = 1, name = "课程类别", type = QueryItem.TYPE_SPINNER)
     private String course_category;
 
     @TableColumn(id = 11, name = "课程归属")
-    @QueryItem(id = 2, name = "课程归属", type = QueryItem.TYPE_SPINNER)
     private String course_assignment;
 
     @TableColumn(id = 12, name = "课程启用年级")
-    @QueryItem(id = 3, name = "启用年级", type = QueryItem.TYPE_SPINNER)
-    private String course_enabling_grade;
+    private String enabling_grade;
 
-    public String getCourse_code() {
-        return course_code;
+    public String getCourse_id() {
+        return course_id;
     }
 
-    public void setCourse_code(String course_code) {
-        this.course_code = course_code;
+    public void setCourse_id(String course_id) {
+        this.course_id = course_id;
     }
 
     public String getCourse_chinese_name() {
@@ -80,12 +74,12 @@ public class CourseExperimentProjectTable {
         this.course_video = course_video;
     }
 
-    public String getInstructional_school() {
-        return instructional_school;
+    public String getCollege() {
+        return college;
     }
 
-    public void setInstructional_school(String instructional_school) {
-        this.instructional_school = instructional_school;
+    public void setCollege(String college) {
+        this.college = college;
     }
 
     public String getCredit() {
@@ -96,20 +90,20 @@ public class CourseExperimentProjectTable {
         this.credit = credit;
     }
 
-    public String getTotal_hours() {
-        return total_hours;
+    public String getClass_hour() {
+        return class_hour;
     }
 
-    public void setTotal_hours(String total_hours) {
-        this.total_hours = total_hours;
+    public void setClass_hour(String class_hour) {
+        this.class_hour = class_hour;
     }
 
-    public String getWeek_hours() {
-        return week_hours;
+    public String getWeek_class_hour() {
+        return week_class_hour;
     }
 
-    public void setWeek_hours(String week_hours) {
-        this.week_hours = week_hours;
+    public void setWeek_class_hour(String week_class_hour) {
+        this.week_class_hour = week_class_hour;
     }
 
     public String getNumber_of_experimental_items() {
@@ -136,11 +130,11 @@ public class CourseExperimentProjectTable {
         this.course_assignment = course_assignment;
     }
 
-    public String getCourse_enabling_grade() {
-        return course_enabling_grade;
+    public String getEnabling_grade() {
+        return enabling_grade;
     }
 
-    public void setCourse_enabling_grade(String course_enabling_grade) {
-        this.course_enabling_grade = course_enabling_grade;
+    public void setEnabling_grade(String enabling_grade) {
+        this.enabling_grade = enabling_grade;
     }
 }

@@ -10,18 +10,18 @@ public class CourseExperimentProjectModel {
     private static final String URL_getCourseExperimentProjectList = "/courseExperimentProject/getData";
     private static final String URL_getQueryConditionList = "/courseExperimentProject/getQueryConditionList";
 
-    public void getData(String instructional_school,
+    public void getData(String college,
                         String course_category,
                         String course_assignment,
-                        String course_enabling_grade,
+                        String enabling_grade,
                         String course,
                         OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("instructional_school", instructional_school)
+                .add("college", college)
                 .add("course_category", course_category)
                 .add("course_assignment", course_assignment)
-                .add("course_enabling_grade", course_enabling_grade)
+                .add("enabling_grade", enabling_grade)
                 .add("course", course)
                 .build();
 

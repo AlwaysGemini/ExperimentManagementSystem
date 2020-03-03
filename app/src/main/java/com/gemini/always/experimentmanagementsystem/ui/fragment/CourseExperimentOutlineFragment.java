@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentOutlineTable;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertCourseExperimentOutline;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryCourseExperimentOutline;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.CourseExperimentOutlineTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentOutlinePresenter;
@@ -74,6 +76,8 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
 
     private String title = "课程实验大纲";
     private Class tableClass = CourseExperimentOutlineTable.class;
+    private Class queryClass = QueryCourseExperimentOutline.class;
+    private Class insertClass = InsertCourseExperimentOutline.class;
     private List<CourseExperimentOutlineTable> list = new ArrayList<>();
 
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -126,8 +130,7 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
             public void run() {
                 getPresenter().insertData(selected_and_edited_list_for_insert.get(0),
                         selected_and_edited_list_for_insert.get(1),
-                        selected_and_edited_list_for_insert.get(2),
-                        selected_and_edited_list_for_insert.get(3));
+                        selected_and_edited_list_for_insert.get(2));
             }
         }.start();
     }
@@ -210,7 +213,7 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
@@ -255,7 +258,7 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

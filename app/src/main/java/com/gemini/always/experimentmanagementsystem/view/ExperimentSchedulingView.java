@@ -7,5 +7,7 @@ import org.json.JSONObject;
 public interface ExperimentSchedulingView extends MVPView {
     void onInsertDataResult(Boolean isSuccess, JSONObject responseJson);
 
+    void onGetUnAllocationDataResult(Boolean isSuccess, JSONObject responseJson);
+
     void getFreeTimeDataResult(Boolean isSuccess, JSONObject responseJson);
 }

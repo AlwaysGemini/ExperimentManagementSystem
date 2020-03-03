@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.bean;
+package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;

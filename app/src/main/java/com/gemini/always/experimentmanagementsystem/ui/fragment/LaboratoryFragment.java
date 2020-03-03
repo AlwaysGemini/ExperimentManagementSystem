@@ -13,7 +13,9 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.LaboratoryTable;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertLaboratory;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryLaboratory;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.LaboratoryTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.LaboratoryPresenter;
@@ -79,6 +81,8 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
     FloatingActionButton fabDelete;
 
     private Class tableClass = LaboratoryTable.class;
+    private Class queryClass = QueryLaboratory.class;
+    private Class insertClass = InsertLaboratory.class;
     private List<LaboratoryTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -163,7 +167,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -212,7 +216,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
@@ -301,7 +305,7 @@ public class LaboratoryFragment extends BaseFragment<LaboratoryView, LaboratoryP
                 for (int i = 0; i < jsonArray.length(); i++) {
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "affiliated_teaching_experiment_center", spinnerDataListForQuery.get(0));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(0), "teaching_experiment_center_name", spinnerDataListForQuery.get(0));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(1), "laboratory_name", spinnerDataListForQuery.get(1));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(2), "enable_flag", spinnerDataListForQuery.get(2));
             } catch (JSONException e) {

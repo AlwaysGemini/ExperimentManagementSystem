@@ -13,7 +13,9 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.ExperimentalCompartmentTable;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertLaboratoryCompartment;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryLaboratoryCompartment;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.LaboratoryCompartmentTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalCompartmentPresenter;
@@ -56,7 +58,7 @@ import permissions.dispatcher.RuntimePermissions;
  * @date: 2020-02-07 21:47
  */
 @RuntimePermissions
-public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCompartmentView, ExperimentalCompartmentPresenter> implements ExperimentalCompartmentView, View.OnClickListener {
+public class LaboratoryCompartmentFragment extends BaseFragment<ExperimentalCompartmentView, ExperimentalCompartmentPresenter> implements ExperimentalCompartmentView, View.OnClickListener {
 
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
@@ -78,8 +80,10 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
-    private Class tableClass = ExperimentalCompartmentTable.class;
-    private List<ExperimentalCompartmentTable> list = new ArrayList<>();
+    private Class tableClass = LaboratoryCompartmentTable.class;
+    private Class queryClass = QueryLaboratoryCompartment.class;
+    private Class insertClass = InsertLaboratoryCompartment.class;
+    private List<LaboratoryCompartmentTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
     private List<String> selected_and_edited_list_for_query = new ArrayList<>();
@@ -99,7 +103,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
 
         initView();
         getQueryConditionList();
-        ExperimentalCompartmentFragmentPermissionsDispatcher.onClickWithCheck(ExperimentalCompartmentFragment.this, getView());
+        LaboratoryCompartmentFragmentPermissionsDispatcher.onClickWithCheck(LaboratoryCompartmentFragment.this, getView());
     }
 
     @Override
@@ -210,8 +214,8 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
                 int count = 0;
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "affiliated_teaching_experiment_center", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "affiliated_laboratory", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "teaching_experiment_center_name", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "laboratory_name", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "enable_flag", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
@@ -251,7 +255,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -274,8 +278,8 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<ExperimentalCompartmentTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
-                                    for (ExperimentalCompartmentTable experimentalCompartmentTable : list) {
+                                    List<LaboratoryCompartmentTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
+                                    for (LaboratoryCompartmentTable experimentalCompartmentTable : list) {
                                         getPresenter().insertData(experimentalCompartmentTable);
                                     }
                                 } else {
@@ -300,7 +304,7 @@ public class ExperimentalCompartmentFragment extends BaseFragment<ExperimentalCo
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.adapter.AllocationExperimentAdapter;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
@@ -23,6 +22,7 @@ import com.gemini.always.experimentmanagementsystem.presenter.ExperimentScheduli
 import com.gemini.always.experimentmanagementsystem.view.ExperimentSchedulingView;
 import com.orhanobut.logger.Logger;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +41,7 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.spinner_week)
-    Spinner spinnerWeek;
+    MaterialSpinner spinnerWeek;
     @BindView(R.id.courseTimeTable)
     CourseTimeTableView courseTimeTable;
     @BindView(R.id.recyclerView)
@@ -49,7 +49,7 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
     Unbinder unbinder;
 
     private int[][][] freeTimeData = new int[20][7][12];
-    private List<AllocationExperimentItem> list = new ArrayList<>();
+    private List<AllocationExperimentItem> allocationExperimentList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -86,27 +86,32 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
         ArrayAdapter<Integer> weekAdapter = new ArrayAdapter<>(getActivity(), R.layout.module_spinner_item, weekList);
         weekAdapter.setDropDownViewResource(R.layout.module_spinner_item);
         spinnerWeek.setAdapter(weekAdapter);
-        spinnerWeek.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+        spinnerWeek.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> courseTimeTable.setFreeTime(freeTimeData, weekList.get(position) - 1));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         AllocationExperimentItem allocationExperimentItem = new AllocationExperimentItem();
         allocationExperimentItem.setExperiment_name("测试课程");
-        list.add(allocationExperimentItem);
+        allocationExperimentList.add(allocationExperimentItem);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), DividerItemDecoration.VERTICAL));
-        AllocationExperimentAdapter adapter = new AllocationExperimentAdapter(getContext(), R.layout.module_item_allocation_experiment, list);
+        AllocationExperimentAdapter adapter = new AllocationExperimentAdapter(getContext(), R.layout.module_item_allocation_experiment, allocationExperimentList);
         adapter.removeAllHeaderView();
         View view = View.inflate(getContext(), R.layout.module_head_allocation_experiment, null);
         adapter.addHeaderView(view);
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.button_allocation:
+
+                        break;
+                }
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 
@@ -115,6 +120,12 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
             @Override
             public void run() {
                 getPresenter().getFreeTimeData();
+            }
+        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                getPresenter().getUnAllocationData();
             }
         }.start();
     }
@@ -136,11 +147,6 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
     }
 
     @Override
-    public void onInsertDataResult(Boolean isSuccess, JSONObject responseJson) {
-
-    }
-
-    @Override
     public void getFreeTimeDataResult(Boolean isSuccess, JSONObject responseJson) {
         if (isSuccess) {
             try {
@@ -159,4 +165,25 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
             }
         }
     }
+
+    @Override
+    public void onGetUnAllocationDataResult(Boolean isSuccess, JSONObject responseJson) {
+        if (isSuccess) {
+            try {
+                JSONArray jsonArray = responseJson.getJSONArray("data");
+                //Gson gson = new Gson();
+                //allocationExperimentList.addAll(gson.fromJson(jsonArray.toString(),new TypeToken<List<AllocationExperimentItem>>(){}.getType()));
+                allocationExperimentList = AllocationExperimentItem.toList(jsonArray);
+            } catch (JSONException e) {
+                Logger.e(e, "JSONException:");
+            }
+        }
+    }
+
+    @Override
+    public void onInsertDataResult(Boolean isSuccess, JSONObject responseJson) {
+
+    }
+
+
 }

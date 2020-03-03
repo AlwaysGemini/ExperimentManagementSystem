@@ -13,6 +13,32 @@ public class ExperimentSchedulingModel {
     private static final String URL_getFreeTimeData = prefix + "/getFreeTimeData";
     private static final String URL_getTeachingExperimentCenterList = prefix + "/getData";
 
+    public void getFreeTimeData(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+        FormBody formBody = new FormBody
+                .Builder()
+                .build();
+
+        OkHttpUtils.postByFormBody(formBody, URL_getFreeTimeData, new OkHttpUtils.OnOkHttpUtilsListener() {
+            @Override
+            public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                onOkHttpUtilsListener.onResult(isSuccess, responseJson);
+            }
+        });
+    }
+
+    public void getUnAllocationData(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+        FormBody formBody = new FormBody
+                .Builder()
+                .build();
+
+        OkHttpUtils.postByFormBody(formBody, URL_getFreeTimeData, new OkHttpUtils.OnOkHttpUtilsListener() {
+            @Override
+            public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                onOkHttpUtilsListener.onResult(isSuccess, responseJson);
+            }
+        });
+    }
+
     public void insertData(String name_of_teaching_class,
                            String number_of_elective_courses,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
@@ -29,18 +55,6 @@ public class ExperimentSchedulingModel {
         });
     }
 
-    public void getFreeTimeData(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
-        FormBody formBody = new FormBody
-                .Builder()
-                .build();
-
-        OkHttpUtils.postByFormBody(formBody, URL_getFreeTimeData, new OkHttpUtils.OnOkHttpUtilsListener() {
-            @Override
-            public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                onOkHttpUtilsListener.onResult(isSuccess, responseJson);
-            }
-        });
-    }
 
     public void getData(String school_year,
                         String semester,

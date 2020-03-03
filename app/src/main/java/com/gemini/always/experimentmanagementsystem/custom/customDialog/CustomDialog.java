@@ -54,7 +54,6 @@ public class CustomDialog extends Dialog {
         private List<String> spinnerTextList = new ArrayList<>();
         private List<List<String>> spinnerDataList = new ArrayList<>();
         private List<DialogListItem> dialogListItems = new ArrayList<>();
-        private View contentView;
         private DialogInterface.OnClickListener positiveButtonClickListener;
         private DialogInterface.OnClickListener negativeButtonClickListener;
         private DialogIF dialogIF;
@@ -108,7 +107,6 @@ public class CustomDialog extends Dialog {
         }
 
         public Builder setContentView(View v) {
-            this.contentView = v;
             return this;
         }
 
@@ -196,7 +194,6 @@ public class CustomDialog extends Dialog {
                     }
                 }
                 DialogListItem[] listItems = new DialogListItem[queryItemNum];
-                int spinnerNum = 0;
                 for (int i = 0; i < fields.length; i++) {
                     Field field = fields[i];
                     field.setAccessible(true);
@@ -204,10 +201,16 @@ public class CustomDialog extends Dialog {
                     if (fieldAnnotation != null) {
                         QueryItem queryItem = (QueryItem) fieldAnnotation;
                         if (queryItem.type() == QueryItem.TYPE_SPINNER) {
-                            listItems[queryItem.id()] = new DialogListItem(new DialogListSpinnerItem(queryItem.name(), spinnerDataList.get(spinnerNum++)));
+                            listItems[queryItem.id()] = new DialogListItem(new DialogListSpinnerItem(queryItem.name(), null));
                         } else if (queryItem.type() == QueryItem.TYPE_EDITTEXT) {
                             listItems[queryItem.id()] = new DialogListItem(new DialogListEditTextItem(queryItem.name(), queryItem.hint()));
                         }
+                    }
+                }
+                int spinnerNum = 0;
+                for (int i = 0; i < queryItemNum; i++) {
+                    if (listItems[i].getType() == DialogListItem.TYPE_SPINNER) {
+                        listItems[i].getSpinnerItem().setSpinnerDataList(spinnerDataList.get(spinnerNum++));
                     }
                 }
                 for (int i = 0; i < queryItemNum; i++)

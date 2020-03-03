@@ -22,4 +22,17 @@ public class ExperimentSchedulingPresenter extends BasePresenter<ExperimentSched
             }
         });
     }
+
+    public void getUnAllocationData() {
+        this.model.getUnAllocationData(new OkHttpUtils.OnOkHttpUtilsListener() {
+            @Override
+            public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                getView().onGetUnAllocationDataResult(isSuccess, responseJson);
+            }
+        });
+    }
+
+    public void insertData() {
+
+    }
 }

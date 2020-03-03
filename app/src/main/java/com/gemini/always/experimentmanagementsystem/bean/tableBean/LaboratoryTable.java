@@ -1,4 +1,4 @@
-package com.gemini.always.experimentmanagementsystem.bean;
+package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
@@ -10,7 +10,7 @@ public class LaboratoryTable {
 
     @TableColumn(id = 1, name = "实验室代码")
     @AddItem(id = 0, name = "实验室代码")
-    private String laboratory_code;
+    private String laboratory_id;
 
     @TableColumn(id = 2, name = "实验室名称")
     @QueryItem(id = 1, name = "实验室名称", type = QueryItem.TYPE_SPINNER)
@@ -20,7 +20,7 @@ public class LaboratoryTable {
     @TableColumn(id = 3, name = "隶属教学实验中心")
     @QueryItem(id = 0, name = "隶属教学实验中心", type = QueryItem.TYPE_SPINNER)
     @AddItem(id = 2, name = "隶属教学实验中心")
-    private String affiliated_teaching_experiment_center;
+    private String teaching_experiment_center;
 
     @TableColumn(id = 4, name = "实验室负责人")
     @AddItem(id = 3, name = "实验室负责人")
@@ -39,12 +39,12 @@ public class LaboratoryTable {
     @AddItem(id = 6, name = "启用标志")
     private String enable_flag;
 
-    public String getLaboratory_code() {
-        return laboratory_code;
+    public String getLaboratory_id() {
+        return laboratory_id;
     }
 
-    public void setLaboratory_code(String laboratory_code) {
-        this.laboratory_code = laboratory_code;
+    public void setLaboratory_id(String laboratory_id) {
+        this.laboratory_id = laboratory_id;
     }
 
     public String getLaboratory_name() {
@@ -55,12 +55,12 @@ public class LaboratoryTable {
         this.laboratory_name = laboratory_name;
     }
 
-    public String getAffiliated_teaching_experiment_center() {
-        return affiliated_teaching_experiment_center;
+    public String getTeaching_experiment_center() {
+        return teaching_experiment_center;
     }
 
-    public void setAffiliated_teaching_experiment_center(String affiliated_teaching_experiment_center) {
-        this.affiliated_teaching_experiment_center = affiliated_teaching_experiment_center;
+    public void setTeaching_experiment_center(String teaching_experiment_center) {
+        this.teaching_experiment_center = teaching_experiment_center;
     }
 
     public String getLaboratory_director() {

@@ -10,7 +10,8 @@ import androidx.annotation.Nullable;
 
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.CourseExperimentProjectTable;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryCourseExperimentProject;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.CourseExperimentProjectTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.CourseExperimentProjectPresenter;
@@ -145,11 +146,13 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                     Logger.e(e, "JSONException");
                 }
             } else {
-                try {
-                    XToastUtils.toast(responseJson.getString("msg"));
-                } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
-                }
+                getActivity().runOnUiThread(() -> {
+                    try {
+                        XToastUtils.toast(responseJson.getString("msg"));
+                    } catch (JSONException e) {
+                        Logger.e(e, "JSONException:");
+                    }
+                });
                 llStateful.showEmpty();
             }
         });
@@ -164,12 +167,12 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
                 int count = 0;
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "instructional_school", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "college", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "course_category", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "course_assignment", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "course_enabling_grade", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "enabling_grade", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
-                XToastUtils.toast(e.getMessage());
+                Logger.e(e, "JSONException:");
             }
         }
     }
@@ -196,7 +199,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(QueryCourseExperimentProject.class)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override

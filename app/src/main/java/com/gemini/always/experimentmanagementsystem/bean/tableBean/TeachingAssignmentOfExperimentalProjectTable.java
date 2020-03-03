@@ -1,17 +1,10 @@
-package com.gemini.always.experimentmanagementsystem.bean;
+package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
-import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-/**
- * @Author: 周清
- * @Description:
- * @Date: Created in 9:34 2020/2/8
- */
-@Table
-public class ExperimentalTeachingAssignmentTable {
+public class TeachingAssignmentOfExperimentalProjectTable {
 
     @TableColumn(id = 1, name = "学年")
     @QueryItem(id = 0, name = "学年", type = QueryItem.TYPE_SPINNER)
@@ -36,17 +29,12 @@ public class ExperimentalTeachingAssignmentTable {
     @AddItem(id = 0, name = "教学班名称")
     private String name_of_teaching_class;
 
-    @TableColumn(id = 7, name = "任课老师")
-    @AddItem(id = 1, name = "任课老师")
-    private String teacher;
+    @TableColumn(id = 7, name = "实验项目")
+    private String experimental_project_name;
 
-    @TableColumn(id = 8, name = "包含实验项目")
-    @AddItem(id = 2, name = "包含实验项目")
-    private String including_experimental_items;
-
-    @TableColumn(id = 9, name = "选修项目数")
-    @AddItem(id = 3, name = "选修项目数")
-    private String number_of_electives;
+    @TableColumn(id = 8, name = "选课人数")
+    @AddItem(id = 1, name = "选课人数")
+    private String number_of_elective_courses;
 
     public String getSchool_year() {
         return school_year;
@@ -96,27 +84,19 @@ public class ExperimentalTeachingAssignmentTable {
         this.name_of_teaching_class = name_of_teaching_class;
     }
 
-    public String getTeacher() {
-        return teacher;
+    public String getExperimental_project_name() {
+        return experimental_project_name;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
+    public void setExperimental_project_name(String experimental_project_name) {
+        this.experimental_project_name = experimental_project_name;
     }
 
-    public String getIncluding_experimental_items() {
-        return including_experimental_items;
+    public String getNumber_of_elective_courses() {
+        return number_of_elective_courses;
     }
 
-    public void setIncluding_experimental_items(String including_experimental_items) {
-        this.including_experimental_items = including_experimental_items;
-    }
-
-    public String getNumber_of_electives() {
-        return number_of_electives;
-    }
-
-    public void setNumber_of_electives(String number_of_electives) {
-        this.number_of_electives = number_of_electives;
+    public void setNumber_of_elective_courses(String number_of_elective_courses) {
+        this.number_of_elective_courses = number_of_elective_courses;
     }
 }

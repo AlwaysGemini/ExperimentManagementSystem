@@ -1,7 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
-import com.gemini.always.experimentmanagementsystem.bean.ExperimentalProjectTable;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentalProjectTable;
 import com.gemini.always.experimentmanagementsystem.model.ExperimentalProjectManagementModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentalProjectManagementView;

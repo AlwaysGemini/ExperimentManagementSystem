@@ -12,7 +12,7 @@ public class TeachingExperimentCenterModel {
     private static final String URL_getQueryConditionList = "/experimentalOrganization/teachingExperimentCenter/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = "/experimentalOrganization/teachingExperimentCenter/getData";
 
-    public void insertData(String teaching_experiment_center_code,
+    public void insertData(String teaching_experiment_center_id,
                            String teaching_experiment_center_name,
                            String laboratory_type,
                            String subordinate_unit,
@@ -23,7 +23,7 @@ public class TeachingExperimentCenterModel {
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("teaching_experiment_center_code", teaching_experiment_center_code)
+                .add("teaching_experiment_center_id", teaching_experiment_center_id)
                 .add("teaching_experiment_center_name", teaching_experiment_center_name)
                 .add("laboratory_type", laboratory_type)
                 .add("subordinate_unit", subordinate_unit)

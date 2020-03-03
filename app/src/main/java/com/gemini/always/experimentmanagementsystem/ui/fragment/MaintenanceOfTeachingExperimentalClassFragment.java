@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.MaintenanceOfTeachingExperimentalClassTable;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.MaintenanceOfTeachingExperimentalClassTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.MaintenanceOfTeachingExperimentalClassPresenter;

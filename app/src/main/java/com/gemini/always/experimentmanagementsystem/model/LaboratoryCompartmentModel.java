@@ -6,23 +6,23 @@ import org.json.JSONObject;
 
 import okhttp3.FormBody;
 
-public class ExperimentalCompartmentModel {
+public class LaboratoryCompartmentModel {
 
     private static final String URL_INSERT_DATA = "/experimentalOrganization/experimentalCompartment/insertData";
     private static final String URL_getQueryConditionList = "/experimentalOrganization/experimentalCompartment/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = "/experimentalOrganization/experimentalCompartment/getData";
 
-    public void insertData(String experimental_compartment_code,
-                           String experimental_compartment_name,
-                           String affiliated_laboratory,
+    public void insertData(String laboratory_compartment_id,
+                           String laboratory_compartment_name,
+                           String laboratory_id,
                            String remarks,
                            String enable_flag,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("experimental_compartment_code", experimental_compartment_code)
-                .add("experimental_compartment_name", experimental_compartment_name)
-                .add("affiliated_laboratory", affiliated_laboratory)
+                .add("laboratory_compartment_id", laboratory_compartment_id)
+                .add("laboratory_compartment_name", laboratory_compartment_name)
+                .add("laboratory_id", laboratory_id)
                 .add("remarks", remarks)
                 .add("enable_flag", enable_flag)
                 .build();
@@ -47,11 +47,11 @@ public class ExperimentalCompartmentModel {
         });
     }
 
-    public void getData(String affiliated_teaching_experiment_center, String affiliated_laboratory, String enable_flag, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+    public void getData(String teaching_experiment_center_name, String laboratory_name, String enable_flag, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("affiliated_teaching_experiment_center", affiliated_teaching_experiment_center)
-                .add("affiliated_laboratory", affiliated_laboratory)
+                .add("teaching_experiment_center_name", teaching_experiment_center_name)
+                .add("laboratory_name", laboratory_name)
                 .add("enable_flag", enable_flag)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {

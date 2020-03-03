@@ -1,7 +1,7 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
-import com.gemini.always.experimentmanagementsystem.bean.TeachingExperimentCenterTable;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.TeachingExperimentCenterTable;
 import com.gemini.always.experimentmanagementsystem.model.TeachingExperimentCenterModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.TeachingExperimentCenterView;
@@ -40,7 +40,7 @@ public class TeachingExperimentCenterPresenter extends BasePresenter<TeachingExp
     }
 
     public void insertData(TeachingExperimentCenterTable teachingExperimentCenterTable) {
-        this.teachingExperimentCenterModel.insertData(teachingExperimentCenterTable.getTeaching_experiment_center_code(),
+        this.teachingExperimentCenterModel.insertData(teachingExperimentCenterTable.getTeaching_experiment_center_id(),
                 teachingExperimentCenterTable.getTeaching_experiment_center_name(),
                 teachingExperimentCenterTable.getLaboratory_type(),
                 teachingExperimentCenterTable.getSubordinate_unit(),

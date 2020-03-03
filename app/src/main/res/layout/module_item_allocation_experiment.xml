@@ -26,6 +26,20 @@
         android:gravity="center">
 
         <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_classroom"
+            style="@style/Material.SpinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/module_item_allocation_experiment_cell_width"
+        android:layout_height="match_parent"
+        android:background="@drawable/linearlayout_border"
+        android:gravity="center">
+
+        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
             android:id="@+id/spinner_week"
             style="@style/Material.SpinnerStyle"
             android:layout_width="wrap_content"

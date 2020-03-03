@@ -12,9 +12,9 @@ public class LaboratoryRoomModel {
     private static final String URL_getQueryConditionList = "/experimentalOrganization/laboratoryRoom/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = "/experimentalOrganization/laboratoryRoom/getData";
 
-    public void insertData(String laboratory_room_code,
+    public void insertData(String laboratory_room_id,
                            String laboratory_room_name,
-                           String affiliated_experimental_compartment,
+                           String laboratory_compartment_id,
                            String nature_of_experimental_site,
                            String category_of_scientific_research_base,
                            String person_in_charge_of_the_experimental_room,
@@ -26,9 +26,9 @@ public class LaboratoryRoomModel {
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("laboratory_room_code", laboratory_room_code)
+                .add("laboratory_room_id", laboratory_room_id)
                 .add("laboratory_room_name", laboratory_room_name)
-                .add("affiliated_experimental_compartment", affiliated_experimental_compartment)
+                .add("laboratory_compartment_id", laboratory_compartment_id)
                 .add("nature_of_experimental_site", nature_of_experimental_site)
                 .add("category_of_scientific_research_base", category_of_scientific_research_base)
                 .add("person_in_charge_of_the_experimental_room", person_in_charge_of_the_experimental_room)
@@ -59,9 +59,9 @@ public class LaboratoryRoomModel {
         });
     }
 
-    public void getData(String affiliated_teaching_experiment_center,
-                        String affiliated_laboratory,
-                        String affiliated_experimental_compartment,
+    public void getData(String teaching_experiment_center_name,
+                        String laboratory_name,
+                        String laboratory_compartment_name,
                         String nature_of_experimental_site,
                         String category_of_scientific_research_base,
                         String status_of_joint_construction,
@@ -70,9 +70,9 @@ public class LaboratoryRoomModel {
                         OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("affiliated_teaching_experiment_center", affiliated_teaching_experiment_center)
-                .add("affiliated_laboratory", affiliated_laboratory)
-                .add("affiliated_experimental_compartment", affiliated_experimental_compartment)
+                .add("teaching_experiment_center_name", teaching_experiment_center_name)
+                .add("laboratory_name", laboratory_name)
+                .add("laboratory_compartment_name", laboratory_compartment_name)
                 .add("nature_of_experimental_site", nature_of_experimental_site)
                 .add("category_of_scientific_research_base", category_of_scientific_research_base)
                 .add("status_of_joint_construction", status_of_joint_construction)

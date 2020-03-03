@@ -15,12 +15,12 @@ public class CourseExperimentProjectPresenter extends BasePresenter<CourseExperi
         this.courseExperimentProjectModel = new CourseExperimentProjectModel();
     }
 
-    public void getData(String instructional_school,
+    public void getData(String college,
                         String course_category,
                         String course_assignment,
                         String course_enabling_grade,
                         String course) {
-        this.courseExperimentProjectModel.getData(instructional_school,
+        this.courseExperimentProjectModel.getData(college,
                 course_category,
                 course_assignment,
                 course_enabling_grade,
