@@ -71,6 +71,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
+    private String title = "实验教学任务书";
     private Class tableClass = ExperimentalTeachingAssignmentTable.class;
     private List<ExperimentalTeachingAssignmentTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
@@ -95,7 +96,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
     }
 
     private void initView() {
-        titlebar.setTitle("实验教学任务书");
+        titlebar.setTitle(title);
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

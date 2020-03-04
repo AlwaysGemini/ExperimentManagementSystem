@@ -11,19 +11,19 @@ public class ExperimentalEquipmentModel {
     private static final String URL_getQueryConditionList = "/experimentalEquipmentManagement/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = "/experimentalEquipmentManagement/getData";
 
-    public void insertData(String id,
+    public void insertData(String experimental_equipment_id,
                            String experimental_equipment_name,
                            String value,
-                           String laboratory_room_name,
+                           String laboratory_room_id,
                            String is_movable,
                            String procurement_time,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("id", id)
+                .add("experimental_equipment_id", experimental_equipment_id)
                 .add("experimental_equipment_name", experimental_equipment_name)
                 .add("value", value)
-                .add("laboratory_room_name", laboratory_room_name)
+                .add("laboratory_room_id", laboratory_room_id)
                 .add("is_movable", is_movable)
                 .add("procurement_time", procurement_time)
                 .build();
@@ -50,7 +50,7 @@ public class ExperimentalEquipmentModel {
 
     public void getData(String teaching_experiment_center_name,
                         String laboratory_name,
-                        String experimental_compartment_name,
+                        String laboratory_compartment_name,
                         String laboratory_room_name,
                         String is_movable,
                         String experimental_equipment_name,
@@ -59,7 +59,7 @@ public class ExperimentalEquipmentModel {
                 .Builder()
                 .add("teaching_experiment_center_name", teaching_experiment_center_name)
                 .add("laboratory_name", laboratory_name)
-                .add("experimental_compartment_name", experimental_compartment_name)
+                .add("laboratory_compartment_name", laboratory_compartment_name)
                 .add("laboratory_room_name", laboratory_room_name)
                 .add("is_movable", is_movable)
                 .add("experimental_equipment_name", experimental_equipment_name)

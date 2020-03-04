@@ -16,7 +16,7 @@ public class ExperimentalConsumablesManagementPresenter extends BasePresenter<Ex
         this.experimentalConsumablesManagementModel = new ExperimentalConsumablesManagementModel();
     }
 
-    public void insertData(String id,
+    public void insertData(String experimental_consumables_id,
                            String experimental_consumables_name,
                            String current_inventory,
                            String maximum_inventory,
@@ -24,8 +24,8 @@ public class ExperimentalConsumablesManagementPresenter extends BasePresenter<Ex
                            String model_specification,
                            String unit,
                            String unit_price,
-                           String laboratory_room_name) {
-        this.experimentalConsumablesManagementModel.insertData(id,
+                           String laboratory_room_id) {
+        this.experimentalConsumablesManagementModel.insertData(experimental_consumables_id,
                 experimental_consumables_name,
                 current_inventory,
                 maximum_inventory,
@@ -33,7 +33,7 @@ public class ExperimentalConsumablesManagementPresenter extends BasePresenter<Ex
                 model_specification,
                 unit,
                 unit_price,
-                laboratory_room_name, new OkHttpUtils.OnOkHttpUtilsListener() {
+                laboratory_room_id, new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
                         getView().onInsertDataResult(isSuccess, responseJson);
@@ -42,12 +42,12 @@ public class ExperimentalConsumablesManagementPresenter extends BasePresenter<Ex
     }
 
     public void insertData(ExperimentalConsumablesManagementTable experimentalConsumablesTable) {
-        this.experimentalConsumablesManagementModel.insertData(experimentalConsumablesTable.getId(),
+        this.experimentalConsumablesManagementModel.insertData(experimentalConsumablesTable.getExperimental_consumables_id(),
                 experimentalConsumablesTable.getExperimental_consumables_name(),
                 experimentalConsumablesTable.getCurrent_inventory(),
                 experimentalConsumablesTable.getMaximum_inventory(),
                 experimentalConsumablesTable.getMinimum_inventory(),
-                experimentalConsumablesTable.getModel_specification(),
+                experimentalConsumablesTable.getModel_and_specification(),
                 experimentalConsumablesTable.getUnit(),
                 experimentalConsumablesTable.getUnit_price(),
                 experimentalConsumablesTable.getLaboratory_room_name(), new OkHttpUtils.OnOkHttpUtilsListener() {

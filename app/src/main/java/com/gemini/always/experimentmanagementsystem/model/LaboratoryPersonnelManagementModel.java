@@ -14,14 +14,14 @@ public class LaboratoryPersonnelManagementModel {
 
     public void insertData(String job_number,
                            String title,
-                           String laboratory_name,
+                           String laboratory_id,
                            String incumbency,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .add("job_number", job_number)
                 .add("title", title)
-                .add("laboratory_name", laboratory_name)
+                .add("laboratory_id", laboratory_id)
                 .add("incumbency", incumbency)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {

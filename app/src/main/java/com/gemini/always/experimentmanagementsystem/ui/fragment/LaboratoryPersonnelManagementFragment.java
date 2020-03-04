@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertLaboratoryPersonnelManagement;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryLaboratoryPersonnelManagement;
 import com.gemini.always.experimentmanagementsystem.bean.tableBean.LaboratoryPersonnelManagementTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
@@ -73,8 +75,11 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
     FloatingActionsMenu fabMenu;
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
+
     List<LaboratoryPersonnelManagementTable> list = new ArrayList<>();
     private Class tableClass = LaboratoryPersonnelManagementTable.class;
+    private Class queryClass = QueryLaboratoryPersonnelManagement.class;
+    private Class insertClass = InsertLaboratoryPersonnelManagement.class;
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
     private List<String> selected_and_edited_list_for_query = new ArrayList<>();
@@ -118,7 +123,7 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -167,7 +172,7 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

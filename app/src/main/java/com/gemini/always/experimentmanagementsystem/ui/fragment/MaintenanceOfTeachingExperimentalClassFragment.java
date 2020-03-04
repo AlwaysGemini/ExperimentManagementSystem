@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertMaintenanceOfTeachingExperimentalClass;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryMaintenanceOfTeachingExperimentalClass;
 import com.gemini.always.experimentmanagementsystem.bean.tableBean.MaintenanceOfTeachingExperimentalClassTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
@@ -75,6 +77,8 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
     FloatingActionButton fabDelete;
 
     private Class tableClass = MaintenanceOfTeachingExperimentalClassTable.class;
+    private Class queryClass = QueryMaintenanceOfTeachingExperimentalClass.class;
+    private Class insertClass = InsertMaintenanceOfTeachingExperimentalClass.class;
     private List<MaintenanceOfTeachingExperimentalClassTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -170,9 +174,9 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
                 for (int i = 0; i < jsonArray.length(); i++) {
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_year", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "year", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "semester", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_of_commencement", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "college", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -278,7 +282,7 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
@@ -295,7 +299,7 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override

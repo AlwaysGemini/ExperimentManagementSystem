@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertExperimentalEquipment;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryExperimentalEquipment;
 import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentalEquipmentTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
@@ -75,6 +77,8 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
     FloatingActionButton fabDelete;
 
     private Class tableClass = ExperimentalEquipmentTable.class;
+    private Class queryClass = QueryExperimentalEquipment.class;
+    private Class insertClass = InsertExperimentalEquipment.class;
     private List<ExperimentalEquipmentTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -188,7 +192,7 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
                 int count = 0;
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "teaching_experiment_center_name", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "laboratory_name", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_compartment_name", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "laboratory_compartment_name", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "laboratory_room_name", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "is_movable", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_equipment_name", spinnerDataListForQuery.get(count++));
@@ -250,7 +254,7 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -299,7 +303,7 @@ public class ExperimentalEquipmentFragment extends BaseFragment<ExperimentalEqui
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

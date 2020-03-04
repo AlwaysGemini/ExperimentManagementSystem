@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentOutlineFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentItemManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentSchedulingFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalConsumablesManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalEquipmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment;
-import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalProjectManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalTeachingAssignmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryPersonnelManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
@@ -107,8 +107,8 @@ public class FragmentSelectActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalConsumablesManagementFragment).commitAllowingStateLoss();
                 break;
             case "ExperimentalProjectManagementFragment":
-                ExperimentalProjectManagementFragment experimentalProjectManagementFragment = new ExperimentalProjectManagementFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalProjectManagementFragment).commitAllowingStateLoss();
+                ExperimentItemManagementFragment experimentItemManagementFragment = new ExperimentItemManagementFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentItemManagementFragment).commitAllowingStateLoss();
                 break;
             case "CourseExperimentOutlineFragment":
                 CourseExperimentOutlineFragment courseExperimentOutlineFragment = new CourseExperimentOutlineFragment();

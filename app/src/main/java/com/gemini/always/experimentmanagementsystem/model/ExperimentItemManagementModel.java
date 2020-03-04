@@ -6,34 +6,36 @@ import org.json.JSONObject;
 
 import okhttp3.FormBody;
 
-public class ExperimentalProjectManagementModel {
+public class ExperimentItemManagementModel {
     private static final String URL_INSERT_DATA = "/experimentalProject/insertData";
     private static final String URL_getQueryConditionList = "/experimentalProject/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = "/experimentalProject/getData";
 
-    public void insertData(String experimental_project_code,
-                           String experimental_project_name,
-                           String experimental_content,
-                           String experimental_hours,
-                           String experimental_credits,
-                           String experimental_properties,
-                           String experimental_type,
-                           String experimental_category,
-                           String affiliation,
-                           String subject,
+    public void insertData(String experiment_item_id,
+                           String experiment_item_name,
+                           String experiment_content,
+                           String experiment_hours,
+                           String experiment_credits,
+                           String experiment_attribute,
+                           String experiment_type,
+                           String experiment_category,
+                           String subordinate_unit,
+                           String subordinate_discipline,
+                           String experiment_requirements,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("experimental_project_code", experimental_project_code)
-                .add("experimental_project_name", experimental_project_name)
-                .add("experimental_content", experimental_content)
-                .add("experimental_hours", experimental_hours)
-                .add("experimental_credits", experimental_credits)
-                .add("experimental_properties", experimental_properties)
-                .add("experimental_type", experimental_type)
-                .add("experimental_category", experimental_category)
-                .add("affiliation", affiliation)
-                .add("subject", subject)
+                .add("experiment_item_id", experiment_item_id)
+                .add("experiment_item_name", experiment_item_name)
+                .add("experiment_content", experiment_content)
+                .add("experiment_hours", experiment_hours)
+                .add("experiment_credits", experiment_credits)
+                .add("experiment_attribute", experiment_attribute)
+                .add("experiment_type", experiment_type)
+                .add("experiment_category", experiment_category)
+                .add("subordinate_unit", subordinate_unit)
+                .add("subordinate_discipline", subordinate_discipline)
+                .add("experiment_requirements", experiment_requirements)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
@@ -56,17 +58,17 @@ public class ExperimentalProjectManagementModel {
         });
     }
 
-    public void getData(String experimental_properties,
-                        String experimental_type,
-                        String experimental_category,
-                        String experimental_project_name,
+    public void getData(String experiment_attribute,
+                        String experiment_type,
+                        String experiment_category,
+                        String experiment_project_name,
                         OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("experimental_properties", experimental_properties)
-                .add("experimental_type", experimental_type)
-                .add("experimental_category", experimental_category)
-                .add("experimental_project_name", experimental_project_name)
+                .add("experiment_attribute", experiment_attribute)
+                .add("experiment_type", experiment_type)
+                .add("experiment_category", experiment_category)
+                .add("experiment_project_name", experiment_project_name)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override

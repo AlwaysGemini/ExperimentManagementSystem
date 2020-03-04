@@ -15,18 +15,18 @@ public class MaintenanceOfTeachingExperimentalClassPresenter extends BasePresent
         this.maintenanceOfTeachingExperimentalClassModel = new MaintenanceOfTeachingExperimentalClassModel();
     }
 
-    public void insertData(String school_year,
+    public void insertData(String experimental_teaching_class_id,
+                           String experimental_teaching_class_name,
+                           String year,
                            String semester,
-                           String name_of_teaching_class,
                            String composition_of_teaching_class,
-                           String school_of_commencement,
-                           String course_name) {
-        this.maintenanceOfTeachingExperimentalClassModel.insertData(school_year,
+                           String course_experiment_outline_id) {
+        this.maintenanceOfTeachingExperimentalClassModel.insertData(experimental_teaching_class_id,
+                experimental_teaching_class_name,
+                year,
                 semester,
-                name_of_teaching_class,
                 composition_of_teaching_class,
-                school_of_commencement,
-                course_name,
+                course_experiment_outline_id,
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
@@ -36,12 +36,12 @@ public class MaintenanceOfTeachingExperimentalClassPresenter extends BasePresent
     }
 
     public void insertData(MaintenanceOfTeachingExperimentalClassTable maintenanceOfTeachingExperimentalClassTable) {
-        this.maintenanceOfTeachingExperimentalClassModel.insertData(maintenanceOfTeachingExperimentalClassTable.getSchool_year(),
+        this.maintenanceOfTeachingExperimentalClassModel.insertData(maintenanceOfTeachingExperimentalClassTable.getYear(),
                 maintenanceOfTeachingExperimentalClassTable.getSemester(),
-                maintenanceOfTeachingExperimentalClassTable.getName_of_teaching_class(),
+                maintenanceOfTeachingExperimentalClassTable.getExperimental_teaching_class_name(),
                 maintenanceOfTeachingExperimentalClassTable.getComposition_of_teaching_class(),
-                maintenanceOfTeachingExperimentalClassTable.getSchool_of_commencement(),
-                maintenanceOfTeachingExperimentalClassTable.getCourse_name(),
+                maintenanceOfTeachingExperimentalClassTable.getCollege(),
+                maintenanceOfTeachingExperimentalClassTable.getCourse_chinese_name(),
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
@@ -59,15 +59,15 @@ public class MaintenanceOfTeachingExperimentalClassPresenter extends BasePresent
         });
     }
 
-    public void getData(String school_year,
+    public void getData(String year,
                         String semester,
-                        String school_of_commencement,
-                        String name_of_teaching_class,
+                        String college,
+                        String experimental_teaching_class_name,
                         String course) {
-        this.maintenanceOfTeachingExperimentalClassModel.getData(school_year,
+        this.maintenanceOfTeachingExperimentalClassModel.getData(year,
                 semester,
-                school_of_commencement,
-                name_of_teaching_class,
+                college,
+                experimental_teaching_class_name,
                 course,
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override

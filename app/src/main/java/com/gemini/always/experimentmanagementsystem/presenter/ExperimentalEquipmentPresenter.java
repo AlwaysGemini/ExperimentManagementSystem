@@ -16,16 +16,16 @@ public class ExperimentalEquipmentPresenter extends BasePresenter<ExperimentalEq
         this.experimentalEquipmentModel = new ExperimentalEquipmentModel();
     }
 
-    public void insertData(String id,
+    public void insertData(String experimental_equipment_id,
                            String experimental_equipment_name,
                            String value,
-                           String laboratory_room_name,
+                           String laboratory_room_id,
                            String is_movable,
                            String procurement_time) {
-        this.experimentalEquipmentModel.insertData(id,
+        this.experimentalEquipmentModel.insertData(experimental_equipment_id,
                 experimental_equipment_name,
                 value,
-                laboratory_room_name,
+                laboratory_room_id,
                 is_movable,
                 procurement_time, new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
@@ -36,7 +36,7 @@ public class ExperimentalEquipmentPresenter extends BasePresenter<ExperimentalEq
     }
 
     public void insertData(ExperimentalEquipmentTable experimentalEquipmentTable) {
-        this.experimentalEquipmentModel.insertData(experimentalEquipmentTable.getId(),
+        this.experimentalEquipmentModel.insertData(experimentalEquipmentTable.getExperimental_equipment_id(),
                 experimentalEquipmentTable.getExperimental_equipment_name(),
                 experimentalEquipmentTable.getValue(),
                 experimentalEquipmentTable.getLaboratory_room_name(),
@@ -60,13 +60,13 @@ public class ExperimentalEquipmentPresenter extends BasePresenter<ExperimentalEq
 
     public void getData(String teaching_experiment_center_name,
                         String laboratory_name,
-                        String experimental_compartment_name,
+                        String laboratory_compartment_name,
                         String laboratory_room_name,
                         String is_movable,
                         String experimental_equipment_name) {
         this.experimentalEquipmentModel.getData(teaching_experiment_center_name,
                 laboratory_name,
-                experimental_compartment_name,
+                laboratory_compartment_name,
                 laboratory_room_name,
                 is_movable,
                 experimental_equipment_name, new OkHttpUtils.OnOkHttpUtilsListener() {

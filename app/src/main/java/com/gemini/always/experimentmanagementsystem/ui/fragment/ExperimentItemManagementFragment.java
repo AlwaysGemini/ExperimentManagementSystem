@@ -12,10 +12,12 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentalProjectTable;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertExperimentItem;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryExperimentItem;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentItemTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
-import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalProjectManagementPresenter;
+import com.gemini.always.experimentmanagementsystem.presenter.ExperimentItemManagementPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
@@ -52,7 +54,7 @@ import butterknife.Unbinder;
  * @author: 周清
  * @date: 2020-02-07 21:47
  */
-public class ExperimentalProjectManagementFragment extends BaseFragment<ExperimentalProjectManagementView, ExperimentalProjectManagementPresenter> implements ExperimentalProjectManagementView {
+public class ExperimentItemManagementFragment extends BaseFragment<ExperimentalProjectManagementView, ExperimentItemManagementPresenter> implements ExperimentalProjectManagementView {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -74,8 +76,10 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
 
-    private Class tableClass = ExperimentalProjectTable.class;
-    private List<ExperimentalProjectTable> list = new ArrayList<>();
+    private Class tableClass = ExperimentItemTable.class;
+    private Class queryClass = QueryExperimentItem.class;
+    private Class insertClass = InsertExperimentItem.class;
+    private List<ExperimentItemTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
     private List<String> selected_and_edited_list_for_query = new ArrayList<>();
@@ -113,8 +117,8 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
     }
 
     @Override
-    public ExperimentalProjectManagementPresenter createPresenter() {
-        return new ExperimentalProjectManagementPresenter();
+    public ExperimentItemManagementPresenter createPresenter() {
+        return new ExperimentItemManagementPresenter();
     }
 
     @Override
@@ -135,7 +139,8 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                         selected_and_edited_list_for_insert.get(6),
                         selected_and_edited_list_for_insert.get(7),
                         selected_and_edited_list_for_insert.get(8),
-                        selected_and_edited_list_for_insert.get(9));
+                        selected_and_edited_list_for_insert.get(9),
+                        selected_and_edited_list_for_insert.get(10));
             }
         }.start();
     }
@@ -182,9 +187,9 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                 for (int i = 0; i < jsonArray.length(); i++) {
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_properties", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_type", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_category", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experiment_attribute", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experiment_type", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experiment_category", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -249,7 +254,7 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -272,8 +277,8 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<ExperimentalProjectTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
-                                    for (ExperimentalProjectTable experimentalProjectTable : list) {
+                                    List<ExperimentItemTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
+                                    for (ExperimentItemTable experimentalProjectTable : list) {
                                         getPresenter().insertData(experimentalProjectTable);
                                     }
                                 } else {
@@ -298,7 +303,7 @@ public class ExperimentalProjectManagementFragment extends BaseFragment<Experime
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

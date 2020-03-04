@@ -1,58 +1,43 @@
 package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
 @Table
 public class ExperimentalEquipmentTable {
-
     @TableColumn(id = 1, name = "实验仪器代码")
-    @AddItem(id = 0, name = "实验仪器代码")
-    private String id;
+    private String experimental_equipment_id;
 
     @TableColumn(id = 2, name = "实验仪器名称")
-    @QueryItem(id = 5, name = "实验仪器名称", type = QueryItem.TYPE_EDITTEXT)
-    @AddItem(id = 1, name = "实验仪器名称")
     private String experimental_equipment_name;
 
     @TableColumn(id = 3, name = "价值")
-    @AddItem(id = 2, name = "价值")
     private String value;
 
     @TableColumn(id = 4, name = "教学实验中心")
-    @QueryItem(id = 0, name = "教学实验中心", type = QueryItem.TYPE_SPINNER)
     private String teaching_experiment_center_name;
 
     @TableColumn(id = 5, name = "实验室")
-    @QueryItem(id = 1, name = "实验室", type = QueryItem.TYPE_SPINNER)
     private String laboratory_name;
 
     @TableColumn(id = 6, name = "实验分室")
-    @QueryItem(id = 2, name = "实验分室", type = QueryItem.TYPE_SPINNER)
-    private String experimental_compartment_name;
+    private String laboratory_compartment_name;
 
     @TableColumn(id = 7, name = "实验房间")
-    @QueryItem(id = 3, name = "实验房间", type = QueryItem.TYPE_SPINNER)
-    @AddItem(id = 3, name = "实验房间")
     private String laboratory_room_name;
 
     @TableColumn(id = 8, name = "是否可搬动")
-    @QueryItem(id = 4, name = "是否可搬动", type = QueryItem.TYPE_SPINNER)
-    @AddItem(id = 4, name = "实验房间")
     private String is_movable;
 
     @TableColumn(id = 9, name = "采购时间")
-    @AddItem(id = 5, name = "采购时间")
     private String procurement_time;
 
-    public String getId() {
-        return id;
+    public String getExperimental_equipment_id() {
+        return experimental_equipment_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setExperimental_equipment_id(String experimental_equipment_id) {
+        this.experimental_equipment_id = experimental_equipment_id;
     }
 
     public String getExperimental_equipment_name() {
@@ -111,11 +96,11 @@ public class ExperimentalEquipmentTable {
         this.laboratory_name = laboratory_name;
     }
 
-    public String getExperimental_compartment_name() {
-        return experimental_compartment_name;
+    public String getLaboratory_compartment_name() {
+        return laboratory_compartment_name;
     }
 
-    public void setExperimental_compartment_name(String experimental_compartment_name) {
-        this.experimental_compartment_name = experimental_compartment_name;
+    public void setLaboratory_compartment_name(String laboratory_compartment_name) {
+        this.laboratory_compartment_name = laboratory_compartment_name;
     }
 }

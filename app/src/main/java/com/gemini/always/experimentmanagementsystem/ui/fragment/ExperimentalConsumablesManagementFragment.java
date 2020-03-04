@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertExperimentalConsumablesManagement;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryExperimentalConsumablesManagement;
 import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentalConsumablesManagementTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
@@ -76,6 +78,8 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
     FloatingActionButton fabDelete;
 
     private Class tableClass = ExperimentalConsumablesManagementTable.class;
+    private Class queryClass = QueryExperimentalConsumablesManagement.class;
+    private Class insertClass = InsertExperimentalConsumablesManagement.class;
     private List<ExperimentalConsumablesManagementTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -246,7 +250,7 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -295,7 +299,7 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

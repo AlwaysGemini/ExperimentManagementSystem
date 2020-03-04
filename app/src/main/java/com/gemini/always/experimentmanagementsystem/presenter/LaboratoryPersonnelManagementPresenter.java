@@ -18,11 +18,11 @@ public class LaboratoryPersonnelManagementPresenter extends BasePresenter<Labora
 
     public void insertData(String job_number,
                            String title,
-                           String laboratory_name,
+                           String laboratory_id,
                            String incumbency) {
         this.laboratoryPersonnelManagementModel.insertData(job_number,
                 title,
-                laboratory_name,
+                laboratory_id,
                 incumbency, new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
