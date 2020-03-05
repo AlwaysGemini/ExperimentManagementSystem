@@ -61,14 +61,14 @@ public class ExperimentItemManagementModel {
     public void getData(String experiment_attribute,
                         String experiment_type,
                         String experiment_category,
-                        String experiment_project_name,
+                        String experiment_item_name,
                         OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .add("experiment_attribute", experiment_attribute)
                 .add("experiment_type", experiment_type)
                 .add("experiment_category", experiment_category)
-                .add("experiment_project_name", experiment_project_name)
+                .add("experiment_item_name", experiment_item_name)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override

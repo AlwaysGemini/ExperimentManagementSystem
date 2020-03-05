@@ -15,7 +15,7 @@ public class CourseExperimentOutlineTable {
     private String proportion_of_experimental_results;
 
     @TableColumn(id = 4, name = "实验项目")
-    private String experimental_item_name;
+    private String experiment_item_name;
 
     public String getCourse_id() {
         return course_id;
@@ -41,11 +41,11 @@ public class CourseExperimentOutlineTable {
         this.proportion_of_experimental_results = proportion_of_experimental_results;
     }
 
-    public String getExperimental_item_name() {
-        return experimental_item_name;
+    public String getExperiment_item_name() {
+        return experiment_item_name;
     }
 
-    public void setExperimental_item_name(String experimental_item_name) {
-        this.experimental_item_name = experimental_item_name;
+    public void setExperiment_item_name(String experiment_item_name) {
+        this.experiment_item_name = experiment_item_name;
     }
 }

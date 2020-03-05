@@ -12,8 +12,8 @@ public class LoginModel {
     public void login(String account, String password, final OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("account", account)
-                .add("password", password)
+                .add("user_account", account)
+                .add("user_password", password)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_LOGIN, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override

@@ -32,7 +32,7 @@ public class CourseExperimentOutlinePresenter extends BasePresenter<CourseExperi
     public void insertData(CourseExperimentOutlineTable courseExperimentOutlineTable) {
         this.courseExperimentOutlineModel.insertData(courseExperimentOutlineTable.getCourse_id(),
                 courseExperimentOutlineTable.getProportion_of_experimental_results(),
-                courseExperimentOutlineTable.getExperimental_item_name(), new OkHttpUtils.OnOkHttpUtilsListener() {
+                courseExperimentOutlineTable.getExperiment_item_name(), new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
                         getView().onInsertDataResult(isSuccess, responseJson);

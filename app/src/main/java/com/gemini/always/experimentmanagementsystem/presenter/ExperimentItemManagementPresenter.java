@@ -51,7 +51,7 @@ public class ExperimentItemManagementPresenter extends BasePresenter<Experimenta
                 experimentItemTable.getExperiment_item_name(),
                 experimentItemTable.getExperiment_content(),
                 experimentItemTable.getExperiment_hours(),
-                experimentItemTable.getExperiment_credits(),
+                experimentItemTable.getExperiment_credit(),
                 experimentItemTable.getExperiment_attribute(),
                 experimentItemTable.getExperiment_type(),
                 experimentItemTable.getExperiment_category(),
@@ -77,8 +77,8 @@ public class ExperimentItemManagementPresenter extends BasePresenter<Experimenta
     public void getData(String experimental_properties,
                         String experimental_type,
                         String experimental_category,
-                        String experimental_project_name) {
-        this.experimentItemManagementModel.getData(experimental_properties, experimental_type, experimental_category, experimental_project_name, new OkHttpUtils.OnOkHttpUtilsListener() {
+                        String experiment_item_name) {
+        this.experimentItemManagementModel.getData(experimental_properties, experimental_type, experimental_category, experiment_item_name, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
                 getView().onGetDataResult(isSuccess, responseJson);

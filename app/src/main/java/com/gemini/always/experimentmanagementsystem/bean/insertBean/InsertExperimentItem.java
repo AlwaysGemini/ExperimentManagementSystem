@@ -16,7 +16,7 @@ public class InsertExperimentItem {
     private String experiment_hours;
 
     @AddItem(id = 4, name = "实验学分")
-    private String experiment_credits;
+    private String experiment_credit;
 
     @AddItem(id = 5, name = "实验属性")
     private String experiment_attribute;
@@ -68,12 +68,12 @@ public class InsertExperimentItem {
         this.experiment_hours = experiment_hours;
     }
 
-    public String getExperiment_credits() {
-        return experiment_credits;
+    public String getExperiment_credit() {
+        return experiment_credit;
     }
 
-    public void setExperiment_credits(String experiment_credits) {
-        this.experiment_credits = experiment_credits;
+    public void setExperiment_credit(String experiment_credit) {
+        this.experiment_credit = experiment_credit;
     }
 
     public String getExperiment_attribute() {
