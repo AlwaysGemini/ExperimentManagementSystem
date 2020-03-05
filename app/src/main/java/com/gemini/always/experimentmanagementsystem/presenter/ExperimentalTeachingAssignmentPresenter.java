@@ -1,8 +1,8 @@
 package com.gemini.always.experimentmanagementsystem.presenter;
 
 import com.gemini.always.experimentmanagementsystem.base.BasePresenter;
-import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentalTeachingAssignmentTable;
-import com.gemini.always.experimentmanagementsystem.model.ExperimentalTeachingAssignmentModel;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentTeachingAssignmentTable;
+import com.gemini.always.experimentmanagementsystem.model.ExperimentTeachingAssignmentModel;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentalTeachingAssignmentView;
 
@@ -15,20 +15,18 @@ import org.json.JSONObject;
  */
 public class ExperimentalTeachingAssignmentPresenter extends BasePresenter<ExperimentalTeachingAssignmentView> {
 
-    private ExperimentalTeachingAssignmentModel model;
+    private ExperimentTeachingAssignmentModel model;
 
     public ExperimentalTeachingAssignmentPresenter() {
-        this.model = new ExperimentalTeachingAssignmentModel();
+        this.model = new ExperimentTeachingAssignmentModel();
     }
 
-    public void insertData(String name_of_teaching_class,
-                           String teacher,
-                           String including_experimental_items,
-                           String number_of_electives) {
-        this.model.insertData(name_of_teaching_class,
-                teacher,
-                including_experimental_items,
-                number_of_electives,
+    public void insertData(String experimental_teaching_class_id,
+                           String teacher_id,
+                           String experiment_item_id) {
+        this.model.insertData(experimental_teaching_class_id,
+                teacher_id,
+                experiment_item_id,
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
@@ -37,11 +35,10 @@ public class ExperimentalTeachingAssignmentPresenter extends BasePresenter<Exper
                 });
     }
 
-    public void insertData(ExperimentalTeachingAssignmentTable table) {
-        this.model.insertData(table.getName_of_teaching_class(),
+    public void insertData(ExperimentTeachingAssignmentTable table) {
+        this.model.insertData(table.getExperimental_teaching_class_name(),
                 table.getTeacher(),
-                table.getIncluding_experimental_items(),
-                table.getNumber_of_electives(),
+                table.getExperiment_item_name(),
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {
@@ -59,13 +56,13 @@ public class ExperimentalTeachingAssignmentPresenter extends BasePresenter<Exper
         });
     }
 
-    public void getData(String school_year,
+    public void getData(String year,
                         String semester,
-                        String school_of_commencement,
+                        String college,
                         String course) {
-        this.model.getData(school_year,
+        this.model.getData(year,
                 semester,
-                school_of_commencement,
+                college,
                 course, new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {

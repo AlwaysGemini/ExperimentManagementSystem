@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentalTeachingAssignmentTable;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertExperimentTeachingAssignment;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryExperimentTeachingAssignment;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentTeachingAssignmentTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalTeachingAssignmentPresenter;
@@ -72,8 +74,10 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
     FloatingActionButton fabDelete;
 
     private String title = "实验教学任务书";
-    private Class tableClass = ExperimentalTeachingAssignmentTable.class;
-    private List<ExperimentalTeachingAssignmentTable> list = new ArrayList<>();
+    private Class tableClass = ExperimentTeachingAssignmentTable.class;
+    private Class queryClass = QueryExperimentTeachingAssignment.class;
+    private Class insertClass = InsertExperimentTeachingAssignment.class;
+    private List<ExperimentTeachingAssignmentTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
     private List<String> selected_and_edited_list_for_query = new ArrayList<>();
@@ -127,7 +131,6 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                 int count = 0;
                 getPresenter().insertData(selected_and_edited_list_for_insert.get(count++),
                         selected_and_edited_list_for_insert.get(count++),
-                        selected_and_edited_list_for_insert.get(count++),
                         selected_and_edited_list_for_insert.get(count++));
             }
         }.start();
@@ -176,9 +179,9 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                 for (int i = 0; i < jsonArray.length(); i++) {
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_year", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "year", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "semester", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_of_commencement", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "college", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
@@ -243,7 +246,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -266,8 +269,8 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<ExperimentalTeachingAssignmentTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
-                                    for (ExperimentalTeachingAssignmentTable experimentalTeachingAssignmentTable : list) {
+                                    List<ExperimentTeachingAssignmentTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
+                                    for (ExperimentTeachingAssignmentTable experimentalTeachingAssignmentTable : list) {
                                         getPresenter().insertData(experimentalTeachingAssignmentTable);
                                     }
                                 } else {
@@ -292,7 +295,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
                         .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
+                        .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {

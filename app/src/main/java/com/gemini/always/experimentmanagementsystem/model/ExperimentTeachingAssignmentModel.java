@@ -11,23 +11,21 @@ import okhttp3.FormBody;
  * @Description:
  * @Date: Created in 9:38 2020/2/8
  */
-public class ExperimentalTeachingAssignmentModel {
+public class ExperimentTeachingAssignmentModel {
 
     private static final String URL_INSERT_DATA = "/experimentalTeachingAssignment/insertData";
     private static final String URL_getQueryConditionList = "/experimentalTeachingAssignment/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = "/experimentalTeachingAssignment/getData";
 
-    public void insertData(String name_of_teaching_class,
-                           String teacher,
-                           String including_experimental_items,
-                           String number_of_electives,
+    public void insertData(String experimental_teaching_class_id,
+                           String teacher_id,
+                           String experiment_item_name,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("name_of_teaching_class", name_of_teaching_class)
-                .add("teacher", teacher)
-                .add("including_experimental_items", including_experimental_items)
-                .add("number_of_electives", number_of_electives)
+                .add("experimental_teaching_class_id", experimental_teaching_class_id)
+                .add("teacher_id", teacher_id)
+                .add("experiment_item_name", experiment_item_name)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
@@ -50,16 +48,16 @@ public class ExperimentalTeachingAssignmentModel {
         });
     }
 
-    public void getData(String school_year,
+    public void getData(String year,
                         String semester,
-                        String school_of_commencement,
+                        String college,
                         String course,
                         OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("school_year", school_year)
+                .add("year", year)
                 .add("semester", semester)
-                .add("school_of_commencement", school_of_commencement)
+                .add("college", college)
                 .add("course", course)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {
