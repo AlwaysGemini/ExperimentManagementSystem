@@ -9,25 +9,8 @@ import okhttp3.FormBody;
 public class TeachingAssignmentOfExperimentalProjectModel {
 
     private static final String prefix = "/teachingAssignmentOfExperimentalProject";
-    private static final String URL_INSERT_DATA = prefix + "/insertData";
     private static final String URL_getQueryConditionList = prefix + "/getQueryConditionList";
     private static final String URL_getTeachingExperimentCenterList = prefix + "/getData";
-
-    public void insertData(String name_of_teaching_class,
-                           String number_of_elective_courses,
-                           OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
-        FormBody formBody = new FormBody
-                .Builder()
-                .add("name_of_teaching_class", name_of_teaching_class)
-                .add("number_of_elective_courses", number_of_elective_courses)
-                .build();
-        OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
-            @Override
-            public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                onOkHttpUtilsListener.onResult(isSuccess, responseJson);
-            }
-        });
-    }
 
     public void getQueryConditionList(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
@@ -42,15 +25,15 @@ public class TeachingAssignmentOfExperimentalProjectModel {
         });
     }
 
-    public void getData(String school_year,
+    public void getData(String year,
                         String semester,
-                        String school_of_commencement,
+                        String college,
                         String course, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("school_year", school_year)
+                .add("year", year)
                 .add("semester", semester)
-                .add("school_of_commencement", school_of_commencement)
+                .add("college", college)
                 .add("course", course)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {

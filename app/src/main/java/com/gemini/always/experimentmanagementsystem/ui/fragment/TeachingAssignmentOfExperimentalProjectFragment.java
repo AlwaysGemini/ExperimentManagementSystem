@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
+import com.gemini.always.experimentmanagementsystem.bean.queryBean.QueryTeachingAssignmentOfExperimentalProject;
 import com.gemini.always.experimentmanagementsystem.bean.tableBean.TeachingAssignmentOfExperimentalProjectTable;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.presenter.TeachingAssignmentOfExperimentalProjectPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
-import com.gemini.always.experimentmanagementsystem.util.FileUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.ListUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
@@ -25,7 +25,6 @@ import com.gemini.always.experimentmanagementsystem.view.BaseCURDView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
-import com.thl.filechooser.FileChooser;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
@@ -68,6 +67,7 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
 
     private String title = "实验项目教学任务书";
     private Class tableClass = TeachingAssignmentOfExperimentalProjectTable.class;
+    private Class queryClass = QueryTeachingAssignmentOfExperimentalProject.class;
     private List<TeachingAssignmentOfExperimentalProjectTable> list = new ArrayList<>();
     private List<List<String>> spinnerDataListForQuery = new ArrayList<>();
     private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
@@ -127,6 +127,8 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
                 }
             }
         });
+        fabAdd.setVisibility(View.GONE);
+        fabImport.setVisibility(View.GONE);
         fabDelete.setVisibility(View.GONE);
     }
 
@@ -154,7 +156,7 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
                         .setType(CustomDialog.TYPE_QUERY)
-                        .setClazz(tableClass)
+                        .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override
@@ -169,26 +171,7 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
                         .show();
                 break;
             case R.id.fab_import:
-                FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
-                    @Override
-                    public void onFileChoosen(String filePath) {
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                if (FileUtils.getFormatName(filePath).equals("xlsx")) {
-                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<TeachingAssignmentOfExperimentalProjectTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
-                                    for (TeachingAssignmentOfExperimentalProjectTable tableItem : list) {
-                                        getPresenter().insertData(tableItem);
-                                    }
-                                } else {
-                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
-                                }
-                            }
-                        }.start();
-                    }
-                });
-                FileUtils.initFileChooser(fileChooser);
+
                 break;
             case R.id.fab_export:
                 new Thread() {
@@ -200,21 +183,7 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
                 }.start();
                 break;
             case R.id.fab_add:
-                new CustomDialog.Builder(getContext())
-                        .setTitle("增加")
-                        .setType(CustomDialog.TYPE_ADD)
-                        .setClazz(tableClass)
-                        .serOnPositive("确定", new CustomDialog.DialogIF() {
-                            @Override
-                            public void onPositive(CustomDialog dialog, List<String> list) {
-                                selected_and_edited_list_for_insert = list;
-                                insertData();
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
-                        .create()
-                        .show();
+
                 break;
             case R.id.fab_delete:
                 if (table.getCheckedList().size() > 0)
@@ -233,17 +202,6 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
                             .show();
                 break;
         }
-    }
-
-    private void insertData() {
-        new Thread() {
-            @Override
-            public void run() {
-                int count = 0;
-                getPresenter().insertData(selected_and_edited_list_for_insert.get(count++),
-                        selected_and_edited_list_for_insert.get(count++));
-            }
-        }.start();
     }
 
     private void getQueryConditionList() {
@@ -270,13 +228,7 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
 
     @Override
     public void onInsertDataResult(Boolean isSuccess, JSONObject responseJson) {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            try {
-                XToastUtils.toast(responseJson.getString("msg"));
-            } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
-            }
-        });
+
     }
 
     @Override
@@ -288,9 +240,9 @@ public class TeachingAssignmentOfExperimentalProjectFragment extends BaseFragmen
                     spinnerDataListForQuery.add(new ArrayList<>());
                 }
                 int count = 0;
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_year", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "year", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "semester", spinnerDataListForQuery.get(count++));
-                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "school_of_commencement", spinnerDataListForQuery.get(count++));
+                ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "college", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
                 XToastUtils.toast(e.getMessage());
             }
