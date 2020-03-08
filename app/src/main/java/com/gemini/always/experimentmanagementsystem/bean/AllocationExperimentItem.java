@@ -10,11 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllocationExperimentItem {
-    private String experiment_name;
-    private int week;
-    private int day;
-    private int start_time;
-    private int end_time;
+    private String experiment_scheduling_id;
+    private String experiment_item_name;
+    private String teacher_id;
 
     public static List<AllocationExperimentItem> toList(JSONArray jsonArray) {
         List<AllocationExperimentItem> list = new ArrayList<>();
@@ -22,7 +20,9 @@ public class AllocationExperimentItem {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 AllocationExperimentItem item = new AllocationExperimentItem();
-                item.setExperiment_name(jsonObject.getString("experiment_name"));
+                item.setExperiment_scheduling_id(jsonObject.getString("experiment_scheduling_id"));
+                item.setExperiment_item_name(jsonObject.getString("experiment_item_name"));
+                item.setTeacher_id(jsonObject.getString("teacher_id"));
                 list.add(item);
             } catch (JSONException e) {
                 Logger.e(e, "JSONException:");
@@ -31,43 +31,27 @@ public class AllocationExperimentItem {
         return list;
     }
 
-    public String getExperiment_name() {
-        return experiment_name;
+    public String getExperiment_scheduling_id() {
+        return experiment_scheduling_id;
     }
 
-    public void setExperiment_name(String experiment_name) {
-        this.experiment_name = experiment_name;
+    public void setExperiment_scheduling_id(String experiment_scheduling_id) {
+        this.experiment_scheduling_id = experiment_scheduling_id;
     }
 
-    public int getWeek() {
-        return week;
+    public String getExperiment_item_name() {
+        return experiment_item_name;
     }
 
-    public void setWeek(int week) {
-        this.week = week;
+    public void setExperiment_item_name(String experiment_item_name) {
+        this.experiment_item_name = experiment_item_name;
     }
 
-    public int getDay() {
-        return day;
+    public String getTeacher_id() {
+        return teacher_id;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(int start_time) {
-        this.start_time = start_time;
-    }
-
-    public int getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(int end_time) {
-        this.end_time = end_time;
+    public void setTeacher_id(String teacher_id) {
+        this.teacher_id = teacher_id;
     }
 }

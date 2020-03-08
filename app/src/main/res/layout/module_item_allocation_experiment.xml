@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="@dimen/module_item_allocation_experiment_height"
     android:orientation="horizontal">
 
@@ -13,81 +13,11 @@
         android:gravity="center" />
 
     <TextView
-        android:id="@+id/text_experiment_name"
+        android:id="@+id/text_experiment_item_name"
         android:layout_width="@dimen/module_item_allocation_experiment_experiment_name_width"
         android:layout_height="match_parent"
         android:background="@drawable/linearlayout_border"
         android:gravity="center" />
-
-    <LinearLayout
-        android:layout_width="@dimen/module_item_allocation_experiment_cell_width"
-        android:layout_height="match_parent"
-        android:background="@drawable/linearlayout_border"
-        android:gravity="center">
-
-        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_classroom"
-            style="@style/Material.SpinnerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/module_item_allocation_experiment_cell_width"
-        android:layout_height="match_parent"
-        android:background="@drawable/linearlayout_border"
-        android:gravity="center">
-
-        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_week"
-            style="@style/Material.SpinnerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/module_item_allocation_experiment_cell_width"
-        android:layout_height="match_parent"
-        android:background="@drawable/linearlayout_border"
-        android:gravity="center">
-
-        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_day"
-            style="@style/Material.SpinnerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/module_item_allocation_experiment_cell_width"
-        android:layout_height="match_parent"
-        android:background="@drawable/linearlayout_border"
-        android:gravity="center">
-
-        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_start_time"
-            style="@style/Material.SpinnerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/module_item_allocation_experiment_cell_width"
-        android:layout_height="match_parent"
-        android:background="@drawable/linearlayout_border"
-        android:gravity="center">
-
-        <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_end_time"
-            style="@style/Material.SpinnerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="@dimen/module_item_allocation_experiment_cell_width"

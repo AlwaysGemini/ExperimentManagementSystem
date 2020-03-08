@@ -11,7 +11,7 @@ public class ExperimentSchedulingModel {
     private static final String prefix = "/experimentScheduling";
     private static final String URL_INSERT_DATA = prefix + "/insertData";
     private static final String URL_getFreeTimeData = prefix + "/getFreeTimeData";
-    private static final String URL_getTeachingExperimentCenterList = prefix + "/getData";
+    private static final String URL_getUnAllocationData = prefix + "/getUnAllocationData";
 
     public void getFreeTimeData(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
@@ -29,9 +29,10 @@ public class ExperimentSchedulingModel {
     public void getUnAllocationData(OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
+                .add("teacher_id", "2")
                 .build();
 
-        OkHttpUtils.postByFormBody(formBody, URL_getFreeTimeData, new OkHttpUtils.OnOkHttpUtilsListener() {
+        OkHttpUtils.postByFormBody(formBody, URL_getUnAllocationData, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
                 onOkHttpUtilsListener.onResult(isSuccess, responseJson);
@@ -39,35 +40,25 @@ public class ExperimentSchedulingModel {
         });
     }
 
-    public void insertData(String name_of_teaching_class,
-                           String number_of_elective_courses,
+    public void insertData(String experiment_scheduling_id,
+                           String instructor_id,
+                           String laboratory_room_id,
+                           String week,
+                           String day,
+                           String start_time,
+                           String length,
                            OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
-                .add("name_of_teaching_class", name_of_teaching_class)
-                .add("number_of_elective_courses", number_of_elective_courses)
+                .add("experiment_scheduling_id", experiment_scheduling_id)
+                .add("instructor_id", instructor_id)
+                .add("laboratory_room_id", laboratory_room_id)
+                .add("week", week)
+                .add("day", day)
+                .add("start_time", start_time)
+                .add("length", length)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_INSERT_DATA, new OkHttpUtils.OnOkHttpUtilsListener() {
-            @Override
-            public void onResult(Boolean isSuccess, JSONObject responseJson) {
-                onOkHttpUtilsListener.onResult(isSuccess, responseJson);
-            }
-        });
-    }
-
-
-    public void getData(String school_year,
-                        String semester,
-                        String school_of_commencement,
-                        String course, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
-        FormBody formBody = new FormBody
-                .Builder()
-                .add("school_year", school_year)
-                .add("semester", semester)
-                .add("school_of_commencement", school_of_commencement)
-                .add("course", course)
-                .build();
-        OkHttpUtils.postByFormBody(formBody, URL_getTeachingExperimentCenterList, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
                 onOkHttpUtilsListener.onResult(isSuccess, responseJson);

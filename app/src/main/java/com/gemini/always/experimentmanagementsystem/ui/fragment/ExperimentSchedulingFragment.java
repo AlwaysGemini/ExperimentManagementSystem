@@ -17,8 +17,11 @@ import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.adapter.AllocationExperimentAdapter;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.AllocationExperimentItem;
+import com.gemini.always.experimentmanagementsystem.bean.insertBean.InsertExperimentScheduling;
 import com.gemini.always.experimentmanagementsystem.custom.courseTimeTable.CourseTimeTableView;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.CustomDialog;
 import com.gemini.always.experimentmanagementsystem.presenter.ExperimentSchedulingPresenter;
+import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.gemini.always.experimentmanagementsystem.view.ExperimentSchedulingView;
 import com.orhanobut.logger.Logger;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -48,8 +51,12 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
     RecyclerView recyclerView;
     Unbinder unbinder;
 
+    private AllocationExperimentAdapter adapter;
+
     private int[][][] freeTimeData = new int[20][7][12];
     private List<AllocationExperimentItem> allocationExperimentList = new ArrayList<>();
+    private Class insertClass = InsertExperimentScheduling.class;
+    private List<String> selected_and_edited_list_for_insert = new ArrayList<>();
 
     @Nullable
     @Override
@@ -64,7 +71,7 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initView();
+        //initView();
         initData();
     }
 
@@ -92,13 +99,10 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> courseTimeTable.setFreeTime(freeTimeData, weekList.get(position) - 1));
             }
         });
-        AllocationExperimentItem allocationExperimentItem = new AllocationExperimentItem();
-        allocationExperimentItem.setExperiment_name("测试课程");
-        allocationExperimentList.add(allocationExperimentItem);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), DividerItemDecoration.VERTICAL));
-        AllocationExperimentAdapter adapter = new AllocationExperimentAdapter(getContext(), R.layout.module_item_allocation_experiment, allocationExperimentList);
+        adapter = new AllocationExperimentAdapter(R.layout.module_item_allocation_experiment, allocationExperimentList);
         adapter.removeAllHeaderView();
         View view = View.inflate(getContext(), R.layout.module_head_allocation_experiment, null);
         adapter.addHeaderView(view);
@@ -107,7 +111,21 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.button_allocation:
-
+                        new CustomDialog.Builder(getContext())
+                                .setTitle("增加")
+                                .setType(CustomDialog.TYPE_ADD)
+                                .setClazz(insertClass)
+                                .serOnPositive("确定", new CustomDialog.DialogIF() {
+                                    @Override
+                                    public void onPositive(CustomDialog dialog, List<String> list) {
+                                        selected_and_edited_list_for_insert = list;
+                                        insertData(allocationExperimentList.get(position).getExperiment_scheduling_id());
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss())
+                                .create()
+                                .show();
                         break;
                 }
             }
@@ -116,18 +134,34 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
     }
 
     private void initData() {
-        new Thread() {
+        /*new Thread() {
             @Override
             public void run() {
                 getPresenter().getFreeTimeData();
             }
-        }.start();
+        }.start();*/
         new Thread() {
             @Override
             public void run() {
                 getPresenter().getUnAllocationData();
             }
         }.start();
+    }
+
+    private void insertData(String experiment_scheduling_id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int count = 0;
+                getPresenter().insertData(experiment_scheduling_id,
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++),
+                        selected_and_edited_list_for_insert.get(count++));
+            }
+        }).start();
     }
 
     @Override
@@ -171,9 +205,8 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
         if (isSuccess) {
             try {
                 JSONArray jsonArray = responseJson.getJSONArray("data");
-                //Gson gson = new Gson();
-                //allocationExperimentList.addAll(gson.fromJson(jsonArray.toString(),new TypeToken<List<AllocationExperimentItem>>(){}.getType()));
                 allocationExperimentList = AllocationExperimentItem.toList(jsonArray);
+                Objects.requireNonNull(getActivity()).runOnUiThread(this::initView);
             } catch (JSONException e) {
                 Logger.e(e, "JSONException:");
             }
@@ -182,7 +215,16 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
 
     @Override
     public void onInsertDataResult(Boolean isSuccess, JSONObject responseJson) {
-
+        if (isSuccess) {
+            Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                try {
+                    XToastUtils.toast(responseJson.getString("msg"));
+                } catch (JSONException e) {
+                    Logger.e(e, "JSONException:");
+                }
+            });
+            
+        }
     }
 
 

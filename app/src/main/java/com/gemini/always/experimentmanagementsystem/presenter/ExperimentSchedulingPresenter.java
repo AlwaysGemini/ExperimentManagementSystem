@@ -32,7 +32,26 @@ public class ExperimentSchedulingPresenter extends BasePresenter<ExperimentSched
         });
     }
 
-    public void insertData() {
+    public void insertData(String experiment_scheduling_id,
+                           String instructor_id,
+                           String laboratory_room_id,
+                           String week,
+                           String day,
+                           String start_time,
+                           String length) {
+        this.model.insertData(experiment_scheduling_id,
+                instructor_id,
+                laboratory_room_id,
+                week,
+                day,
+                start_time,
+                length,
+                new OkHttpUtils.OnOkHttpUtilsListener() {
+                    @Override
+                    public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                        getView().onInsertDataResult(isSuccess, responseJson);
+                    }
+                });
 
     }
 }
