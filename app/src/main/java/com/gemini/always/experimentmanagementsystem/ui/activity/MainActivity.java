@@ -293,6 +293,9 @@ public class MainActivity extends AppCompatActivity {
                     case "实验排课":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentSchedulingFragment");
                         break;
+                    case "选课规则设置":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "RulesOfSelectingCoursesFragment");
+                        break;
                 }
             }
         });

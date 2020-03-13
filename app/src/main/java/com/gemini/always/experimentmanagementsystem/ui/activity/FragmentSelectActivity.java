@@ -19,6 +19,7 @@ import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalTeac
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LaboratoryPersonnelManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.LoginFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.MaintenanceOfTeachingExperimentalClassFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.RulesOfSelectingCoursesFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.TeachingAssignmentOfExperimentalProjectFragment;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
@@ -129,6 +130,10 @@ public class FragmentSelectActivity extends AppCompatActivity {
             case "ExperimentSchedulingFragment":
                 ExperimentSchedulingFragment experimentSchedulingFragment = new ExperimentSchedulingFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentSchedulingFragment).commitAllowingStateLoss();
+                break;
+            case "RulesOfSelectingCoursesFragment":
+                RulesOfSelectingCoursesFragment rulesOfSelectingCoursesFragment = new RulesOfSelectingCoursesFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, rulesOfSelectingCoursesFragment).commitAllowingStateLoss();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");
