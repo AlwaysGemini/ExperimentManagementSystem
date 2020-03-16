@@ -95,7 +95,9 @@ public class LoginFragment extends BaseFragment<LoginView, LoginPresenter> imple
         });
         if (isSuccess) {
             try {
-                User.login(responseJson.getJSONObject("data").getString("user_account"));
+                User.login(responseJson.getJSONObject("data").getString("user_account"),
+                        responseJson.getJSONObject("data").getString("user_id"),
+                        responseJson.getJSONObject("data").getString("user_role"));
             } catch (JSONException e) {
                 Logger.e(e, "JSONException:");
             }

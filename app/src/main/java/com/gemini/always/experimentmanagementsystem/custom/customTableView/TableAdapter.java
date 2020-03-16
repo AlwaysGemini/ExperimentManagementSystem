@@ -111,6 +111,15 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
             checkBox.setChecked(false);
             mCheckStates.clear();
         }
+        int columnNum = 0;
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            field.setAccessible(true);
+            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
+            if (fieldAnnotation != null) {
+                columnNum++;
+            }
+        }
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             field.setAccessible(true);
@@ -134,7 +143,7 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
                 cell[sequence].addView(textView);
             }
         }
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < columnNum; i++) {
             mContainer.addView(cell[i]);
         }
     }
@@ -155,7 +164,16 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
         mContainer.addView(checkBoxContainer);
         checkBoxContainer.setVisibility(View.GONE);
         Field[] fields = clazz.getDeclaredFields();
-        LinearLayout[] cell = new LinearLayout[fields.length];
+        int columnNum = 0;
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            field.setAccessible(true);
+            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
+            if (fieldAnnotation != null) {
+                columnNum++;
+            }
+        }
+        LinearLayout[] cell = new LinearLayout[columnNum];
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             field.setAccessible(true);
@@ -175,7 +193,7 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
                 cell[sequence].addView(textView);
             }
         }
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < columnNum; i++) {
             mContainer.addView(cell[i]);
         }
         super.addHeaderView(mContainer);

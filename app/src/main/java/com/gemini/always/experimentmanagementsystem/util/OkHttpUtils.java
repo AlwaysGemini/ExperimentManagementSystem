@@ -42,7 +42,7 @@ public class OkHttpUtils {
      * @param params
      * @return
      */
-    public static JSONObject upload(String url, File file, String fileName, Map<String, String> params) {
+    public static void upload(String url, File file, String fileName, Map<String, String> params, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         OkHttpClient client = new OkHttpClient();
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
@@ -58,19 +58,29 @@ public class OkHttpUtils {
                 .url(Constants.URL + url)
                 .post(multipartBody)
                 .build();
-        Response response;
-        JSONObject responseJson = null;
-        try {
-            response = client.newCall(request).execute();
-            responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
-        } catch (IOException e) {
-            Logger.e(e, "IOException:");
-        } catch (JSONException e) {
-            Logger.e(e, "JSONException:");
-        }
-        if (responseJson == null) responseJson = new JSONObject();
-        Logger.json(responseJson.toString());
-        return responseJson;
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                Logger.e(e, "IOException:");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                try {
+                    JSONObject responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
+                    Logger.json(responseJson.toString());
+                    onOkHttpUtilsListener.onResult(true, responseJson);
+                } catch (JSONException e) {
+                    call.cancel();
+                    Logger.e(e, "JSONException:");
+                } catch (IOException e) {
+                    call.cancel();
+                    Logger.e(e, "IOException:");
+                }
+            }
+        });
     }
 
     public static JSONObject post(JSONObject requestJson, String url) {

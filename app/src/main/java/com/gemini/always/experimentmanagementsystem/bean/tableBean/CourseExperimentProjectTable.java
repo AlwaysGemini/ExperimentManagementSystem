@@ -15,31 +15,28 @@ public class CourseExperimentProjectTable {
     @TableColumn(id = 3, name = "课程英文名称")
     private String course_english_name;
 
-    @TableColumn(id = 4, name = "课程视频")
-    private String course_video;
-
-    @TableColumn(id = 5, name = "开课学院")
+    @TableColumn(id = 4, name = "开课学院")
     private String college;
 
-    @TableColumn(id = 6, name = "学分")
+    @TableColumn(id = 5, name = "学分")
     private String credit;
 
-    @TableColumn(id = 7, name = "总学时")
+    @TableColumn(id = 6, name = "总学时")
     private String class_hour;
 
-    @TableColumn(id = 8, name = "周学时")
+    @TableColumn(id = 7, name = "周学时")
     private String week_class_hour;
 
-    @TableColumn(id = 9, name = "实验项目数")
+    @TableColumn(id = 8, name = "实验项目数")
     private String number_of_experimental_items;
 
-    @TableColumn(id = 10, name = "课程类别")
+    @TableColumn(id = 9, name = "课程类别")
     private String course_category;
 
-    @TableColumn(id = 11, name = "课程归属")
+    @TableColumn(id = 10, name = "课程归属")
     private String course_assignment;
 
-    @TableColumn(id = 12, name = "课程启用年级")
+    @TableColumn(id = 11, name = "课程启用年级")
     private String enabling_grade;
 
     public String getCourse_id() {
@@ -64,14 +61,6 @@ public class CourseExperimentProjectTable {
 
     public void setCourse_english_name(String course_english_name) {
         this.course_english_name = course_english_name;
-    }
-
-    public String getCourse_video() {
-        return course_video;
-    }
-
-    public void setCourse_video(String course_video) {
-        this.course_video = course_video;
     }
 
     public String getCollege() {

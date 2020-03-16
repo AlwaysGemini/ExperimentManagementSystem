@@ -112,17 +112,55 @@ public class MainActivity extends AppCompatActivity {
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .inject();
 
-        mAdapter = new DrawerAdapter(Arrays.asList(
-                createItemFor(POS_CHANGE_ROLE).setChecked(true),
-                createItemFor(POS_SETTING),
-                new SpaceItem(48),
-                createItemFor(POS_LOGOUT)));
+        if (User.getUserType().equals("管理员+教师") || User.getUserType().equals("选择为管理员") || User.getUserType().equals("选择为教师")) {
+            mAdapter = new DrawerAdapter(Arrays.asList(
+                    createItemFor(POS_CHANGE_ROLE).setChecked(false),
+                    createItemFor(POS_SETTING),
+                    new SpaceItem(48).setChecked(true),
+                    createItemFor(POS_LOGOUT)));
+            mAdapter.setSelected(2);
+        } else {
+            mAdapter = new DrawerAdapter(Arrays.asList(
+                    createItemFor(POS_SETTING),
+                    new SpaceItem(48),
+                    createItemFor(POS_LOGOUT)));
+        }
+
         mAdapter.setListener(new DrawerAdapter.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int position) {
-                switch (position) {
+                if (mSlidingRootNav.isMenuClosed()) {
+                    return;
+                }
+                int realPosition = position;
+                if (!(User.getUserType().equals("管理员+教师") || User.getUserType().equals("选择为管理员") || User.getUserType().equals("选择为教师"))) {
+                    realPosition = position + 1;
+                }
+                switch (realPosition) {
                     case POS_CHANGE_ROLE:
-
+                        ArrayList<String> items = new ArrayList<>();
+                        items.add("管理员");
+                        items.add("教师");
+                        new MaterialDialog.Builder(MainActivity.this)
+                                .title("切换身份")
+                                .items(items)
+                                .itemsCallbackSingleChoice(
+                                        0,
+                                        new MaterialDialog.ListCallbackSingleChoice() {
+                                            @Override
+                                            public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                                                XToastUtils.toast("选择了" + text);
+                                                if (text.equals("管理员")) {
+                                                    User.setUserType("选择为管理员");
+                                                } else {
+                                                    User.setUserType("选择为教师");
+                                                }
+                                                return true;
+                                            }
+                                        })
+                                .positiveText(R.string.btn_confirm)
+                                .negativeText(R.string.btn_cancel)
+                                .show();
                         break;
                     case POS_SETTING:
 
@@ -296,6 +334,9 @@ public class MainActivity extends AppCompatActivity {
                     case "选课规则设置":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "RulesOfSelectingCoursesFragment");
                         break;
+                    case "实验项目指导书提交":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentProjectInstructionUploadFragment");
+                        break;
                 }
             }
         });
@@ -307,59 +348,113 @@ public class MainActivity extends AppCompatActivity {
      * 初始化主界面的列表数据
      */
     private void initData() {
-        level0Item[0] = new Level0Item("实验课程项目");
-        data.add(level0Item[0]);
+        int count = 0;
+        switch (User.getUserType()) {
+            case "":
+            case "管理员+教师":
+            case "选择为管理员":
+            case "管理员":
+                level0Item[count] = new Level0Item("实验课程项目");
+                data.add(level0Item[count++]);
 
-        level0Item[1] = new Level0Item("实验资源管理");
-        level0Item[1].addSubItem(new Item("实验机构"));
-        level0Item[1].addSubItem(new Item("实验室人员管理"));
-        level0Item[1].addSubItem(new Item("实验仪器设备管理"));
-        level0Item[1].addSubItem(new Item("实验耗材管理"));
-        level0Item[1].addSubItem(new Item("代码维护"));
-        data.add(level0Item[1]);
+                level0Item[count] = new Level0Item("实验资源管理");
+                level0Item[count].addSubItem(new Item("实验机构"));
+                level0Item[count].addSubItem(new Item("实验室人员管理"));
+                level0Item[count].addSubItem(new Item("实验仪器设备管理"));
+                level0Item[count].addSubItem(new Item("实验耗材管理"));
+                level0Item[count].addSubItem(new Item("代码维护"));
+                data.add(level0Item[count++]);
 
-        level0Item[2] = new Level0Item("实验项目管理");
-        level0Item[2].addSubItem(new Item("实验项目管理"));
-        level0Item[2].addSubItem(new Item("课程实验大纲"));
-        data.add(level0Item[2]);
+                level0Item[count] = new Level0Item("实验项目管理");
+                level0Item[count].addSubItem(new Item("实验项目管理"));
+                level0Item[count].addSubItem(new Item("课程实验大纲"));
+                data.add(level0Item[count++]);
 
-        level0Item[3] = new Level0Item("实验开课排课");
-        level0Item[3].addSubItem(new Item("实验教学班维护"));
-        level0Item[3].addSubItem(new Item("实验教学任务书"));
-        level0Item[3].addSubItem(new Item("实验项目教学任务书"));
-        level0Item[3].addSubItem(new Item("实验排课"));
-        level0Item[3].addSubItem(new Item("实验项目指导书审核"));
-        level0Item[3].addSubItem(new Item("实验项目指导书查看"));
-        data.add(level0Item[3]);
+                level0Item[count] = new Level0Item("实验开课排课");
+                level0Item[count].addSubItem(new Item("实验教学班维护"));
+                level0Item[count].addSubItem(new Item("实验教学任务书"));
+                level0Item[count].addSubItem(new Item("实验项目教学任务书"));
+                level0Item[count].addSubItem(new Item("实验排课"));
+                level0Item[count].addSubItem(new Item("实验项目指导书审核"));
+                level0Item[count].addSubItem(new Item("实验项目指导书查看"));
+                data.add(level0Item[count++]);
 
-        level0Item[4] = new Level0Item("实验选课管理");
-        level0Item[4].addSubItem(new Item("选课规则设置"));
-        level0Item[4].addSubItem(new Item("选课名单调整"));
-        level0Item[4].addSubItem(new Item("生成配课"));
-        data.add(level0Item[4]);
+                level0Item[count] = new Level0Item("实验选课管理");
+                level0Item[count].addSubItem(new Item("选课规则设置"));
+                level0Item[count].addSubItem(new Item("选课名单调整"));
+                level0Item[count].addSubItem(new Item("生成配课"));
+                data.add(level0Item[count++]);
 
-        level0Item[5] = new Level0Item("实验成绩管理");
-        level0Item[5].addSubItem(new Item("实验项目成绩录入"));
-        level0Item[5].addSubItem(new Item("实验成绩汇总入"));
-        level0Item[5].addSubItem(new Item("实验成绩审核"));
-        level0Item[5].addSubItem(new Item("实验考勤成绩"));
-        data.add(level0Item[5]);
+                level0Item[count] = new Level0Item("实验成绩管理");
+                level0Item[count].addSubItem(new Item("实验项目成绩录入"));
+                level0Item[count].addSubItem(new Item("实验成绩汇总入"));
+                level0Item[count].addSubItem(new Item("实验成绩审核"));
+                level0Item[count].addSubItem(new Item("实验考勤成绩"));
+                data.add(level0Item[count++]);
 
-        level0Item[6] = new Level0Item("开放性实验管理");
-        level0Item[6].addSubItem(new Item("项目申请"));
-        level0Item[6].addSubItem(new Item("项目审核"));
-        level0Item[6].addSubItem(new Item("实验安排"));
-        level0Item[6].addSubItem(new Item("预约控制"));
-        level0Item[6].addSubItem(new Item("名单调整"));
-        level0Item[6].addSubItem(new Item("成绩管理"));
-        data.add(level0Item[6]);
+                level0Item[count] = new Level0Item("开放性实验管理");
+                level0Item[count].addSubItem(new Item("项目申请"));
+                level0Item[count].addSubItem(new Item("项目审核"));
+                level0Item[count].addSubItem(new Item("实验安排"));
+                level0Item[count].addSubItem(new Item("预约控制"));
+                level0Item[count].addSubItem(new Item("名单调整"));
+                level0Item[count].addSubItem(new Item("成绩管理"));
+                data.add(level0Item[count++]);
 
-        level0Item[7] = new Level0Item("实验课表打印");
-        level0Item[7].addSubItem(new Item("课程课表打印"));
-        level0Item[7].addSubItem(new Item("教师课表打印"));
-        level0Item[7].addSubItem(new Item("场地课表打印"));
-        data.add(level0Item[7]);
+                level0Item[count] = new Level0Item("实验课表打印");
+                level0Item[count].addSubItem(new Item("课程课表打印"));
+                level0Item[count].addSubItem(new Item("教师课表打印"));
+                level0Item[count].addSubItem(new Item("场地课表打印"));
+                data.add(level0Item[count++]);
+                break;
+            case "选择为教师":
+            case "教师":
+                level0Item[count] = new Level0Item("实验课程项目");
+                data.add(level0Item[count++]);
 
+                level0Item[count] = new Level0Item("实验项目管理");
+                level0Item[count].addSubItem(new Item("实验项目管理"));
+                level0Item[count].addSubItem(new Item("课程实验大纲"));
+                data.add(level0Item[count++]);
+
+                level0Item[count] = new Level0Item("实验开课排课");
+                level0Item[count].addSubItem(new Item("实验教学班维护"));
+                level0Item[count].addSubItem(new Item("实验教学任务书"));
+                level0Item[count].addSubItem(new Item("实验项目教学任务书"));
+                level0Item[count].addSubItem(new Item("实验排课"));
+                level0Item[count].addSubItem(new Item("实验项目指导书提交"));
+                level0Item[count].addSubItem(new Item("实验项目指导书查看"));
+                data.add(level0Item[count++]);
+
+                level0Item[count] = new Level0Item("实验选课管理");
+                level0Item[count].addSubItem(new Item("选课名单调整"));
+                level0Item[count].addSubItem(new Item("生成配课"));
+                data.add(level0Item[count++]);
+
+                level0Item[count] = new Level0Item("实验成绩管理");
+                level0Item[count].addSubItem(new Item("实验项目成绩录入"));
+                level0Item[count].addSubItem(new Item("实验成绩汇总入"));
+                level0Item[count].addSubItem(new Item("实验考勤成绩"));
+                data.add(level0Item[count++]);
+
+                level0Item[count] = new Level0Item("开放性实验管理");
+                level0Item[count].addSubItem(new Item("项目申请"));
+                level0Item[count].addSubItem(new Item("实验安排"));
+                level0Item[count].addSubItem(new Item("预约控制"));
+                level0Item[count].addSubItem(new Item("名单调整"));
+                level0Item[count].addSubItem(new Item("成绩管理"));
+                data.add(level0Item[count++]);
+
+                level0Item[count] = new Level0Item("实验课表打印");
+                level0Item[count].addSubItem(new Item("课程课表打印"));
+                level0Item[count].addSubItem(new Item("教师课表打印"));
+                level0Item[count].addSubItem(new Item("场地课表打印"));
+                data.add(level0Item[count++]);
+                break;
+            case "学生":
+
+                break;
+        }
         adapter.notifyDataSetChanged();
     }
 }

@@ -9,9 +9,11 @@ public class User {
     private String userSex;
     private String userPhoneNumber;
 
-    public static void login(String account) {
+    public static void login(String account, String user_id, String userType) {
         if (MMKV.defaultMMKV().decodeString("account") == null) {
             MMKV.defaultMMKV().encode("account", account);
+            MMKV.defaultMMKV().encode("user_id", user_id);
+            MMKV.defaultMMKV().encode("userType", userType);
         }
     }
 
@@ -21,8 +23,12 @@ public class User {
 
     public static void logout() {
         if (MMKV.defaultMMKV().decodeString("account") != null) {
-            MMKV.defaultMMKV().remove("account");
+            MMKV.defaultMMKV().clearAll();
         }
+    }
+
+    public static String getUserType() {
+        return MMKV.defaultMMKV().getString("userType", "");
     }
 
     public String getUserId() {
@@ -41,12 +47,8 @@ public class User {
         this.userName = userName;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public static void setUserType(String userType) {
+        MMKV.defaultMMKV().encode("userType", userType);
     }
 
     public String getUserSex() {
