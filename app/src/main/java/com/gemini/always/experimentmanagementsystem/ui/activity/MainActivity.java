@@ -337,6 +337,9 @@ public class MainActivity extends AppCompatActivity {
                     case "实验项目指导书提交":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentProjectInstructionUploadFragment");
                         break;
+                    case "实验项目指导书审核":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentProjectInstructionExaminingFragment");
+                        break;
                 }
             }
         });

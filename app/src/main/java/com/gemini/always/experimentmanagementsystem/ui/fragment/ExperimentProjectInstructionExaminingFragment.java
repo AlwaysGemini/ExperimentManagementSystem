@@ -12,18 +12,17 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentProjectInstructionUploadTable;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentProjectInstructionExaminingTable;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
-import com.gemini.always.experimentmanagementsystem.presenter.ExperimentProjectInstructionUploadPresenter;
+import com.gemini.always.experimentmanagementsystem.presenter.ExperimentProjectInstructionExaminingPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
-import com.gemini.always.experimentmanagementsystem.view.ExperimentProjectInstructionUploadView;
+import com.gemini.always.experimentmanagementsystem.view.ExperimentProjectInstructionExaminingView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
-import com.thl.filechooser.FileChooser;
-import com.thl.filechooser.FileInfo;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONException;
@@ -38,30 +37,30 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ExperimentProjectInstructionUploadFragment extends BaseFragment<ExperimentProjectInstructionUploadView, ExperimentProjectInstructionUploadPresenter> implements ExperimentProjectInstructionUploadView {
+public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<ExperimentProjectInstructionExaminingView, ExperimentProjectInstructionExaminingPresenter> implements ExperimentProjectInstructionExaminingView, View.OnClickListener {
 
-    Unbinder unbinder;
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
     MyTableView table;
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
-    @BindView(R.id.fab_upload)
-    FloatingActionButton fabUpload;
+    @BindView(R.id.fab_examining)
+    FloatingActionButton fabExamining;
     @BindView(R.id.fab_query)
     FloatingActionButton fabQuery;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
+    Unbinder unbinder;
 
-    private String title = "实验项目指导书提交";
-    private Class tableClass = ExperimentProjectInstructionUploadTable.class;
-    private List<ExperimentProjectInstructionUploadTable> list = new ArrayList<>();
+    private String title = "实验项目指导书审核";
+    private Class tableClass = ExperimentProjectInstructionExaminingTable.class;
+    private List<ExperimentProjectInstructionExaminingTable> list = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_experiment_project_instruction_upload, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_experiment_project_instruction_examining, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -70,11 +69,22 @@ public class ExperimentProjectInstructionUploadFragment extends BaseFragment<Exp
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public ExperimentProjectInstructionExaminingPresenter createPresenter() {
+        return new ExperimentProjectInstructionExaminingPresenter();
+    }
+
+    @Override
+    public ExperimentProjectInstructionExaminingView createView() {
         initView();
+
+        return this;
     }
 
     private void initView() {
-        fabUpload.setVisibility(View.GONE);
+        fabExamining.setVisibility(View.GONE);
 
         titlebar.setTitle(title);
         titlebar.setLeftClickListener(new View.OnClickListener() {
@@ -89,16 +99,6 @@ public class ExperimentProjectInstructionUploadFragment extends BaseFragment<Exp
         });
     }
 
-    @Override
-    public ExperimentProjectInstructionUploadPresenter createPresenter() {
-        return new ExperimentProjectInstructionUploadPresenter();
-    }
-
-    @Override
-    public ExperimentProjectInstructionUploadView createView() {
-        return this;
-    }
-
     private void getExperimentProjectInstructionState() {
         new Thread() {
             @Override
@@ -108,13 +108,12 @@ public class ExperimentProjectInstructionUploadFragment extends BaseFragment<Exp
         }.start();
     }
 
-    private void uploadExperimentProjectInstruction(String filePath,
-                                                    String fileName,
-                                                    String experiment_project_instruction_id) {
+    private void examining(String experiment_project_instruction_id,
+                           String state) {
         new Thread() {
             @Override
             public void run() {
-                getPresenter().uploadExperimentProjectInstruction(filePath, fileName, experiment_project_instruction_id);
+                getPresenter().examining(experiment_project_instruction_id, state);
             }
         }.start();
     }
@@ -144,8 +143,8 @@ public class ExperimentProjectInstructionUploadFragment extends BaseFragment<Exp
                                 table.setCheckedPosition(position, true);
                                 ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0, 1.0f, 100, 100);
                                 scaleAnimation.setDuration(500);
-                                fabUpload.setVisibility(View.VISIBLE);
-                                fabUpload.startAnimation(scaleAnimation);
+                                fabExamining.setVisibility(View.VISIBLE);
+                                fabExamining.startAnimation(scaleAnimation);
                             }
                             return false;
                         }
@@ -165,7 +164,7 @@ public class ExperimentProjectInstructionUploadFragment extends BaseFragment<Exp
     }
 
     @Override
-    public void onUploadExperimentProjectInstructionResult(Boolean isSuccess, JSONObject responseJson) {
+    public void onExaminingExperimentProjectInstructionResult(Boolean isSuccess, JSONObject responseJson) {
         if (isSuccess) {
             Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                 try {
@@ -177,39 +176,33 @@ public class ExperimentProjectInstructionUploadFragment extends BaseFragment<Exp
         }
     }
 
-    @OnClick({R.id.fab_upload, R.id.fab_query, R.id.fab_menu})
+    @OnClick({R.id.fab_examining, R.id.fab_query})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.fab_query:
-                getExperimentProjectInstructionState();
-                break;
-            case R.id.fab_menu:
+            case R.id.fab_examining:
+                ArrayList<String> items = new ArrayList<>();
+                items.add("审核通过");
+                items.add("审核不通过");
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
+                        .title("审核")
+                        .items(items)
+                        .itemsCallbackSingleChoice(
+                                0,
+                                new MaterialDialog.ListCallbackSingleChoice() {
+                                    @Override
+                                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                                        examining(list.get(table.getCheckedList().get(0) - 1).getExperiment_project_instruction_id(),
+                                                text.toString());
+                                        return true;
+                                    }
+                                })
+                        .positiveText(R.string.btn_confirm)
+                        .negativeText(R.string.btn_cancel)
+                        .show();
 
                 break;
-            case R.id.fab_upload:
-                if (table.getCheckedList().size() != 1) {
-                    XToastUtils.error("只能单个上传");
-                } else {
-                    FileChooser fileChooser = new FileChooser(this, new FileChooser.FileChoosenListener() {
-                        @Override
-                        public void onFileChoosen(String filePath) {
-                            new Thread() {
-                                @Override
-                                public void run() {
-                                    uploadExperimentProjectInstruction(filePath,
-                                            list.get(table.getCheckedList().get(0) - 1).getExperiment_item_name() + "项目指导书.pdf",
-                                            list.get(table.getCheckedList().get(0) - 1).getExperiment_project_instruction_id());
-                                }
-                            }.start();
-                        }
-                    });
-                    fileChooser.setTitle("选择需要提交的文件");
-                    fileChooser.setDoneText("确定");
-                    fileChooser.setChooseType(FileInfo.FILE_TYPE_FILE);
-                    fileChooser.showFile(true);
-                    fileChooser.setThemeColor(R.color.colorAccent);
-                    fileChooser.open();
-                }
+            case R.id.fab_query:
+                getExperimentProjectInstructionState();
                 break;
         }
     }
