@@ -12,17 +12,16 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentProjectInstructionExaminingTable;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentProjectInstructionCheckTable;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
-import com.gemini.always.experimentmanagementsystem.presenter.ExperimentProjectInstructionExaminingPresenter;
+import com.gemini.always.experimentmanagementsystem.presenter.ExperimentProjectInstructionCheckPresenter;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
-import com.gemini.always.experimentmanagementsystem.view.ExperimentProjectInstructionExaminingView;
+import com.gemini.always.experimentmanagementsystem.view.ExperimentProjectInstructionCheckView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.orhanobut.logger.Logger;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.statelayout.StatefulLayout;
 
 import org.json.JSONException;
@@ -37,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<ExperimentProjectInstructionExaminingView, ExperimentProjectInstructionExaminingPresenter> implements ExperimentProjectInstructionExaminingView, View.OnClickListener {
+public class ExperimentProjectInstructionCheckFragment extends BaseFragment<ExperimentProjectInstructionCheckView, ExperimentProjectInstructionCheckPresenter> implements ExperimentProjectInstructionCheckView, View.OnClickListener {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -45,22 +44,22 @@ public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<
     MyTableView table;
     @BindView(R.id.ll_stateful)
     StatefulLayout llStateful;
-    @BindView(R.id.fab_examining)
-    FloatingActionButton fabExamining;
+    @BindView(R.id.fab_download)
+    FloatingActionButton fabDownload;
     @BindView(R.id.fab_query)
     FloatingActionButton fabQuery;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
     Unbinder unbinder;
 
-    private String title = "实验项目指导书审核";
-    private Class tableClass = ExperimentProjectInstructionExaminingTable.class;
-    private List<ExperimentProjectInstructionExaminingTable> list = new ArrayList<>();
+    private String title = "实验项目指导书查看";
+    private Class tableClass = ExperimentProjectInstructionCheckTable.class;
+    private List<ExperimentProjectInstructionCheckTable> list = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_experiment_project_instruction_examining, container, false);
+        View view = inflater.inflate(R.layout.module_fragment_experiment_project_instruction_check, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -69,22 +68,11 @@ public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public ExperimentProjectInstructionExaminingPresenter createPresenter() {
-        return new ExperimentProjectInstructionExaminingPresenter();
-    }
-
-    @Override
-    public ExperimentProjectInstructionExaminingView createView() {
         initView();
-
-        return this;
     }
 
     private void initView() {
-        fabExamining.setVisibility(View.GONE);
+        fabDownload.setVisibility(View.GONE);
 
         titlebar.setTitle(title);
         titlebar.setLeftClickListener(new View.OnClickListener() {
@@ -99,6 +87,16 @@ public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<
         });
     }
 
+    @Override
+    public ExperimentProjectInstructionCheckPresenter createPresenter() {
+        return new ExperimentProjectInstructionCheckPresenter();
+    }
+
+    @Override
+    public ExperimentProjectInstructionCheckView createView() {
+        return this;
+    }
+
     private void getExperimentProjectInstructionState() {
         new Thread() {
             @Override
@@ -108,12 +106,11 @@ public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<
         }.start();
     }
 
-    private void examining(String experiment_project_instruction_id,
-                           String state) {
+    private void download(final String url) {
         new Thread() {
             @Override
             public void run() {
-                getPresenter().examining(experiment_project_instruction_id, state);
+                getPresenter().download("/" + url, Objects.requireNonNull(Objects.requireNonNull(getActivity()).getExternalFilesDir(null)).getAbsolutePath(), url);
             }
         }.start();
     }
@@ -143,8 +140,8 @@ public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<
                                 table.setCheckedPosition(position, true);
                                 ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0, 1.0f, 100, 100);
                                 scaleAnimation.setDuration(500);
-                                fabExamining.setVisibility(View.VISIBLE);
-                                fabExamining.startAnimation(scaleAnimation);
+                                fabDownload.setVisibility(View.VISIBLE);
+                                fabDownload.startAnimation(scaleAnimation);
                             }
                             return false;
                         }
@@ -164,7 +161,7 @@ public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<
     }
 
     @Override
-    public void onExaminingExperimentProjectInstructionResult(Boolean isSuccess, JSONObject responseJson) {
+    public void onDownloadExperimentProjectInstructionResult(Boolean isSuccess, JSONObject responseJson) {
         if (isSuccess) {
             Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                 try {
@@ -176,32 +173,16 @@ public class ExperimentProjectInstructionExaminingFragment extends BaseFragment<
         }
     }
 
-    @OnClick({R.id.fab_examining, R.id.fab_query})
+    @OnClick({R.id.fab_download, R.id.fab_query, R.id.fab_menu})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.fab_examining:
-                ArrayList<String> items = new ArrayList<>();
-                items.add("审核通过");
-                items.add("审核不通过");
-                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
-                        .title("审核")
-                        .items(items)
-                        .itemsCallbackSingleChoice(
-                                0,
-                                new MaterialDialog.ListCallbackSingleChoice() {
-                                    @Override
-                                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                        examining(list.get(table.getCheckedList().get(0) - 1).getExperiment_project_instruction_id(),
-                                                text.toString());
-                                        return true;
-                                    }
-                                })
-                        .positiveText(R.string.btn_confirm)
-                        .negativeText(R.string.btn_cancel)
-                        .show();
+            case R.id.fab_download:
+                download(list.get(table.getCheckedList().get(0) - 1).getFile_name());
                 break;
             case R.id.fab_query:
                 getExperimentProjectInstructionState();
+                break;
+            case R.id.fab_menu:
                 break;
         }
     }
