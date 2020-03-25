@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
-        if (!User.isLogin()) {
+        if (!User.isLogin(MainActivity.this)) {
             FragmentSelectActivity.startFragmentSelecter(this, "LoginFragment");
             finish();
             return;
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .inject();
 
-        if (User.getUserType().equals("管理员+教师") || User.getUserType().equals("选择为管理员") || User.getUserType().equals("选择为教师")) {
+        if (User.getCurrentUserType(MainActivity.this).equals("管理员+教师") || User.getCurrentUserType(MainActivity.this).equals("选择为管理员") || User.getCurrentUserType(MainActivity.this).equals("选择为教师")) {
             mAdapter = new DrawerAdapter(Arrays.asList(
                     createItemFor(POS_CHANGE_ROLE).setChecked(false),
                     createItemFor(POS_SETTING),
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 int realPosition = position;
-                if (!(User.getUserType().equals("管理员+教师") || User.getUserType().equals("选择为管理员") || User.getUserType().equals("选择为教师"))) {
+                if (!(User.getCurrentUserType(MainActivity.this).equals("管理员+教师") || User.getCurrentUserType(MainActivity.this).equals("选择为管理员") || User.getCurrentUserType(MainActivity.this).equals("选择为教师"))) {
                     realPosition = position + 1;
                 }
                 switch (realPosition) {
@@ -149,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
                                         new MaterialDialog.ListCallbackSingleChoice() {
                                             @Override
                                             public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                                XToastUtils.toast("选择了" + text);
                                                 if (text.equals("管理员")) {
-                                                    User.setUserType("选择为管理员");
+                                                    User.setCurrentUserType(getApplicationContext(), "选择为管理员");
                                                 } else {
-                                                    User.setUserType("选择为教师");
+                                                    User.setCurrentUserType(getApplicationContext(), "选择为教师");
                                                 }
+                                                initData();
                                                 return true;
                                             }
                                         })
@@ -192,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
                                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        User.logout();
+                                        User.logout(getApplicationContext());
                                         XToastUtils.toast("成功退出登录");
-                                        if (!User.isLogin()) {
+                                        if (!User.isLogin(getApplicationContext())) {
                                             FragmentSelectActivity.startFragmentSelecter(MyApplication.getContext(), "LoginFragment");
                                             finish();
                                             return;
@@ -301,6 +301,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(final BaseQuickAdapter adapter, View view, final int position) {
                 mSlidingRootNav.closeMenu();
                 switch (((Item) (Objects.requireNonNull(adapter.getItem(position)))).getItemName()) {
+                    case "实验课程项目":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "CourseExperimentProjectFragment");
+                        break;
                     case "实验机构":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalOrganizationFragment");
                         break;
@@ -343,6 +346,9 @@ public class MainActivity extends AppCompatActivity {
                     case "实验项目指导书查看":
                         FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentProjectInstructionCheckFragment");
                         break;
+                    case "实验选课":
+                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalCourseSelectionFragment");
+                        break;
                 }
             }
         });
@@ -355,12 +361,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initData() {
         int count = 0;
-        switch (User.getUserType()) {
+        data.clear();
+        switch (User.getCurrentUserType(MainActivity.this)) {
             case "":
             case "管理员+教师":
             case "选择为管理员":
             case "管理员":
                 level0Item[count] = new Level0Item("实验课程项目");
+                level0Item[count].addSubItem(new Item("实验课程项目"));
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("实验资源管理");
@@ -416,6 +424,7 @@ public class MainActivity extends AppCompatActivity {
             case "选择为教师":
             case "教师":
                 level0Item[count] = new Level0Item("实验课程项目");
+                level0Item[count].addSubItem(new Item("实验课程项目"));
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("实验项目管理");
@@ -458,7 +467,17 @@ public class MainActivity extends AppCompatActivity {
                 data.add(level0Item[count++]);
                 break;
             case "学生":
+                level0Item[count] = new Level0Item("实验选课管理");
+                level0Item[count].addSubItem(new Item("实验选课"));
+                data.add(level0Item[count++]);
 
+                level0Item[count] = new Level0Item("实验成绩管理");
+                level0Item[count].addSubItem(new Item("实验成绩查看"));
+                data.add(level0Item[count++]);
+
+                level0Item[count] = new Level0Item("实验课表打印");
+                level0Item[count].addSubItem(new Item("实验课表打印"));
+                data.add(level0Item[count++]);
                 break;
         }
         adapter.notifyDataSetChanged();

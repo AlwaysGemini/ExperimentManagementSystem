@@ -73,9 +73,9 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
     FloatingActionButton fabQuery;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
-    Unbinder unbinder;
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
+    Unbinder unbinder;
 
     private Class tableClass = ExperimentalConsumablesManagementTable.class;
     private Class queryClass = QueryExperimentalConsumablesManagement.class;
@@ -243,7 +243,7 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
         });
     }
 
-    @OnClick({R.id.fab_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu})
+    @OnClick({R.id.fab_query, R.id.fab_import, R.id.fab_export, R.id.fab_add, R.id.fab_menu, R.id.fab_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_query:

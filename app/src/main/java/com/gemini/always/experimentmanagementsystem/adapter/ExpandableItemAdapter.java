@@ -10,7 +10,6 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.bean.Item;
 import com.gemini.always.experimentmanagementsystem.bean.Level0Item;
-import com.gemini.always.experimentmanagementsystem.ui.activity.FragmentSelectActivity;
 import com.gemini.always.experimentmanagementsystem.ui.activity.MainActivity;
 
 import java.util.List;
@@ -54,14 +53,10 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         if (MainActivity.getSlidingRootNav().isMenuOpened()) {
                             MainActivity.getSlidingRootNav().closeMenu();
                         } else {
                             int pos = holder.getAdapterPosition();
-                            if (pos == 0) {
-                                FragmentSelectActivity.startFragmentSelecter(context, "CourseExperimentProjectFragment");
-                            }
                             if (item0.isExpanded()) {
                                 collapse(pos);
                             } else {

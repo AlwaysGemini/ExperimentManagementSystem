@@ -1,7 +1,5 @@
 package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
@@ -9,34 +7,24 @@ import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table
 public class LaboratoryTable {
 
     @TableColumn(id = 1, name = "实验室代码")
-    @AddItem(id = 0, name = "实验室代码")
     private String laboratory_id;
 
     @TableColumn(id = 2, name = "实验室名称")
-    @QueryItem(id = 1, name = "实验室名称", type = QueryItem.TYPE_SPINNER)
-    @AddItem(id = 1, name = "实验室名称")
     private String laboratory_name;
 
     @TableColumn(id = 3, name = "隶属教学实验中心")
-    @QueryItem(id = 0, name = "隶属教学实验中心", type = QueryItem.TYPE_SPINNER)
-    @AddItem(id = 2, name = "隶属教学实验中心")
     private String teaching_experiment_center;
 
     @TableColumn(id = 4, name = "实验室负责人")
-    @AddItem(id = 3, name = "实验室负责人")
     private String laboratory_director;
 
     @TableColumn(id = 5, name = "规章制度")
-    @AddItem(id = 4, name = "规章制度")
     private String rules_and_regulations;
 
     @TableColumn(id = 6, name = "备注")
-    @AddItem(id = 5, name = "备注")
     private String remarks;
 
     @TableColumn(id = 7, name = "启用标志")
-    @QueryItem(id = 2, name = "启用标志", type = QueryItem.TYPE_SPINNER)
-    @AddItem(id = 6, name = "启用标志")
     private String enable_flag;
 
     public String getLaboratory_id() {

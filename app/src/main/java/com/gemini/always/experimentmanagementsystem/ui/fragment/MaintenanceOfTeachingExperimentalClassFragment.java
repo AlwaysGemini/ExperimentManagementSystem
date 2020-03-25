@@ -72,9 +72,9 @@ public class MaintenanceOfTeachingExperimentalClassFragment extends BaseFragment
     FloatingActionButton fabQuery;
     @BindView(R.id.fab_menu)
     FloatingActionsMenu fabMenu;
-    Unbinder unbinder;
     @BindView(R.id.fab_delete)
     FloatingActionButton fabDelete;
+    Unbinder unbinder;
 
     private Class tableClass = MaintenanceOfTeachingExperimentalClassTable.class;
     private Class queryClass = QueryMaintenanceOfTeachingExperimentalClass.class;
