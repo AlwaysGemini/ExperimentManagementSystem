@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int POS_CHANGE_ROLE = 0;
     private static final int POS_SETTING = 1;
-    private static final int POS_LOGOUT = 3;
+    private static final int POS_HELP = 2;
+    private static final int POS_LOGOUT = 4;
     private static SlidingRootNav mSlidingRootNav;
     Level0Item[] level0Item = new Level0Item[8];
     private TitleBar titleBar;
@@ -116,12 +117,14 @@ public class MainActivity extends AppCompatActivity {
             mAdapter = new DrawerAdapter(Arrays.asList(
                     createItemFor(POS_CHANGE_ROLE).setChecked(false),
                     createItemFor(POS_SETTING),
+                    createItemFor(POS_HELP),
                     new SpaceItem(48).setChecked(true),
                     createItemFor(POS_LOGOUT)));
             mAdapter.setSelected(2);
         } else {
             mAdapter = new DrawerAdapter(Arrays.asList(
                     createItemFor(POS_SETTING),
+                    createItemFor(POS_HELP),
                     new SpaceItem(48),
                     createItemFor(POS_LOGOUT)));
         }
@@ -164,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case POS_SETTING:
 
+                        break;
+                    case POS_HELP:
+                        FragmentSelectActivity.startFragmentSelecter(MainActivity.this, "HelpFragment");
                         break;
                     case POS_LOGOUT:
                         /*new AlertDialog.Builder(MainActivity.this)
