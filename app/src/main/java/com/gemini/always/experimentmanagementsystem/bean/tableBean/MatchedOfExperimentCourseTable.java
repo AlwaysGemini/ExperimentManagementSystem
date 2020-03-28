@@ -1,11 +1,9 @@
 package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@Table
-public class MaintenanceOfTeachingExperimentalClassTable {
-
+public class MatchedOfExperimentCourseTable {
+    private String experiment_course_match_id;
     private String experimental_teaching_class_id;
 
     @TableColumn(id = 1, name = "学年")
@@ -29,8 +27,24 @@ public class MaintenanceOfTeachingExperimentalClassTable {
     @TableColumn(id = 7, name = "课程名称")
     private String course_chinese_name;
 
-    @TableColumn(id = 8, name = "实验成绩占比(%)")
-    private String proportion_of_experimental_results;
+    @TableColumn(id = 8, name = "容量")
+    private String capacity;
+
+    public String getExperiment_course_match_id() {
+        return experiment_course_match_id;
+    }
+
+    public void setExperiment_course_match_id(String experiment_course_match_id) {
+        this.experiment_course_match_id = experiment_course_match_id;
+    }
+
+    public String getExperimental_teaching_class_id() {
+        return experimental_teaching_class_id;
+    }
+
+    public void setExperimental_teaching_class_id(String experimental_teaching_class_id) {
+        this.experimental_teaching_class_id = experimental_teaching_class_id;
+    }
 
     public String getYear() {
         return year;
@@ -88,19 +102,11 @@ public class MaintenanceOfTeachingExperimentalClassTable {
         this.course_chinese_name = course_chinese_name;
     }
 
-    public String getProportion_of_experimental_results() {
-        return proportion_of_experimental_results;
+    public String getCapacity() {
+        return capacity;
     }
 
-    public void setProportion_of_experimental_results(String proportion_of_experimental_results) {
-        this.proportion_of_experimental_results = proportion_of_experimental_results;
-    }
-
-    public String getExperimental_teaching_class_id() {
-        return experimental_teaching_class_id;
-    }
-
-    public void setExperimental_teaching_class_id(String experimental_teaching_class_id) {
-        this.experimental_teaching_class_id = experimental_teaching_class_id;
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 }

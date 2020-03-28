@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.gemini.always.experimentmanagementsystem.ContentPage;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.adapter.FragmentAdapter;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
-import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalOrganizationPresenter;
-import com.gemini.always.experimentmanagementsystem.view.ExperimentalOrganizationView;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.tabbar.TabSegment;
 
@@ -24,16 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * @version V1.0
- * @Title:
- * @ClassName: com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment.java
- * @Description: 教学机构模块
- * @author: 周清
- * @date: 2020-02-07 21:47
- */
-public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalOrganizationView, ExperimentalOrganizationPresenter> implements ExperimentalOrganizationView {
-
+public class ExperimentCourseMatchFragment extends Fragment {
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.tabSegment)
@@ -42,8 +31,8 @@ public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalO
     ViewPager contentViewPager;
     Unbinder unbinder;
 
-    private String title = "实验机构";
-    private String[] pages = ContentPage.getPageNames();
+    private String title = "生成配课";
+    private String[] pages = {"待配课", "已配课"};
 
     @Nullable
     @Override
@@ -66,10 +55,8 @@ public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalO
         for (String page : pages) {
             tabSegment.addTab(new TabSegment.Tab(page));
         }
-        adapter.addFragment(new TeachingExperimentCenterFragment(), "实验教学中心");
-        adapter.addFragment(new LaboratoryFragment(), "实验室");
-        adapter.addFragment(new LaboratoryCompartmentFragment(), "实验分室");
-        adapter.addFragment(new LaboratoryRoomFragment(), "实验房间");
+        adapter.addFragment(new UnmatchedOfExperimentCourseFragment(), "待配课");
+        adapter.addFragment(new MatchedOfExperimentCourseFragment(), "已配课");
 
 
         contentViewPager.setAdapter(adapter);
@@ -88,16 +75,6 @@ public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalO
                 }
             }
         });
-    }
-
-    @Override
-    public ExperimentalOrganizationPresenter createPresenter() {
-        return new ExperimentalOrganizationPresenter();
-    }
-
-    @Override
-    public ExperimentalOrganizationView createView() {
-        return this;
     }
 
     @Override

@@ -1,11 +1,8 @@
 package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customTableView.Table;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
-@Table
-public class MaintenanceOfTeachingExperimentalClassTable {
-
+public class UnmatchedOfExperimentCourseTable {
     private String experimental_teaching_class_id;
 
     @TableColumn(id = 1, name = "学年")
@@ -28,9 +25,6 @@ public class MaintenanceOfTeachingExperimentalClassTable {
 
     @TableColumn(id = 7, name = "课程名称")
     private String course_chinese_name;
-
-    @TableColumn(id = 8, name = "实验成绩占比(%)")
-    private String proportion_of_experimental_results;
 
     public String getYear() {
         return year;
@@ -86,14 +80,6 @@ public class MaintenanceOfTeachingExperimentalClassTable {
 
     public void setCourse_chinese_name(String course_chinese_name) {
         this.course_chinese_name = course_chinese_name;
-    }
-
-    public String getProportion_of_experimental_results() {
-        return proportion_of_experimental_results;
-    }
-
-    public void setProportion_of_experimental_results(String proportion_of_experimental_results) {
-        this.proportion_of_experimental_results = proportion_of_experimental_results;
     }
 
     public String getExperimental_teaching_class_id() {
