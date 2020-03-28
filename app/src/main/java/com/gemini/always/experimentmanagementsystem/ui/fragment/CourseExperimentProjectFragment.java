@@ -198,7 +198,6 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
             case R.id.fab_query:
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
-                        .setType(CustomDialog.TYPE_QUERY)
                         .setClazz(QueryCourseExperimentProject.class)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {

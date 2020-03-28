@@ -185,7 +185,6 @@ public class UnmatchedOfExperimentCourseFragment extends BaseFragment<UnmatchedO
             case R.id.fab_match:
                 new CustomDialog.Builder(getContext())
                         .setTitle("生成配课")
-                        .setType(CustomDialog.TYPE_QUERY)
                         .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override

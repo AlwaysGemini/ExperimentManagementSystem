@@ -1,24 +1,24 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertExperimentalEquipment {
-    @AddItem(id = 0, name = "实验仪器代码")
+    @DialogItem(id = 0, name = "实验仪器代码")
     private String id;
 
-    @AddItem(id = 1, name = "实验仪器名称")
+    @DialogItem(id = 1, name = "实验仪器名称")
     private String experimental_equipment_name;
 
-    @AddItem(id = 2, name = "价值")
+    @DialogItem(id = 2, name = "价值")
     private String value;
 
-    @AddItem(id = 3, name = "实验房间代码")
+    @DialogItem(id = 3, name = "实验房间代码")
     private String laboratory_room_name;
 
-    @AddItem(id = 4, name = "是否可搬动")
+    @DialogItem(id = 4, name = "是否可搬动")
     private String is_movable;
 
-    @AddItem(id = 5, name = "采购时间")
+    @DialogItem(id = 5, name = "采购时间")
     private String procurement_time;
 
     public String getId() {

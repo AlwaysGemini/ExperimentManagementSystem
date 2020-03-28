@@ -245,7 +245,6 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
             case R.id.fab_query:
                 new CustomDialog.Builder(getContext())
                         .setTitle("查询")
-                        .setType(CustomDialog.TYPE_QUERY)
                         .setClazz(queryClass)
                         .setSpinnerDataList(spinnerDataListForQuery)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
@@ -294,7 +293,6 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
             case R.id.fab_add:
                 new CustomDialog.Builder(getContext())
                         .setTitle("增加")
-                        .setType(CustomDialog.TYPE_ADD)
                         .setClazz(insertClass)
                         .serOnPositive("确定", new CustomDialog.DialogIF() {
                             @Override

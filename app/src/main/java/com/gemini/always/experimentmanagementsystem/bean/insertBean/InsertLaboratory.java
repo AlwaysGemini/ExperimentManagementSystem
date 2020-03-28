@@ -1,27 +1,27 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertLaboratory {
-    @AddItem(id = 0, name = "实验室代码")
+    @DialogItem(id = 0, name = "实验室代码")
     private String laboratory_id;
 
-    @AddItem(id = 1, name = "实验室名称")
+    @DialogItem(id = 1, name = "实验室名称")
     private String laboratory_name;
 
-    @AddItem(id = 2, name = "隶属教学实验中心代码")
+    @DialogItem(id = 2, name = "隶属教学实验中心代码")
     private String teaching_experiment_center_id;
 
-    @AddItem(id = 3, name = "实验室负责人")
+    @DialogItem(id = 3, name = "实验室负责人")
     private String laboratory_director;
 
-    @AddItem(id = 4, name = "规章制度")
+    @DialogItem(id = 4, name = "规章制度")
     private String rules_and_regulations;
 
-    @AddItem(id = 5, name = "备注")
+    @DialogItem(id = 5, name = "备注")
     private String remarks;
 
-    @AddItem(id = 6, name = "启用标志")
+    @DialogItem(id = 6, name = "启用标志")
     private String enable_flag;
 
     public String getLaboratory_id() {

@@ -1,9 +1,9 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertUnmatchedOfExperimentCourse {
-    @QueryItem(id = 0, name = "容量", type = QueryItem.TYPE_EDITTEXT)
+    @DialogItem(id = 0, name = "容量", type = DialogItem.TYPE_EDITTEXT)
     private String capacity;
 
     public String getCapacity() {

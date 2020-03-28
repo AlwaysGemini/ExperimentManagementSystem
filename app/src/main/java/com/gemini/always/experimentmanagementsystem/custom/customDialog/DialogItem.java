@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface QueryItem {
+public @interface DialogItem {
 
     int TYPE_SPINNER = 0;
     int TYPE_EDITTEXT = 1;
@@ -22,7 +22,7 @@ public @interface QueryItem {
      */
     int id();
 
-    int type();
+    int type() default TYPE_EDITTEXT;
 
     String hint() default "";
 }

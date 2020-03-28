@@ -1,39 +1,39 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertLaboratoryRoom {
-    @AddItem(id = 0, name = "实验分室代码")
+    @DialogItem(id = 0, name = "实验分室代码")
     private String laboratory_room_id;
 
-    @AddItem(id = 1, name = "实验分室名称")
+    @DialogItem(id = 1, name = "实验分室名称")
     private String laboratory_room_name;
 
-    @AddItem(id = 2, name = "隶属实验分室代码")
+    @DialogItem(id = 2, name = "隶属实验分室代码")
     private String laboratory_compartment_id;
 
-    @AddItem(id = 3, name = "实验场地性质")
+    @DialogItem(id = 3, name = "实验场地性质")
     private String nature_of_experimental_site;
 
-    @AddItem(id = 4, name = "科研基地类别")
+    @DialogItem(id = 4, name = "科研基地类别")
     private String category_of_scientific_research_base;
 
-    @AddItem(id = 5, name = "实验房间负责人")
+    @DialogItem(id = 5, name = "实验房间负责人")
     private String person_in_charge_of_the_experimental_room;
 
-    @AddItem(id = 6, name = "共建情况")
+    @DialogItem(id = 6, name = "共建情况")
     private String status_of_joint_construction;
 
-    @AddItem(id = 7, name = "校区")
+    @DialogItem(id = 7, name = "校区")
     private String campus;
 
-    @AddItem(id = 8, name = "容量")
+    @DialogItem(id = 8, name = "容量")
     private String capacity;
 
-    @AddItem(id = 9, name = "备注")
+    @DialogItem(id = 9, name = "备注")
     private String remarks;
 
-    @AddItem(id = 10, name = "启用标志")
+    @DialogItem(id = 10, name = "启用标志")
     private String enable_flag;
 
     public String getLaboratory_room_id() {

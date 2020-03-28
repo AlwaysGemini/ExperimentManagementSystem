@@ -1,24 +1,24 @@
 package com.gemini.always.experimentmanagementsystem.bean.queryBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class QueryExperimentalConsumablesManagement {
-    @QueryItem(id = 0, name = "教学实验中心", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 0, name = "教学实验中心", type = DialogItem.TYPE_SPINNER)
     private String teaching_experiment_center_name;
 
-    @QueryItem(id = 1, name = "实验室", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 1, name = "实验室", type = DialogItem.TYPE_SPINNER)
     private String laboratory_name;
 
-    @QueryItem(id = 2, name = "实验分室", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 2, name = "实验分室", type = DialogItem.TYPE_SPINNER)
     private String experimental_compartment_name;
 
-    @QueryItem(id = 3, name = "实验房间", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 3, name = "实验房间", type = DialogItem.TYPE_SPINNER)
     private String laboratory_room_name;
 
-    @QueryItem(id = 4, name = "型号规格", type = QueryItem.TYPE_EDITTEXT, hint = "按型号规格模糊查询")
+    @DialogItem(id = 4, name = "型号规格", type = DialogItem.TYPE_EDITTEXT, hint = "按型号规格模糊查询")
     private String model_and_specification;
 
-    @QueryItem(id = 5, name = "实验耗材", type = QueryItem.TYPE_EDITTEXT, hint = "按实验耗材代码、名称模糊查询")
+    @DialogItem(id = 5, name = "实验耗材", type = DialogItem.TYPE_EDITTEXT, hint = "按实验耗材代码、名称模糊查询")
     private String experimental_consumables_name;
 
     public String getTeaching_experiment_center_name() {

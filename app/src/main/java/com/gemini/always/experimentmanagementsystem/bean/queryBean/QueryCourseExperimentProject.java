@@ -1,17 +1,17 @@
 package com.gemini.always.experimentmanagementsystem.bean.queryBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class QueryCourseExperimentProject {
-    @QueryItem(name = "开课学院", id = 0, type = QueryItem.TYPE_SPINNER)
+    @DialogItem(name = "开课学院", id = 0, type = DialogItem.TYPE_SPINNER)
     private String college;
-    @QueryItem(name = "课程类别", id = 1, type = QueryItem.TYPE_SPINNER)
+    @DialogItem(name = "课程类别", id = 1, type = DialogItem.TYPE_SPINNER)
     private String course_category;
-    @QueryItem(name = "课程归属", id = 2, type = QueryItem.TYPE_SPINNER)
+    @DialogItem(name = "课程归属", id = 2, type = DialogItem.TYPE_SPINNER)
     private String course_assignment;
-    @QueryItem(name = "课程启用年级", id = 3, type = QueryItem.TYPE_SPINNER)
+    @DialogItem(name = "课程启用年级", id = 3, type = DialogItem.TYPE_SPINNER)
     private String enabling_grade;
-    @QueryItem(name = "课程", id = 4, type = QueryItem.TYPE_EDITTEXT, hint = "按课程代码、名称模糊查询")
+    @DialogItem(name = "课程", id = 4, type = DialogItem.TYPE_EDITTEXT, hint = "按课程代码、名称模糊查询")
     private String course;
 
     public String getCollege() {

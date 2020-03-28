@@ -1,18 +1,18 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertLaboratoryPersonnelManagement {
-    @AddItem(id = 0, name = "工号")
+    @DialogItem(id = 0, name = "工号")
     private String job_number;
 
-    @AddItem(id = 1, name = "职称")
+    @DialogItem(id = 1, name = "职称")
     private String title;
 
-    @AddItem(id = 2, name = "实验室代码")
+    @DialogItem(id = 2, name = "实验室代码")
     private String laboratory_id;
 
-    @AddItem(id = 3, name = "在职状态")
+    @DialogItem(id = 3, name = "在职状态")
     private String incumbency;
 
     public String getJob_number() {

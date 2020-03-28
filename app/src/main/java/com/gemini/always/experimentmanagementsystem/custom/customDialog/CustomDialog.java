@@ -26,9 +26,6 @@ import java.util.List;
  */
 public class CustomDialog extends Dialog {
 
-    public static final int TYPE_ADD = 1;
-    public static final int TYPE_QUERY = 2;
-
     public CustomDialog(Context context) {
         super(context);
     }
@@ -47,11 +44,7 @@ public class CustomDialog extends Dialog {
         private String title;
         private String positiveButtonText;
         private String negativeButtonText;
-        private int type;
         private Class clazz;
-        private List<String> editList = new ArrayList<>();
-        private List<String> editTextDataList = new ArrayList<>();
-        private List<String> spinnerTextList = new ArrayList<>();
         private List<List<String>> spinnerDataList = new ArrayList<>();
         private List<DialogListItem> dialogListItems = new ArrayList<>();
         private DialogInterface.OnClickListener positiveButtonClickListener;
@@ -65,16 +58,6 @@ public class CustomDialog extends Dialog {
         public Builder serOnPositive(String positiveButtonText, DialogIF dialogIF) {
             this.positiveButtonText = positiveButtonText;
             this.dialogIF = dialogIF;
-            return this;
-        }
-
-        public Builder setEditList(List<String> editList) {
-            this.editList = editList;
-            return this;
-        }
-
-        public Builder setSpinnerTextList(List<String> spinnerTextList) {
-            this.spinnerTextList = spinnerTextList;
             return this;
         }
 
@@ -158,37 +141,13 @@ public class CustomDialog extends Dialog {
             ((TextView) layout.findViewById(R.id.title)).setText(title);
             // set the confirm button
 
-
-            if (type == TYPE_ADD) {
-                Field[] fields = clazz.getDeclaredFields();
-                int addItemNum = 0;
-                for (int i = 0; i < fields.length; i++) {
-                    Field field = fields[i];
-                    field.setAccessible(true);
-                    Annotation fieldAnnotation = field.getAnnotation(AddItem.class);
-                    if (fieldAnnotation != null) {
-                        addItemNum++;
-                    }
-                }
-                DialogListItem[] listItems = new DialogListItem[addItemNum];
-                for (int i = 0; i < fields.length; i++) {
-                    Field field = fields[i];
-                    field.setAccessible(true);
-                    Annotation fieldAnnotation = field.getAnnotation(AddItem.class);
-                    if (fieldAnnotation != null) {
-                        AddItem addItem = (AddItem) fieldAnnotation;
-                        listItems[addItem.id()] = new DialogListItem(new DialogListEditTextItem(addItem.name(), ""));
-                    }
-                }
-                for (int i = 0; i < addItemNum; i++)
-                    dialogListItems.add(listItems[i]);
-            } else if (type == TYPE_QUERY) {
+            if (clazz != null) {
                 Field[] fields = clazz.getDeclaredFields();
                 int queryItemNum = 0;
                 for (int i = 0; i < fields.length; i++) {
                     Field field = fields[i];
                     field.setAccessible(true);
-                    Annotation fieldAnnotation = field.getAnnotation(QueryItem.class);
+                    Annotation fieldAnnotation = field.getAnnotation(DialogItem.class);
                     if (fieldAnnotation != null) {
                         queryItemNum++;
                     }
@@ -197,13 +156,13 @@ public class CustomDialog extends Dialog {
                 for (int i = 0; i < fields.length; i++) {
                     Field field = fields[i];
                     field.setAccessible(true);
-                    Annotation fieldAnnotation = field.getAnnotation(QueryItem.class);
+                    Annotation fieldAnnotation = field.getAnnotation(DialogItem.class);
                     if (fieldAnnotation != null) {
-                        QueryItem queryItem = (QueryItem) fieldAnnotation;
-                        if (queryItem.type() == QueryItem.TYPE_SPINNER) {
-                            listItems[queryItem.id()] = new DialogListItem(new DialogListSpinnerItem(queryItem.name(), null));
-                        } else if (queryItem.type() == QueryItem.TYPE_EDITTEXT) {
-                            listItems[queryItem.id()] = new DialogListItem(new DialogListEditTextItem(queryItem.name(), queryItem.hint()));
+                        DialogItem dialogItem = (DialogItem) fieldAnnotation;
+                        if (dialogItem.type() == DialogItem.TYPE_SPINNER) {
+                            listItems[dialogItem.id()] = new DialogListItem(new DialogListSpinnerItem(dialogItem.name(), null));
+                        } else if (dialogItem.type() == DialogItem.TYPE_EDITTEXT) {
+                            listItems[dialogItem.id()] = new DialogListItem(new DialogListEditTextItem(dialogItem.name(), dialogItem.hint()));
                         }
                     }
                 }
@@ -215,20 +174,6 @@ public class CustomDialog extends Dialog {
                 }
                 for (int i = 0; i < queryItemNum; i++)
                     dialogListItems.add(listItems[i]);
-            }
-
-            if (dialogListItems.size() == 0) {
-                for (int i = 0; i < spinnerTextList.size(); i++) {
-                    DialogListItem dialogListItem = new DialogListItem(new DialogListSpinnerItem(spinnerTextList.get(i), spinnerDataList.get(i)));
-                    dialogListItems.add(dialogListItem);
-                }
-                for (int i = 0; i < editList.size(); i++) {
-                    DialogListItem dialogListItem = new DialogListItem(new DialogListEditTextItem(editList.get(i), ""));
-                    dialogListItems.add(dialogListItem);
-                }
-                for (int i = 0; i < editTextDataList.size(); i++) {
-                    dialogListItems.get(i).getEditTextItem().setEdited(editTextDataList.get(i));
-                }
             }
 
             ListView listView = layout.findViewById(R.id.list_view);
@@ -291,32 +236,6 @@ public class CustomDialog extends Dialog {
             }
             dialog.setContentView(layout);
             return dialog;
-        }
-
-        public List<DialogListItem> getDialogListItems() {
-            return dialogListItems;
-        }
-
-        public void setDialogListItems(List<DialogListItem> dialogListItems) {
-            this.dialogListItems = dialogListItems;
-        }
-
-        public List<String> getEditTextDataList() {
-            return editTextDataList;
-        }
-
-        public Builder setEditTextDataList(List<String> editTextDataList) {
-            this.editTextDataList = editTextDataList;
-            return this;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public Builder setType(int type) {
-            this.type = type;
-            return this;
         }
 
         public Class getClazz() {

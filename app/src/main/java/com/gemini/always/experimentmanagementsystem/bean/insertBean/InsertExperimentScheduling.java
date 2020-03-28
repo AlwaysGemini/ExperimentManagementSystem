@@ -1,19 +1,19 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertExperimentScheduling {
-    @AddItem(id = 0, name = "实验人员")
+    @DialogItem(id = 0, name = "实验人员")
     private String instructor_id;
-    @AddItem(id = 1, name = "实验房间代码")
+    @DialogItem(id = 1, name = "实验房间代码")
     private String laboratory_room_id;
-    @AddItem(id = 2, name = "第几周")
+    @DialogItem(id = 2, name = "第几周")
     private String week;
-    @AddItem(id = 3, name = "星期几")
+    @DialogItem(id = 3, name = "星期几")
     private String day;
-    @AddItem(id = 4, name = "开始时间")
+    @DialogItem(id = 4, name = "开始时间")
     private String start_time;
-    @AddItem(id = 5, name = "长度")
+    @DialogItem(id = 5, name = "长度")
     private String length;
 
     public String getInstructor_id() {

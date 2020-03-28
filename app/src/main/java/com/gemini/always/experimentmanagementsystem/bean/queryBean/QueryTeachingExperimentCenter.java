@@ -1,12 +1,12 @@
 package com.gemini.always.experimentmanagementsystem.bean.queryBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class QueryTeachingExperimentCenter {
-    @QueryItem(id = 0, name = "实验室类型", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 0, name = "实验室类型", type = DialogItem.TYPE_SPINNER)
     private String laboratory_type;
 
-    @QueryItem(id = 1, name = "启用标志", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 1, name = "启用标志", type = DialogItem.TYPE_SPINNER)
     private String enable_flag;
 
     public String getLaboratory_type() {

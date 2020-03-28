@@ -1,18 +1,18 @@
 package com.gemini.always.experimentmanagementsystem.bean.queryBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.QueryItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class QueryExperimentItem {
-    @QueryItem(id = 0, name = "实验属性", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 0, name = "实验属性", type = DialogItem.TYPE_SPINNER)
     private String experiment_attribute;
 
-    @QueryItem(id = 1, name = "实验类别", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 1, name = "实验类别", type = DialogItem.TYPE_SPINNER)
     private String experiment_type;
 
-    @QueryItem(id = 2, name = "实验类型", type = QueryItem.TYPE_SPINNER)
+    @DialogItem(id = 2, name = "实验类型", type = DialogItem.TYPE_SPINNER)
     private String experiment_category;
 
-    @QueryItem(id = 3, name = "实验项目名称", type = QueryItem.TYPE_EDITTEXT)
+    @DialogItem(id = 3, name = "实验项目名称", type = DialogItem.TYPE_EDITTEXT)
     private String experiment_item_name;
 
     public String getExperiment_attribute() {

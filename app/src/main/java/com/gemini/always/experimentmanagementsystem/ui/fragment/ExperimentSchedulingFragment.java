@@ -113,7 +113,6 @@ public class ExperimentSchedulingFragment extends BaseFragment<ExperimentSchedul
                     case R.id.button_allocation:
                         new CustomDialog.Builder(getContext())
                                 .setTitle("增加")
-                                .setType(CustomDialog.TYPE_ADD)
                                 .setClazz(insertClass)
                                 .serOnPositive("确定", new CustomDialog.DialogIF() {
                                     @Override

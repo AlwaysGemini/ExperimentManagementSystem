@@ -1,33 +1,33 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertExperimentalConsumablesManagement {
-    @AddItem(id = 0, name = "实验耗材代码")
+    @DialogItem(id = 0, name = "实验耗材代码")
     private String experimental_consumables_id;
 
-    @AddItem(id = 1, name = "实验耗材名称")
+    @DialogItem(id = 1, name = "实验耗材名称")
     private String experimental_consumables_name;
 
-    @AddItem(id = 2, name = "当前库存量")
+    @DialogItem(id = 2, name = "当前库存量")
     private String current_inventory;
 
-    @AddItem(id = 3, name = "最大库存量")
+    @DialogItem(id = 3, name = "最大库存量")
     private String maximum_inventory;
 
-    @AddItem(id = 4, name = "最小库存量")
+    @DialogItem(id = 4, name = "最小库存量")
     private String minimum_inventory;
 
-    @AddItem(id = 5, name = "型号规格")
+    @DialogItem(id = 5, name = "型号规格")
     private String model_and_specification;
 
-    @AddItem(id = 6, name = "单位")
+    @DialogItem(id = 6, name = "单位")
     private String unit;
 
-    @AddItem(id = 7, name = "单价")
+    @DialogItem(id = 7, name = "单价")
     private String unit_price;
 
-    @AddItem(id = 8, name = "实验房间代码")
+    @DialogItem(id = 8, name = "实验房间代码")
     private String laboratory_room_id;
 
     public String getExperimental_consumables_id() {

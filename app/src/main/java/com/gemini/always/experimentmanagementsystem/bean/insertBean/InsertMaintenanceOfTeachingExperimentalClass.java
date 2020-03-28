@@ -1,24 +1,24 @@
 package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 
-import com.gemini.always.experimentmanagementsystem.custom.customDialog.AddItem;
+import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertMaintenanceOfTeachingExperimentalClass {
-    @AddItem(id = 0, name = "教学班代码")
+    @DialogItem(id = 0, name = "教学班代码")
     private String experimental_teaching_class_id;
 
-    @AddItem(id = 1, name = "教学班名称")
+    @DialogItem(id = 1, name = "教学班名称")
     private String experimental_teaching_class_name;
 
-    @AddItem(id = 2, name = "学年")
+    @DialogItem(id = 2, name = "学年")
     private String school_year;
 
-    @AddItem(id = 3, name = "学期")
+    @DialogItem(id = 3, name = "学期")
     private String semester;
 
-    @AddItem(id = 4, name = "教学班组成")
+    @DialogItem(id = 4, name = "教学班组成")
     private String composition_of_teaching_class;
 
-    @AddItem(id = 5, name = "授课任务代码")
+    @DialogItem(id = 5, name = "授课任务代码")
     private String course_experiment_outline_id;
 
     public String getExperimental_teaching_class_id() {
