@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentOutlineFragment;
@@ -31,6 +32,8 @@ import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
 import com.githang.statusbar.StatusBarCompat;
 import com.orhanobut.logger.Logger;
 
+import java.util.Objects;
+
 /**
  * @version V1.0
  * @Title:
@@ -42,12 +45,12 @@ import com.orhanobut.logger.Logger;
 public class FragmentSelectActivity extends AppCompatActivity {
 
     /**
-     * 仅仅启动FragmentSelecter
+     * 仅仅启动FragmentSelector
      *
      * @param context
      * @param fragmentName
      */
-    public static void startFragmentSelecter(Context context, String fragmentName) {
+    public static void startFragmentSelector(Context context, String fragmentName) {
         Intent intent = new Intent(context, FragmentSelectActivity.class);
         intent.putExtra("Fragment", fragmentName);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -55,13 +58,13 @@ public class FragmentSelectActivity extends AppCompatActivity {
     }
 
     /**
-     * 启动FragmentSelecter并附带参数
+     * 启动FragmentSelector并附带参数
      *
      * @param context
      * @param fragmentName
      * @param otherInformations
      */
-    public static void startFragmentSelecter(Context context, String fragmentName, String... otherInformations) {
+    public static void startFragmentSelector(Context context, String fragmentName, String... otherInformations) {
         if (otherInformations.length % 2 != 0) {
             Logger.e("输入参数数量错误");
         }
@@ -88,86 +91,73 @@ public class FragmentSelectActivity extends AppCompatActivity {
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
 
         Intent intent = getIntent();
-        switch (intent.getStringExtra("Fragment")) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, choiceFragment(Objects.requireNonNull(intent.getStringExtra("Fragment")))).commitAllowingStateLoss();
+    }
+
+    private Fragment choiceFragment(String fragmentName) {
+        Fragment fragment = null;
+        switch (fragmentName) {
             case "LoginFragment":
-                LoginFragment loginFragment = new LoginFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, loginFragment).commitAllowingStateLoss();
+                fragment = new LoginFragment();
                 break;
             case "CourseExperimentProjectFragment":
-                CourseExperimentProjectFragment courseExperimentProjectFragment = new CourseExperimentProjectFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, courseExperimentProjectFragment).commitAllowingStateLoss();
+                fragment = new CourseExperimentProjectFragment();
                 break;
             case "ExperimentalOrganizationFragment":
-                ExperimentalOrganizationFragment experimentalOrganizationFragment = new ExperimentalOrganizationFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalOrganizationFragment).commitAllowingStateLoss();
+                fragment = new ExperimentalOrganizationFragment();
                 break;
             case "LaboratoryPersonnelManagementFragment":
-                LaboratoryPersonnelManagementFragment laboratoryPersonnelManagementFragment = new LaboratoryPersonnelManagementFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, laboratoryPersonnelManagementFragment).commitAllowingStateLoss();
+                fragment = new LaboratoryPersonnelManagementFragment();
                 break;
             case "ExperimentalEquipmentFragment":
-                ExperimentalEquipmentFragment experimentalEquipmentFragment = new ExperimentalEquipmentFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalEquipmentFragment).commitAllowingStateLoss();
+                fragment = new ExperimentalEquipmentFragment();
                 break;
             case "ExperimentalConsumablesManagementFragment":
-                ExperimentalConsumablesManagementFragment experimentalConsumablesManagementFragment = new ExperimentalConsumablesManagementFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalConsumablesManagementFragment).commitAllowingStateLoss();
+                fragment = new ExperimentalConsumablesManagementFragment();
                 break;
             case "ExperimentalProjectManagementFragment":
-                ExperimentItemManagementFragment experimentItemManagementFragment = new ExperimentItemManagementFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentItemManagementFragment).commitAllowingStateLoss();
+                fragment = new ExperimentItemManagementFragment();
                 break;
             case "CourseExperimentOutlineFragment":
-                CourseExperimentOutlineFragment courseExperimentOutlineFragment = new CourseExperimentOutlineFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, courseExperimentOutlineFragment).commitAllowingStateLoss();
+                fragment = new CourseExperimentOutlineFragment();
                 break;
             case "MaintenanceOfTeachingExperimentalClassFragment":
-                MaintenanceOfTeachingExperimentalClassFragment maintenanceOfTeachingExperimentalClassFragment = new MaintenanceOfTeachingExperimentalClassFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, maintenanceOfTeachingExperimentalClassFragment).commitAllowingStateLoss();
+                fragment = new MaintenanceOfTeachingExperimentalClassFragment();
                 break;
             case "ExperimentalTeachingAssignmentFragment":
-                ExperimentalTeachingAssignmentFragment experimentalTeachingAssignmentFragment = new ExperimentalTeachingAssignmentFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalTeachingAssignmentFragment).commitAllowingStateLoss();
+                fragment = new ExperimentalTeachingAssignmentFragment();
                 break;
             case "TeachingAssignmentOfExperimentalProjectFragment":
-                TeachingAssignmentOfExperimentalProjectFragment teachingAssignmentOfExperimentalProjectFragment = new TeachingAssignmentOfExperimentalProjectFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, teachingAssignmentOfExperimentalProjectFragment).commitAllowingStateLoss();
+                fragment = new TeachingAssignmentOfExperimentalProjectFragment();
                 break;
             case "ExperimentSchedulingFragment":
-                ExperimentSchedulingFragment experimentSchedulingFragment = new ExperimentSchedulingFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentSchedulingFragment).commitAllowingStateLoss();
+                fragment = new ExperimentSchedulingFragment();
                 break;
             case "RulesOfSelectingCoursesFragment":
-                RulesOfSelectingCoursesFragment rulesOfSelectingCoursesFragment = new RulesOfSelectingCoursesFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, rulesOfSelectingCoursesFragment).commitAllowingStateLoss();
+                fragment = new RulesOfSelectingCoursesFragment();
                 break;
             case "ExperimentProjectInstructionUploadFragment":
-                ExperimentProjectInstructionUploadFragment experimentProjectInstructionUploadFragment = new ExperimentProjectInstructionUploadFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentProjectInstructionUploadFragment).commitAllowingStateLoss();
+                fragment = new ExperimentProjectInstructionUploadFragment();
                 break;
             case "ExperimentProjectInstructionExaminingFragment":
-                ExperimentProjectInstructionExaminingFragment experimentProjectInstructionExaminingFragment = new ExperimentProjectInstructionExaminingFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentProjectInstructionExaminingFragment).commitAllowingStateLoss();
+                fragment = new ExperimentProjectInstructionExaminingFragment();
                 break;
             case "ExperimentProjectInstructionCheckFragment":
-                ExperimentProjectInstructionCheckFragment experimentProjectInstructionCheckFragment = new ExperimentProjectInstructionCheckFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentProjectInstructionCheckFragment).commitAllowingStateLoss();
+                fragment = new ExperimentProjectInstructionCheckFragment();
                 break;
             case "ExperimentalCourseSelectionFragment":
-                ExperimentalCourseSelectionFragment experimentalCourseSelectionFragment = new ExperimentalCourseSelectionFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentalCourseSelectionFragment).commitAllowingStateLoss();
+                fragment = new ExperimentalCourseSelectionFragment();
                 break;
             case "ExperimentCourseMatchFragment":
-                ExperimentCourseMatchFragment experimentCourseMatchFragment = new ExperimentCourseMatchFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, experimentCourseMatchFragment).commitAllowingStateLoss();
+                fragment = new ExperimentCourseMatchFragment();
                 break;
             case "HelpFragment":
-                HelpFragment helpFragment = new HelpFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, helpFragment).commitAllowingStateLoss();
+                fragment = new HelpFragment();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");
                 break;
         }
+        return fragment;
     }
 }

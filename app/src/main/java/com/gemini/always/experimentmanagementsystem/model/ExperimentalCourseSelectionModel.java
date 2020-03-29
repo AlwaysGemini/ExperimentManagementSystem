@@ -25,12 +25,12 @@ public class ExperimentalCourseSelectionModel {
     }
 
     public void select(String student_id,
-                       String experimental_teaching_class_id,
+                       String experiment_course_match_id,
                        OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .add("student_id", student_id)
-                .add("experimental_teaching_class_id", experimental_teaching_class_id)
+                .add("experiment_course_match_id", experiment_course_match_id)
                 .build();
 
         OkHttpUtils.postByFormBody(formBody, URL_select, new OkHttpUtils.OnOkHttpUtilsListener() {

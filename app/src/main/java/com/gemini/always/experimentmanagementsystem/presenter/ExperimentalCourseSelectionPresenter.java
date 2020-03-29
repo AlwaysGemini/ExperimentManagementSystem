@@ -24,9 +24,9 @@ public class ExperimentalCourseSelectionPresenter extends BasePresenter<Experime
     }
 
     public void select(String student_id,
-                       String experimental_teaching_class_id) {
+                       String experiment_course_match_id) {
         model.select(student_id,
-                experimental_teaching_class_id,
+                experiment_course_match_id,
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {

@@ -94,7 +94,7 @@ public class ExcelUtils {
     }
 
     /**
-     * 创建表格
+     * 将导入的表格转换成T类型的List
      *
      * @param fileName 指定所创建的文件名
      * @param clazz    给定表格的类，进而通过反射获得类的set方法

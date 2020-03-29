@@ -3,7 +3,7 @@ package com.gemini.always.experimentmanagementsystem.bean.tableBean;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
 public class ExperimentalCourseSelectionTable {
-    private String experimental_teaching_class_id;
+    private String experiment_course_match_id;
 
     @TableColumn(id = 1, name = "实验教学班名称")
     private String experimental_teaching_class_name;
@@ -13,14 +13,6 @@ public class ExperimentalCourseSelectionTable {
     private String college;
     @TableColumn(id = 4, name = "课程名称")
     private String course_chinese_name;
-
-    public String getExperimental_teaching_class_id() {
-        return experimental_teaching_class_id;
-    }
-
-    public void setExperimental_teaching_class_id(String experimental_teaching_class_id) {
-        this.experimental_teaching_class_id = experimental_teaching_class_id;
-    }
 
     public String getExperimental_teaching_class_name() {
         return experimental_teaching_class_name;
@@ -52,5 +44,13 @@ public class ExperimentalCourseSelectionTable {
 
     public void setCourse_chinese_name(String course_chinese_name) {
         this.course_chinese_name = course_chinese_name;
+    }
+
+    public String getExperiment_course_match_id() {
+        return experiment_course_match_id;
+    }
+
+    public void setExperiment_course_match_id(String experiment_course_match_id) {
+        this.experiment_course_match_id = experiment_course_match_id;
     }
 }

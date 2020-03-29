@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF108EE9"));
         if (!User.isLogin(MainActivity.this)) {
-            FragmentSelectActivity.startFragmentSelecter(this, "LoginFragment");
+            FragmentSelectActivity.startFragmentSelector(this, "LoginFragment");
             finish();
             return;
         }
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case POS_HELP:
-                        FragmentSelectActivity.startFragmentSelecter(MainActivity.this, "HelpFragment");
+                        FragmentSelectActivity.startFragmentSelector(MainActivity.this, "HelpFragment");
                         break;
                     case POS_LOGOUT:
                         /*new AlertDialog.Builder(MainActivity.this)
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                                         User.logout(getApplicationContext());
                                         XToastUtils.toast("成功退出登录");
                                         if (!User.isLogin(getApplicationContext())) {
-                                            FragmentSelectActivity.startFragmentSelecter(MyApplication.getContext(), "LoginFragment");
+                                            FragmentSelectActivity.startFragmentSelector(MyApplication.getContext(), "LoginFragment");
                                             finish();
                                             return;
                                         }
@@ -308,55 +308,55 @@ public class MainActivity extends AppCompatActivity {
                 mSlidingRootNav.closeMenu();
                 switch (((Item) (Objects.requireNonNull(adapter.getItem(position)))).getItemName()) {
                     case "实验课程项目":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "CourseExperimentProjectFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "CourseExperimentProjectFragment");
                         break;
                     case "实验机构":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalOrganizationFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalOrganizationFragment");
                         break;
                     case "实验室人员管理":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "LaboratoryPersonnelManagementFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "LaboratoryPersonnelManagementFragment");
                         break;
                     case "实验仪器设备管理":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalEquipmentFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalEquipmentFragment");
                         break;
                     case "实验耗材管理":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalConsumablesManagementFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalConsumablesManagementFragment");
                         break;
                     case "实验项目管理":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalProjectManagementFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalProjectManagementFragment");
                         break;
                     case "课程实验大纲":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "CourseExperimentOutlineFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "CourseExperimentOutlineFragment");
                         break;
                     case "实验教学班维护":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "MaintenanceOfTeachingExperimentalClassFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "MaintenanceOfTeachingExperimentalClassFragment");
                         break;
                     case "实验教学任务书":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalTeachingAssignmentFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalTeachingAssignmentFragment");
                         break;
                     case "实验项目教学任务书":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "TeachingAssignmentOfExperimentalProjectFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "TeachingAssignmentOfExperimentalProjectFragment");
                         break;
                     case "实验排课":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentSchedulingFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentSchedulingFragment");
                         break;
                     case "选课规则设置":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "RulesOfSelectingCoursesFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "RulesOfSelectingCoursesFragment");
                         break;
                     case "实验项目指导书提交":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentProjectInstructionUploadFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentProjectInstructionUploadFragment");
                         break;
                     case "实验项目指导书审核":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentProjectInstructionExaminingFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentProjectInstructionExaminingFragment");
                         break;
                     case "实验项目指导书查看":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentProjectInstructionCheckFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentProjectInstructionCheckFragment");
                         break;
                     case "实验选课":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentalCourseSelectionFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalCourseSelectionFragment");
                         break;
                     case "生成配课":
-                        FragmentSelectActivity.startFragmentSelecter(getApplicationContext(), "ExperimentCourseMatchFragment");
+                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentCourseMatchFragment");
                         break;
                 }
             }

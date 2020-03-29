@@ -188,7 +188,7 @@ public class ExperimentalCourseSelectionFragment extends BaseFragment<Experiment
                 break;
             case R.id.fab_select:
                 if (table.getCheckedList().size() > 0)
-                    select(list.get(table.getCheckedList().get(0) - 1).getExperimental_teaching_class_id());
+                    select(list.get(table.getCheckedList().get(0) - 1).getExperiment_course_match_id());
                 break;
         }
     }
