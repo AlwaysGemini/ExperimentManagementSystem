@@ -172,26 +172,6 @@ public class MainActivity extends AppCompatActivity {
                         FragmentSelectActivity.startFragmentSelector(MainActivity.this, "HelpFragment");
                         break;
                     case POS_LOGOUT:
-                        /*new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("确定退出登录吗？")
-                                .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        User.logout();
-                                        XToastUtils.toast("成功退出登录");
-                                        if (!User.isLogin()) {
-                                            FragmentSelectActivity.startFragmentSelecter(MyApplication.getContext(), "LoginFragment");
-                                            finish();
-                                            return;
-                                        }
-                                    }
-                                })
-                                .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                }).show();*/
                         new MaterialDialog.Builder(MainActivity.this)
                                 .content("确定退出登录吗？")
                                 .positiveText("确定")
@@ -306,62 +286,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(final BaseQuickAdapter adapter, View view, final int position) {
                 mSlidingRootNav.closeMenu();
-                switch (((Item) (Objects.requireNonNull(adapter.getItem(position)))).getItemName()) {
-                    case "实验课程项目":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "CourseExperimentProjectFragment");
-                        break;
-                    case "实验机构":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalOrganizationFragment");
-                        break;
-                    case "实验室人员管理":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "LaboratoryPersonnelManagementFragment");
-                        break;
-                    case "实验仪器设备管理":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalEquipmentFragment");
-                        break;
-                    case "实验耗材管理":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalConsumablesManagementFragment");
-                        break;
-                    case "实验项目管理":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalProjectManagementFragment");
-                        break;
-                    case "课程实验大纲":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "CourseExperimentOutlineFragment");
-                        break;
-                    case "实验教学班维护":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "MaintenanceOfTeachingExperimentalClassFragment");
-                        break;
-                    case "实验教学任务书":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalTeachingAssignmentFragment");
-                        break;
-                    case "实验项目教学任务书":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "TeachingAssignmentOfExperimentalProjectFragment");
-                        break;
-                    case "实验排课":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentSchedulingFragment");
-                        break;
-                    case "选课规则设置":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "RulesOfSelectingCoursesFragment");
-                        break;
-                    case "实验项目指导书提交":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentProjectInstructionUploadFragment");
-                        break;
-                    case "实验项目指导书审核":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentProjectInstructionExaminingFragment");
-                        break;
-                    case "实验项目指导书查看":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentProjectInstructionCheckFragment");
-                        break;
-                    case "实验选课":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentalCourseSelectionFragment");
-                        break;
-                    case "生成配课":
-                        FragmentSelectActivity.startFragmentSelector(getApplicationContext(), "ExperimentCourseMatchFragment");
-                        break;
-                }
+                FragmentSelectActivity.startFragmentSelector(getApplicationContext(), getFragmentNameByItemTitle(((Item) (Objects.requireNonNull(adapter.getItem(position)))).getItemName()));
             }
         });
-
         recyclerView.setAdapter(adapter);
     }
 
@@ -490,5 +417,63 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private String getFragmentNameByItemTitle(String itemTitle) {
+        String fragmentName = "";
+        switch (itemTitle) {
+            case "实验课程项目":
+                fragmentName = "CourseExperimentProjectFragment";
+                break;
+            case "实验机构":
+                fragmentName = "ExperimentalOrganizationFragment";
+                break;
+            case "实验室人员管理":
+                fragmentName = "LaboratoryPersonnelManagementFragment";
+                break;
+            case "实验仪器设备管理":
+                fragmentName = "ExperimentalEquipmentFragment";
+                break;
+            case "实验耗材管理":
+                fragmentName = "ExperimentalConsumablesManagementFragment";
+                break;
+            case "实验项目管理":
+                fragmentName = "ExperimentalProjectManagementFragment";
+                break;
+            case "课程实验大纲":
+                fragmentName = "CourseExperimentOutlineFragment";
+                break;
+            case "实验教学班维护":
+                fragmentName = "MaintenanceOfTeachingExperimentalClassFragment";
+                break;
+            case "实验教学任务书":
+                fragmentName = "ExperimentalTeachingAssignmentFragment";
+                break;
+            case "实验项目教学任务书":
+                fragmentName = "TeachingAssignmentOfExperimentalProjectFragment";
+                break;
+            case "实验排课":
+                fragmentName = "ExperimentSchedulingFragment";
+                break;
+            case "选课规则设置":
+                fragmentName = "RulesOfSelectingCoursesFragment";
+                break;
+            case "实验项目指导书提交":
+                fragmentName = "ExperimentProjectInstructionUploadFragment";
+                break;
+            case "实验项目指导书审核":
+                fragmentName = "ExperimentProjectInstructionExaminingFragment";
+                break;
+            case "实验项目指导书查看":
+                fragmentName = "ExperimentProjectInstructionCheckFragment";
+                break;
+            case "实验选课":
+                fragmentName = "ExperimentalCourseSelectionFragment";
+                break;
+            case "生成配课":
+                fragmentName = "ExperimentCourseMatchFragment";
+                break;
+        }
+        return fragmentName;
     }
 }
