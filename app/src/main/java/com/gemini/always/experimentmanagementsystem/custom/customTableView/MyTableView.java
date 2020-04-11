@@ -59,6 +59,10 @@ public class MyTableView extends RelativeLayout {
         recyclerView.setAdapter(adapter);
     }
 
+    public void setSelectMode(int selectMode) {
+        adapter.setSelectMode(selectMode);
+    }
+
     public void setOnItemClickListener(BaseQuickAdapter.OnItemClickListener onItemClickListener) {
         adapter.setOnItemClickListener(onItemClickListener);
     }

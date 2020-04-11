@@ -1,22 +1,34 @@
 package com.gemini.always.experimentmanagementsystem.model;
 
-import com.gemini.always.experimentmanagementsystem.bean.tableTemplateBean.ExperimentalItemAchievementTableTemplate;
 import com.gemini.always.experimentmanagementsystem.util.OkHttpUtils;
-import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.FormBody;
 
 public class ExperimentalItemAchievementEntryModel {
     private static final String prefix = "/experimentalItemAchievement";
+    private static final String URL_getExperimentItemAchievementTableSummary = prefix + "/getExperimentItemAchievementTableSummary";
     private static final String URL_getTemplate = prefix + "/getTemplate";
-    private static final String URL_importExperimentalItemAchievement = prefix + "/importExperimentalItemAchievement";
+    private static final String URL_uploadExperimentalItemAchievement = prefix + "/uploadExperimentalItemAchievement";
+
+    public void getExperimentItemAchievementTableSummary(String user_id,
+                                                         OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+        FormBody formBody = new FormBody
+                .Builder()
+                .add("user_id", user_id)
+                .build();
+        OkHttpUtils.postByFormBody(formBody, URL_getExperimentItemAchievementTableSummary, new OkHttpUtils.OnOkHttpUtilsListener() {
+            @Override
+            public void onResult(Boolean isSuccess, JSONObject responseJson) {
+                onOkHttpUtilsListener.onResult(isSuccess, responseJson);
+            }
+        });
+    }
 
     public void getTemplate(String experiment_course_match_id,
                             OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
@@ -32,16 +44,15 @@ public class ExperimentalItemAchievementEntryModel {
         });
     }
 
-    public void importExperimentalItemAchievement(List<ExperimentalItemAchievementTableTemplate> list, OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            JSONArray jsonArray = new JSONArray(new Gson().toJson(list));
-            jsonObject.put("data", jsonArray);
-        } catch (JSONException e) {
-            Logger.e(e, "JSONException:");
-        }
-
-        OkHttpUtils.postByJson(jsonObject, URL_importExperimentalItemAchievement, new OkHttpUtils.OnOkHttpUtilsListener() {
+    public void importExperimentalItemAchievement(String filePath,
+                                                  String fileName,
+                                                  String experiment_item_id,
+                                                  String experiment_course_match_id,
+                                                  OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
+        Map<String, String> map = new HashMap<>();
+        map.put("experiment_item_id", experiment_item_id);
+        map.put("experiment_course_match_id", experiment_course_match_id);
+        OkHttpUtils.upload(URL_uploadExperimentalItemAchievement, new File(filePath), fileName, map, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
             public void onResult(Boolean isSuccess, JSONObject responseJson) {
                 onOkHttpUtilsListener.onResult(isSuccess, responseJson);

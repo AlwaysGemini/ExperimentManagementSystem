@@ -31,8 +31,8 @@ import static com.gemini.always.experimentmanagementsystem.util.ReflectUtil.invo
  */
 public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
 
-    private static int MultipleSelection = 1;
-    private static int SingleSelection = 2;
+    public static int MultipleSelection = 1;
+    public static int SingleSelection = 2;
 
     private Context context;
     private Class clazz;
@@ -157,13 +157,9 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
                     int pos = (int) compoundButton.getTag();
                     if (selectMode == MultipleSelection) {
                         if (b) {
-                            for (int i = 1; i <= dataList.size(); i++) {
-                                mCheckStates.put(i, true);
-                            }
+                            mCheckStates.put(pos, true);
                         } else {
-                            for (int i = 1; i <= dataList.size(); i++) {
-                                mCheckStates.delete(i);
-                            }
+                            mCheckStates.delete(pos);
                         }
                     } else if (selectMode == SingleSelection) {
                         if (b) {
@@ -252,6 +248,10 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
             rowContainer.addView(cell);
         }
         return rowContainer;
+    }
+
+    public void setSelectMode(int selectMode) {
+        this.selectMode = selectMode;
     }
 
     public void showCheckBox(boolean isDisplay) {
