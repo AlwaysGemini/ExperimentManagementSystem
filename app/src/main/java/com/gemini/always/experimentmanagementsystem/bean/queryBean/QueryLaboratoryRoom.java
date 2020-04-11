@@ -3,28 +3,28 @@ package com.gemini.always.experimentmanagementsystem.bean.queryBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class QueryLaboratoryRoom {
-    @DialogItem(id = 0, name = "隶属教学实验中心", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 0, name = "隶属教学实验中心", type = DialogItem.TYPE_Spinner)
     private String teaching_experiment_center_name;
 
-    @DialogItem(id = 1, name = "隶属实验室", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 1, name = "隶属实验室", type = DialogItem.TYPE_Spinner)
     private String laboratory_name;
 
-    @DialogItem(id = 2, name = "隶属实验分室", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 2, name = "隶属实验分室", type = DialogItem.TYPE_Spinner)
     private String laboratory_compartment_name;
 
-    @DialogItem(id = 3, name = "实验场地性质", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 3, name = "实验场地性质", type = DialogItem.TYPE_Spinner)
     private String nature_of_experimental_site;
 
-    @DialogItem(id = 4, name = "科研基地类别", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 4, name = "科研基地类别", type = DialogItem.TYPE_Spinner)
     private String category_of_scientific_research_base;
 
-    @DialogItem(id = 5, name = "共建情况", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 5, name = "共建情况", type = DialogItem.TYPE_Spinner)
     private String status_of_joint_construction;
 
-    @DialogItem(id = 6, name = "校区", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 6, name = "校区", type = DialogItem.TYPE_Spinner)
     private String campus;
 
-    @DialogItem(id = 7, name = "启用标志", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 7, name = "启用标志", type = DialogItem.TYPE_Spinner)
     private String enable_flag;
 
     public String getTeaching_experiment_center_name() {

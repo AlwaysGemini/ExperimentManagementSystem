@@ -3,28 +3,28 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertTeachingExperimentCenter {
-    @DialogItem(id = 0, name = "教学实验中心代码")
+    @DialogItem(id = 0, name = "教学实验中心代码", type = DialogItem.TYPE_EditText)
     private String teaching_experiment_center_code;
 
-    @DialogItem(id = 1, name = "教学实验中心名称")
+    @DialogItem(id = 1, name = "教学实验中心名称", type = DialogItem.TYPE_EditText)
     private String teaching_experiment_center_name;
 
-    @DialogItem(id = 2, name = "实验室类型")
+    @DialogItem(id = 2, name = "实验室类型", type = DialogItem.TYPE_EditText)
     private String laboratory_type;
 
-    @DialogItem(id = 3, name = "所属单位")
+    @DialogItem(id = 3, name = "所属单位", type = DialogItem.TYPE_EditText)
     private String subordinate_unit;
 
-    @DialogItem(id = 4, name = "所属学科")
+    @DialogItem(id = 4, name = "所属学科", type = DialogItem.TYPE_EditText)
     private String subordinate_discipline;
 
-    @DialogItem(id = 5, name = "建立年份")
+    @DialogItem(id = 5, name = "建立年份", type = DialogItem.TYPE_EditText)
     private String year_of_establishment;
 
-    @DialogItem(id = 6, name = "备注")
+    @DialogItem(id = 6, name = "备注", type = DialogItem.TYPE_EditText)
     private String remarks;
 
-    @DialogItem(id = 7, name = "启用标志")
+    @DialogItem(id = 7, name = "启用标志", type = DialogItem.TYPE_EditText)
     private String enable_flag;
 
     public String getTeaching_experiment_center_code() {

@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface DialogItem {
 
-    int TYPE_SPINNER = 0;
-    int TYPE_EDITTEXT = 1;
+    int TYPE_Spinner = 0;
+    int TYPE_EditText = 1;
 
     /**
      * 名称
@@ -22,7 +22,7 @@ public @interface DialogItem {
      */
     int id();
 
-    int type() default TYPE_EDITTEXT;
+    int type();
 
     String hint() default "";
 }

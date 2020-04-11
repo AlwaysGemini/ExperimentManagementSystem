@@ -3,7 +3,7 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertUnmatchedOfExperimentCourse {
-    @DialogItem(id = 0, name = "容量", type = DialogItem.TYPE_EDITTEXT)
+    @DialogItem(id = 0, name = "容量", type = DialogItem.TYPE_EditText)
     private String capacity;
 
     public String getCapacity() {

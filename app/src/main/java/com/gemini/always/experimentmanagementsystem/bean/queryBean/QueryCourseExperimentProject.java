@@ -3,15 +3,15 @@ package com.gemini.always.experimentmanagementsystem.bean.queryBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class QueryCourseExperimentProject {
-    @DialogItem(name = "开课学院", id = 0, type = DialogItem.TYPE_SPINNER)
+    @DialogItem(name = "开课学院", id = 0, type = DialogItem.TYPE_Spinner)
     private String college;
-    @DialogItem(name = "课程类别", id = 1, type = DialogItem.TYPE_SPINNER)
+    @DialogItem(name = "课程类别", id = 1, type = DialogItem.TYPE_Spinner)
     private String course_category;
-    @DialogItem(name = "课程归属", id = 2, type = DialogItem.TYPE_SPINNER)
+    @DialogItem(name = "课程归属", id = 2, type = DialogItem.TYPE_Spinner)
     private String course_assignment;
-    @DialogItem(name = "课程启用年级", id = 3, type = DialogItem.TYPE_SPINNER)
+    @DialogItem(name = "课程启用年级", id = 3, type = DialogItem.TYPE_Spinner)
     private String enabling_grade;
-    @DialogItem(name = "课程", id = 4, type = DialogItem.TYPE_EDITTEXT, hint = "按课程代码、名称模糊查询")
+    @DialogItem(name = "课程", id = 4, type = DialogItem.TYPE_EditText, hint = "按课程代码、名称模糊查询")
     private String course;
 
     public String getCollege() {

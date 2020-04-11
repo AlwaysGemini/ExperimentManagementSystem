@@ -286,7 +286,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(final BaseQuickAdapter adapter, View view, final int position) {
                 mSlidingRootNav.closeMenu();
-                FragmentSelectActivity.startFragmentSelector(getApplicationContext(), getFragmentNameByItemTitle(((Item) (Objects.requireNonNull(adapter.getItem(position)))).getItemName()));
+                String fragmentName = getFragmentNameByItemTitle(((Item) (Objects.requireNonNull(adapter.getItem(position)))).getItemName());
+                if (!fragmentName.equals("")) {
+                    FragmentSelectActivity.startFragmentSelector(getApplicationContext(), fragmentName);
+                } else {
+                    XToastUtils.error("暂未开发");
+                }
             }
         });
         recyclerView.setAdapter(adapter);
@@ -384,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
 
                 level0Item[count] = new Level0Item("实验成绩管理");
                 level0Item[count].addSubItem(new Item("实验项目成绩录入"));
-                level0Item[count].addSubItem(new Item("实验成绩汇总入"));
+                level0Item[count].addSubItem(new Item("实验成绩汇总录入"));
                 level0Item[count].addSubItem(new Item("实验考勤成绩"));
                 data.add(level0Item[count++]);
 
@@ -472,6 +477,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "生成配课":
                 fragmentName = "ExperimentCourseMatchFragment";
+                break;
+            case "实验项目成绩录入":
+                fragmentName = "ExperimentalItemAchievementEntryFragment";
                 break;
         }
         return fragmentName;

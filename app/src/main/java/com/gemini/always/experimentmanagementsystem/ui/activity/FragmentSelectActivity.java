@@ -20,6 +20,7 @@ import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentSchedu
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalConsumablesManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalCourseSelectionFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalEquipmentFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalItemAchievementEntryFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalTeachingAssignmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.HelpFragment;
@@ -153,6 +154,9 @@ public class FragmentSelectActivity extends AppCompatActivity {
                 break;
             case "HelpFragment":
                 fragment = new HelpFragment();
+                break;
+            case "ExperimentalItemAchievementEntryFragment":
+                fragment = new ExperimentalItemAchievementEntryFragment();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");

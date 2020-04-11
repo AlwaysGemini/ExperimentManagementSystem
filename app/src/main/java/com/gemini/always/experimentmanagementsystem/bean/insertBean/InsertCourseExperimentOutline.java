@@ -3,13 +3,13 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertCourseExperimentOutline {
-    @DialogItem(id = 0, name = "授课任务代码")
+    @DialogItem(id = 0, name = "授课任务代码", type = DialogItem.TYPE_EditText)
     private String allocation_of_courses_id;
 
-    @DialogItem(id = 1, name = "实验成绩占比(%)")
+    @DialogItem(id = 1, name = "实验成绩占比(%)", type = DialogItem.TYPE_EditText)
     private String proportion_of_experimental_results;
 
-    @DialogItem(id = 2, name = "实验项目代码")
+    @DialogItem(id = 2, name = "实验项目代码", type = DialogItem.TYPE_EditText)
     private String experimental_project_name;
 
     public String getAllocation_of_courses_id() {

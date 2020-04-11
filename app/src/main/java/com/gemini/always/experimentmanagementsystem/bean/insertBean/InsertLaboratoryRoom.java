@@ -3,37 +3,37 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertLaboratoryRoom {
-    @DialogItem(id = 0, name = "实验分室代码")
+    @DialogItem(id = 0, name = "实验分室代码", type = DialogItem.TYPE_EditText)
     private String laboratory_room_id;
 
-    @DialogItem(id = 1, name = "实验分室名称")
+    @DialogItem(id = 1, name = "实验分室名称", type = DialogItem.TYPE_EditText)
     private String laboratory_room_name;
 
-    @DialogItem(id = 2, name = "隶属实验分室代码")
+    @DialogItem(id = 2, name = "隶属实验分室代码", type = DialogItem.TYPE_EditText)
     private String laboratory_compartment_id;
 
-    @DialogItem(id = 3, name = "实验场地性质")
+    @DialogItem(id = 3, name = "实验场地性质", type = DialogItem.TYPE_EditText)
     private String nature_of_experimental_site;
 
-    @DialogItem(id = 4, name = "科研基地类别")
+    @DialogItem(id = 4, name = "科研基地类别", type = DialogItem.TYPE_EditText)
     private String category_of_scientific_research_base;
 
-    @DialogItem(id = 5, name = "实验房间负责人")
+    @DialogItem(id = 5, name = "实验房间负责人", type = DialogItem.TYPE_EditText)
     private String person_in_charge_of_the_experimental_room;
 
-    @DialogItem(id = 6, name = "共建情况")
+    @DialogItem(id = 6, name = "共建情况", type = DialogItem.TYPE_EditText)
     private String status_of_joint_construction;
 
-    @DialogItem(id = 7, name = "校区")
+    @DialogItem(id = 7, name = "校区", type = DialogItem.TYPE_EditText)
     private String campus;
 
-    @DialogItem(id = 8, name = "容量")
+    @DialogItem(id = 8, name = "容量", type = DialogItem.TYPE_EditText)
     private String capacity;
 
-    @DialogItem(id = 9, name = "备注")
+    @DialogItem(id = 9, name = "备注", type = DialogItem.TYPE_EditText)
     private String remarks;
 
-    @DialogItem(id = 10, name = "启用标志")
+    @DialogItem(id = 10, name = "启用标志", type = DialogItem.TYPE_EditText)
     private String enable_flag;
 
     public String getLaboratory_room_id() {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -20,6 +19,7 @@ import com.xuexiang.xui.widget.textview.autofit.AutoFitTextView;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.gemini.always.experimentmanagementsystem.util.ReflectUtil.invokeGet;
@@ -31,6 +31,9 @@ import static com.gemini.always.experimentmanagementsystem.util.ReflectUtil.invo
  */
 public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
 
+    private static int MultipleSelection = 1;
+    private static int SingleSelection = 2;
+
     private Context context;
     private Class clazz;
     private List<T> dataList;
@@ -40,6 +43,8 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
     private int HEAD_CHECKBOX_CONTAINER = 0;
     private int width = 150;
     private int height = 25;
+    private int selectMode = MultipleSelection;
+
     /**
      * 防止Checkbox错乱 做setTag  getTag操作
      */
@@ -55,53 +60,125 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
     @Override
     protected void convert(final BaseViewHolder helper, Object item) {
         int position = helper.getAdapterPosition();
-        Field[] fields = clazz.getDeclaredFields();
-        LinearLayout[] cell = new LinearLayout[fields.length];
+
         LinearLayout mContainer = helper.getView(R.id.item);
-        //LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, DensityUtils.dip2px(height));
-        //mContainer.setLayoutParams(LP_MM);
         mContainer.setTag(position);
         mContainer.removeAllViews();
-        LinearLayout checkBoxContainer = new LinearLayout(context);
-        checkBoxContainer.setTag(position);
-        checkBoxContainer.setBackground(context.getDrawable(R.drawable.linearlayout_border));
-        LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        checkBoxContainer.setLayoutParams(LP_MM);
+
+        Field[] fields = clazz.getDeclaredFields();
+        int columnNum = 0;
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            field.setAccessible(true);
+            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
+            if (fieldAnnotation != null) {
+                columnNum++;
+            }
+        }
+        String[] rowData = new String[columnNum];
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            field.setAccessible(true);
+            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
+            if (fieldAnnotation != null) {
+                TableColumn smartColumn = (TableColumn) fieldAnnotation;
+                int sequence = smartColumn.id() - 1;
+                rowData[sequence] = (String) invokeGet(item, field.getName());
+            }
+        }
+        mContainer.addView(createRow(position, Arrays.asList(rowData)));
+    }
+
+    public void addHeaderView() {
+        Field[] fields = clazz.getDeclaredFields();
+        int columnNum = 0;
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            field.setAccessible(true);
+            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
+            if (fieldAnnotation != null) {
+                columnNum++;
+            }
+        }
+        String[] rowData = new String[columnNum];
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            field.setAccessible(true);
+            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
+            if (fieldAnnotation != null) {
+                TableColumn smartColumn = (TableColumn) fieldAnnotation;
+                int sequence = smartColumn.id() - 1;
+                rowData[sequence] = smartColumn.name();
+            }
+        }
+        super.addHeaderView(createHeadRow(Arrays.asList(rowData)));
+    }
+
+    private CheckBox createCheckBox(int position) {
         CheckBox checkBox = new CheckBox(context);
         checkBox.setTag(position);
         checkBox.setChecked(mCheckStates.get(position, false));
         checkBox.setGravity(Gravity.CENTER);
-        checkBoxContainer.addView(checkBox);
-        mContainer.addView(checkBoxContainer);
         if (isDisplayCheckBox) {
             this.getHeaderLayout().findViewById(HEAD_CHECKBOX_CONTAINER).setVisibility(View.VISIBLE);
             CheckBox headerCheckBox = getHeaderLayout().findViewById(HEAD_CHECKBOX);
             headerCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (b) {
-                        for (int i = 1; i <= dataList.size(); i++) {
-                            mCheckStates.put(i, true);
+                    if (selectMode == MultipleSelection) {
+                        if (b) {
+                            for (int i = 1; i <= dataList.size(); i++) {
+                                mCheckStates.put(i, true);
+                            }
+                        } else {
+                            for (int i = 1; i <= dataList.size(); i++) {
+                                mCheckStates.delete(i);
+                            }
                         }
-                    } else {
-                        for (int i = 1; i <= dataList.size(); i++) {
-                            mCheckStates.delete(i);
+                    } else if (selectMode == SingleSelection) {
+                        if (b) {
+                            for (int i = 1; i <= dataList.size(); i++) {
+                                if (i != position) {
+                                    mCheckStates.delete(i);
+                                } else {
+                                    mCheckStates.put(i, true);
+                                }
+                            }
                         }
                     }
                     notifyDataSetChanged();
                 }
             });
             checkBox.setVisibility(View.VISIBLE);
-            checkBox.setChecked(mCheckStates.get(helper.getAdapterPosition(), false));
+            checkBox.setChecked(mCheckStates.get(position, false));
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     int pos = (int) compoundButton.getTag();
-                    if (b) {
-                        mCheckStates.put(pos, true);
-                    } else {
-                        mCheckStates.delete(pos);
+                    if (selectMode == MultipleSelection) {
+                        if (b) {
+                            for (int i = 1; i <= dataList.size(); i++) {
+                                mCheckStates.put(i, true);
+                            }
+                        } else {
+                            for (int i = 1; i <= dataList.size(); i++) {
+                                mCheckStates.delete(i);
+                            }
+                        }
+                    } else if (selectMode == SingleSelection) {
+                        if (b) {
+                            for (int i = 1; i <= dataList.size(); i++) {
+                                if (i != pos) {
+                                    mCheckStates.delete(i);
+                                } else {
+                                    mCheckStates.put(i, true);
+                                }
+                            }
+                        } else {
+                            mCheckStates.delete(pos);
+                        }
                     }
+                    notifyDataSetChanged();
                 }
             });
         } else {
@@ -111,47 +188,44 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
             checkBox.setChecked(false);
             mCheckStates.clear();
         }
-        int columnNum = 0;
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
-            field.setAccessible(true);
-            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
-            if (fieldAnnotation != null) {
-                columnNum++;
-            }
-        }
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
-            field.setAccessible(true);
-            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
-            if (fieldAnnotation != null) {
-                TableColumn smartColumn = (TableColumn) fieldAnnotation;
-                int sequence = smartColumn.id() - 1;
-                cell[sequence] = new LinearLayout(context); // 线性布局方式
-                cell[sequence].setTag(sequence);
-                cell[sequence].setOrientation(LinearLayout.HORIZONTAL); //
-                cell[sequence].setGravity(Gravity.CENTER);
-                cell[sequence].setBackground(context.getDrawable(R.drawable.linearlayout_border));
-                LP_MM = new LinearLayout.LayoutParams(DensityUtils.dip2px(width), LinearLayout.LayoutParams.MATCH_PARENT);
-                cell[sequence].setLayoutParams(LP_MM);
-                final AutoFitTextView textView = new AutoFitTextView(context);
-                textView.setSingleLine(true);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(DensityUtils.dip2px(10), 0, DensityUtils.dip2px(10), 0);//4个参数按顺序分别是左上右下
-                textView.setLayoutParams(layoutParams);
-                textView.setText((String) invokeGet(item, field.getName()));
-                cell[sequence].addView(textView);
-            }
-        }
-        for (int i = 0; i < columnNum; i++) {
-            mContainer.addView(cell[i]);
-        }
+        return checkBox;
     }
 
-    public void addHeaderView() {
-        LinearLayout mContainer = new LinearLayout(context);
+    private LinearLayout createRow(int position, List<String> data) {
+        LinearLayout rowContainer = new LinearLayout(context);
+        rowContainer.setTag(position);
         LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, DensityUtils.dip2px(height));
-        mContainer.setLayoutParams(LP_MM);
+        rowContainer.setLayoutParams(LP_MM);
+
+        LinearLayout checkBoxContainer = new LinearLayout(context);
+        checkBoxContainer.setTag(position);
+        checkBoxContainer.setBackground(context.getDrawable(R.drawable.linearlayout_border));
+        LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        checkBoxContainer.setLayoutParams(LP_MM);
+
+        checkBoxContainer.addView(createCheckBox(position));
+        rowContainer.addView(checkBoxContainer);
+
+        for (String string : data) {
+            LinearLayout cell = new LinearLayout(context);
+            cell.setOrientation(LinearLayout.HORIZONTAL); //
+            cell.setGravity(Gravity.CENTER);
+            cell.setBackground(context.getDrawable(R.drawable.linearlayout_border));
+            LP_MM = new LinearLayout.LayoutParams(DensityUtils.dip2px(width), LinearLayout.LayoutParams.MATCH_PARENT);
+            cell.setLayoutParams(LP_MM);
+            final AutoFitTextView textView = new AutoFitTextView(context);
+            textView.setSingleLine(true);
+            textView.setText(string);
+            cell.addView(textView);
+            rowContainer.addView(cell);
+        }
+        return rowContainer;
+    }
+
+    private LinearLayout createHeadRow(List<String> data) {
+        LinearLayout rowContainer = new LinearLayout(context);
+        LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, DensityUtils.dip2px(height));
+        rowContainer.setLayoutParams(LP_MM);
         LinearLayout checkBoxContainer = new LinearLayout(context);
         checkBoxContainer.setId(HEAD_CHECKBOX_CONTAINER);
         checkBoxContainer.setBackground(context.getDrawable(R.drawable.linearlayout_border));
@@ -161,42 +235,23 @@ public class TableAdapter<T> extends BaseQuickAdapter<T, BaseViewHolder> {
         headCheckBox.setId(HEAD_CHECKBOX);
         headCheckBox.setGravity(Gravity.CENTER);
         checkBoxContainer.addView(headCheckBox);
-        mContainer.addView(checkBoxContainer);
+        rowContainer.addView(checkBoxContainer);
         checkBoxContainer.setVisibility(View.GONE);
-        Field[] fields = clazz.getDeclaredFields();
-        int columnNum = 0;
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
-            field.setAccessible(true);
-            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
-            if (fieldAnnotation != null) {
-                columnNum++;
-            }
+
+        for (String string : data) {
+            LinearLayout cell = new LinearLayout(context);
+            cell.setOrientation(LinearLayout.HORIZONTAL); //
+            cell.setGravity(Gravity.CENTER);
+            cell.setBackground(context.getDrawable(R.drawable.linearlayout_border));
+            LP_MM = new LinearLayout.LayoutParams(DensityUtils.dip2px(width), LinearLayout.LayoutParams.MATCH_PARENT);
+            cell.setLayoutParams(LP_MM);
+            final AutoFitTextView textView = new AutoFitTextView(context);
+            textView.setSingleLine(true);
+            textView.setText(string);
+            cell.addView(textView);
+            rowContainer.addView(cell);
         }
-        LinearLayout[] cell = new LinearLayout[columnNum];
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
-            field.setAccessible(true);
-            Annotation fieldAnnotation = field.getAnnotation(TableColumn.class);
-            if (fieldAnnotation != null) {
-                TableColumn smartColumn = (TableColumn) fieldAnnotation;
-                int sequence = smartColumn.id() - 1;
-                cell[sequence] = new LinearLayout(context); // 线性布局方式
-                cell[sequence].setOrientation(LinearLayout.HORIZONTAL); //
-                cell[sequence].setGravity(Gravity.CENTER);
-                cell[sequence].setBackground(context.getDrawable(R.drawable.linearlayout_border));
-                LP_MM = new LinearLayout.LayoutParams(DensityUtils.dip2px(width), LinearLayout.LayoutParams.MATCH_PARENT);
-                cell[sequence].setLayoutParams(LP_MM);
-                final AutoFitTextView textView = new AutoFitTextView(context);
-                textView.setSingleLine(true);
-                textView.setText(smartColumn.name());
-                cell[sequence].addView(textView);
-            }
-        }
-        for (int i = 0; i < columnNum; i++) {
-            mContainer.addView(cell[i]);
-        }
-        super.addHeaderView(mContainer);
+        return rowContainer;
     }
 
     public void showCheckBox(boolean isDisplay) {

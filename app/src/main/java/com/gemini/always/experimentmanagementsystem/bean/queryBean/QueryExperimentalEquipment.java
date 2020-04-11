@@ -3,22 +3,22 @@ package com.gemini.always.experimentmanagementsystem.bean.queryBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class QueryExperimentalEquipment {
-    @DialogItem(id = 0, name = "教学实验中心", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 0, name = "教学实验中心", type = DialogItem.TYPE_Spinner)
     private String teaching_experiment_center_name;
 
-    @DialogItem(id = 1, name = "实验室", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 1, name = "实验室", type = DialogItem.TYPE_Spinner)
     private String laboratory_name;
 
-    @DialogItem(id = 2, name = "实验分室", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 2, name = "实验分室", type = DialogItem.TYPE_Spinner)
     private String experimental_compartment_name;
 
-    @DialogItem(id = 3, name = "实验房间", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 3, name = "实验房间", type = DialogItem.TYPE_Spinner)
     private String laboratory_room_name;
 
-    @DialogItem(id = 4, name = "是否可搬动", type = DialogItem.TYPE_SPINNER)
+    @DialogItem(id = 4, name = "是否可搬动", type = DialogItem.TYPE_Spinner)
     private String is_movable;
 
-    @DialogItem(id = 5, name = "实验仪器名称", type = DialogItem.TYPE_EDITTEXT)
+    @DialogItem(id = 5, name = "实验仪器名称", type = DialogItem.TYPE_EditText)
     private String experimental_equipment_name;
 
     public String getTeaching_experiment_center_name() {

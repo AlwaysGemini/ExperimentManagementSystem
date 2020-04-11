@@ -3,37 +3,37 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertExperimentItem {
-    @DialogItem(id = 0, name = "实验项目代码")
+    @DialogItem(id = 0, name = "实验项目代码", type = DialogItem.TYPE_EditText)
     private String experiment_item_id;
 
-    @DialogItem(id = 1, name = "实验项目名称")
+    @DialogItem(id = 1, name = "实验项目名称", type = DialogItem.TYPE_EditText)
     private String experiment_item_name;
 
-    @DialogItem(id = 2, name = "实验内容")
+    @DialogItem(id = 2, name = "实验内容", type = DialogItem.TYPE_EditText)
     private String experiment_content;
 
-    @DialogItem(id = 3, name = "实验学时")
+    @DialogItem(id = 3, name = "实验学时", type = DialogItem.TYPE_EditText)
     private String experiment_hours;
 
-    @DialogItem(id = 4, name = "实验学分")
+    @DialogItem(id = 4, name = "实验学分", type = DialogItem.TYPE_EditText)
     private String experiment_credit;
 
-    @DialogItem(id = 5, name = "实验属性")
+    @DialogItem(id = 5, name = "实验属性", type = DialogItem.TYPE_EditText)
     private String experiment_attribute;
 
-    @DialogItem(id = 6, name = "实验类别")
+    @DialogItem(id = 6, name = "实验类别", type = DialogItem.TYPE_EditText)
     private String experiment_type;
 
-    @DialogItem(id = 7, name = "实验类型")
+    @DialogItem(id = 7, name = "实验类型", type = DialogItem.TYPE_EditText)
     private String experiment_category;
 
-    @DialogItem(id = 8, name = "所属单位")
+    @DialogItem(id = 8, name = "所属单位", type = DialogItem.TYPE_EditText)
     private String subordinate_unit;
 
-    @DialogItem(id = 9, name = "所属学科")
+    @DialogItem(id = 9, name = "所属学科", type = DialogItem.TYPE_EditText)
     private String subordinate_discipline;
 
-    @DialogItem(id = 10, name = "实验要求")
+    @DialogItem(id = 10, name = "实验要求", type = DialogItem.TYPE_EditText)
     private String experiment_requirements;
 
     public String getExperiment_item_id() {

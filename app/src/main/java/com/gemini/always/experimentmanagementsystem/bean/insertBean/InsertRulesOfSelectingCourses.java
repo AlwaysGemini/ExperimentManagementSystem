@@ -3,28 +3,28 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertRulesOfSelectingCourses {
-    @DialogItem(id = 0, name = "学年")
+    @DialogItem(id = 0, name = "学年", type = DialogItem.TYPE_EditText)
     private String year;
 
-    @DialogItem(id = 1, name = "学期")
+    @DialogItem(id = 1, name = "学期", type = DialogItem.TYPE_EditText)
     private String semester;
 
-    @DialogItem(id = 2, name = "选课开始时间")
+    @DialogItem(id = 2, name = "选课开始时间", type = DialogItem.TYPE_EditText)
     private String start_time;
 
-    @DialogItem(id = 3, name = "选课结束时间")
+    @DialogItem(id = 3, name = "选课结束时间", type = DialogItem.TYPE_EditText)
     private String end_time;
 
-    @DialogItem(id = 4, name = "是否允许退选")
+    @DialogItem(id = 4, name = "是否允许退选", type = DialogItem.TYPE_EditText)
     private String is_withdrawable;
 
-    @DialogItem(id = 5, name = "是否允许改选")
+    @DialogItem(id = 5, name = "是否允许改选", type = DialogItem.TYPE_EditText)
     private String is_reelect;
 
-    @DialogItem(id = 6, name = "是否选择容量")
+    @DialogItem(id = 6, name = "是否选择容量", type = DialogItem.TYPE_EditText)
     private String is_selective_capacity;
 
-    @DialogItem(id = 7, name = "是否即选即用")
+    @DialogItem(id = 7, name = "是否即选即用", type = DialogItem.TYPE_EditText)
     private String is_click_to_run;
 
     public String getYear() {

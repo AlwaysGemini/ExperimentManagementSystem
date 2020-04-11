@@ -3,16 +3,16 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertLaboratoryPersonnelManagement {
-    @DialogItem(id = 0, name = "工号")
+    @DialogItem(id = 0, name = "工号", type = DialogItem.TYPE_EditText)
     private String job_number;
 
-    @DialogItem(id = 1, name = "职称")
+    @DialogItem(id = 1, name = "职称", type = DialogItem.TYPE_EditText)
     private String title;
 
-    @DialogItem(id = 2, name = "实验室代码")
+    @DialogItem(id = 2, name = "实验室代码", type = DialogItem.TYPE_EditText)
     private String laboratory_id;
 
-    @DialogItem(id = 3, name = "在职状态")
+    @DialogItem(id = 3, name = "在职状态", type = DialogItem.TYPE_EditText)
     private String incumbency;
 
     public String getJob_number() {

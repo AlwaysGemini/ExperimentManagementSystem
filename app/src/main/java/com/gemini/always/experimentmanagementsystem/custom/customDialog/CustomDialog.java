@@ -38,7 +38,6 @@ public class CustomDialog extends Dialog {
         void onPositive(CustomDialog dialog, List<String> list);
     }
 
-
     public static class Builder {
         private Context context;
         private String title;
@@ -159,9 +158,9 @@ public class CustomDialog extends Dialog {
                     Annotation fieldAnnotation = field.getAnnotation(DialogItem.class);
                     if (fieldAnnotation != null) {
                         DialogItem dialogItem = (DialogItem) fieldAnnotation;
-                        if (dialogItem.type() == DialogItem.TYPE_SPINNER) {
+                        if (dialogItem.type() == DialogItem.TYPE_Spinner) {
                             listItems[dialogItem.id()] = new DialogListItem(new DialogListSpinnerItem(dialogItem.name(), null));
-                        } else if (dialogItem.type() == DialogItem.TYPE_EDITTEXT) {
+                        } else if (dialogItem.type() == DialogItem.TYPE_EditText) {
                             listItems[dialogItem.id()] = new DialogListItem(new DialogListEditTextItem(dialogItem.name(), dialogItem.hint()));
                         }
                     }
