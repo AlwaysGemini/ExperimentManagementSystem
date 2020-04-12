@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
 
                 level0Item[count] = new Level0Item("实验成绩管理");
                 level0Item[count].addSubItem(new Item("实验项目成绩录入"));
-                level0Item[count].addSubItem(new Item("实验成绩汇总入"));
+                level0Item[count].addSubItem(new Item("实验成绩汇总"));
                 level0Item[count].addSubItem(new Item("实验成绩审核"));
                 level0Item[count].addSubItem(new Item("实验考勤成绩"));
                 data.add(level0Item[count++]);
@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
 
                 level0Item[count] = new Level0Item("实验成绩管理");
                 level0Item[count].addSubItem(new Item("实验项目成绩录入"));
-                level0Item[count].addSubItem(new Item("实验成绩汇总录入"));
+                level0Item[count].addSubItem(new Item("实验成绩汇总"));
                 level0Item[count].addSubItem(new Item("实验考勤成绩"));
                 data.add(level0Item[count++]);
 
@@ -480,6 +480,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "实验项目成绩录入":
                 fragmentName = "ExperimentalItemAchievementEntryFragment";
+                break;
+            case "实验成绩汇总":
+                fragmentName = "ExperimentAchievementSummaryFragment";
                 break;
         }
         return fragmentName;

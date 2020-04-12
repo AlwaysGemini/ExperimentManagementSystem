@@ -24,8 +24,9 @@ public class ExperimentalItemAchievementEntryPresenter extends BasePresenter<Exp
                 });
     }
 
-    public void getTemplate(String experiment_course_match_id) {
+    public void getTemplate(String experiment_course_match_id, String experiment_item_id) {
         this.model.getTemplate(experiment_course_match_id,
+                experiment_item_id,
                 new OkHttpUtils.OnOkHttpUtilsListener() {
                     @Override
                     public void onResult(Boolean isSuccess, JSONObject responseJson) {

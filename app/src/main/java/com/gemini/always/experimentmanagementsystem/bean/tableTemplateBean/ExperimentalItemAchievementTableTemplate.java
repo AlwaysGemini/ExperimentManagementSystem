@@ -3,6 +3,8 @@ package com.gemini.always.experimentmanagementsystem.bean.tableTemplateBean;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableColumn;
 
 public class ExperimentalItemAchievementTableTemplate {
+    private String experiment_course_match_id;
+
     @TableColumn(id = 1, name = "实验选课代码")
     private String experimental_course_selection_id;
 
@@ -12,13 +14,14 @@ public class ExperimentalItemAchievementTableTemplate {
     @TableColumn(id = 3, name = "姓名")
     private String user_name;
 
-    @TableColumn(id = 4, name = "实验项目")
+    @TableColumn(id = 4, name = "学号")
+    private String student_id;
+
+    @TableColumn(id = 5, name = "实验项目")
     private String experiment_item_name;
 
-    @TableColumn(id = 5, name = "成绩")
+    @TableColumn(id = 6, name = "成绩")
     private String experimental_item_score;
-
-    private String experiment_course_match_id;
 
     public String getExperimental_course_selection_id() {
         return experimental_course_selection_id;
@@ -66,5 +69,13 @@ public class ExperimentalItemAchievementTableTemplate {
 
     public void setExperiment_course_match_id(String experiment_course_match_id) {
         this.experiment_course_match_id = experiment_course_match_id;
+    }
+
+    public String getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(String student_id) {
+        this.student_id = student_id;
     }
 }

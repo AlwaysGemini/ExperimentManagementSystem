@@ -68,6 +68,8 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
 
     private Class templateClass = ExperimentalItemAchievementTableTemplate.class;
 
+    private String toBeGetTemplate;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -124,11 +126,11 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
         }.start();
     }
 
-    private void getTemplate(String experiment_course_match_id) {
+    private void getTemplate(String experiment_course_match_id, String experiment_item_id) {
         new Thread() {
             @Override
             public void run() {
-                getPresenter().getTemplate(experiment_course_match_id);
+                getPresenter().getTemplate(experiment_course_match_id, experiment_item_id);
             }
         }.start();
     }
@@ -207,7 +209,7 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
                     } catch (JSONException e) {
                         Logger.e(e, "JSONException:");
                     }
-                    ExcelUtils.createExcel(getContext(), title + "表格", data, templateClass);
+                    ExcelUtils.createExcel(getContext(), toBeGetTemplate + "表格", data, templateClass);
                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
                 }
             }.start();
@@ -216,14 +218,22 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
 
     @Override
     public void onImportExperimentalItemAchievementResult(Boolean isSuccess, JSONObject responseJson) {
-
+        if (isSuccess) {
+            try {
+                XToastUtils.toast(responseJson.getString("msg"));
+            } catch (JSONException e) {
+                Logger.e(e, "JSONException");
+            }
+        }
     }
 
     @OnClick({R.id.fab_get_template, R.id.fab_import, R.id.fab_query})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_get_template:
-                getTemplate(list.get(table.getCheckedList().get(0) - 1).getExperiment_course_match_id());
+                toBeGetTemplate = list.get(table.getCheckedList().get(0) - 1).getExperimental_teaching_class_name() + " - " + list.get(table.getCheckedList().get(0) - 1).getExperiment_item_name() + " - ";
+                getTemplate(list.get(table.getCheckedList().get(0) - 1).getExperiment_course_match_id(),
+                        list.get(table.getCheckedList().get(0) - 1).getExperiment_item_id());
                 break;
             case R.id.fab_import:
                 if (table.getCheckedList().size() != 1) {
@@ -235,10 +245,11 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
                             new Thread() {
                                 @Override
                                 public void run() {
+                                    ExperimentalItemAchievementEntryTable toBeUpload = list.get(table.getCheckedList().get(0) - 1);
                                     importExperimentalItemAchievement(filePath,
-                                            list.get(table.getCheckedList().get(0) - 1).getExperiment_item_name() + "项目指导书.xlsx",
-                                            list.get(table.getCheckedList().get(0) - 1).getExperiment_item_id(),
-                                            list.get(table.getCheckedList().get(0) - 1).getExperiment_course_match_id());
+                                            toBeUpload.getExperiment_item_id() + " - " + toBeUpload.getExperiment_course_match_id() + " - " + "实验项目成绩表格.xlsx",
+                                            toBeUpload.getExperiment_item_id(),
+                                            toBeUpload.getExperiment_course_match_id());
                                 }
                             }.start();
                         }

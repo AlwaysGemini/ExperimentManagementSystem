@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentOutlineFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentAchievementSummaryFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentCourseMatchFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentItemManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentProjectInstructionCheckFragment;
@@ -157,6 +158,9 @@ public class FragmentSelectActivity extends AppCompatActivity {
                 break;
             case "ExperimentalItemAchievementEntryFragment":
                 fragment = new ExperimentalItemAchievementEntryFragment();
+                break;
+            case "ExperimentAchievementSummaryFragment":
+                fragment = new ExperimentAchievementSummaryFragment();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");

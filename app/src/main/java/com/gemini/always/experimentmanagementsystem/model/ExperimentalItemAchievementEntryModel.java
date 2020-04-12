@@ -31,10 +31,12 @@ public class ExperimentalItemAchievementEntryModel {
     }
 
     public void getTemplate(String experiment_course_match_id,
+                            String experiment_item_id,
                             OkHttpUtils.OnOkHttpUtilsListener onOkHttpUtilsListener) {
         FormBody formBody = new FormBody
                 .Builder()
                 .add("experiment_course_match_id", experiment_course_match_id)
+                .add("experiment_item_id", experiment_item_id)
                 .build();
         OkHttpUtils.postByFormBody(formBody, URL_getTemplate, new OkHttpUtils.OnOkHttpUtilsListener() {
             @Override
