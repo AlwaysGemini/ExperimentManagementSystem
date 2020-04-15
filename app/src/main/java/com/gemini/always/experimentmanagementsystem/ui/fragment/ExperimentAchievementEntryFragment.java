@@ -13,15 +13,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.base.BaseFragment;
 import com.gemini.always.experimentmanagementsystem.bean.User;
-import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentalItemAchievementEntryTable;
-import com.gemini.always.experimentmanagementsystem.bean.tableTemplateBean.ExperimentalItemAchievementTableTemplate;
+import com.gemini.always.experimentmanagementsystem.bean.tableBean.ExperimentAchievementEntryTable;
+import com.gemini.always.experimentmanagementsystem.bean.tableTemplateBean.ExperimentAchievementTableTemplate;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.MyTableView;
 import com.gemini.always.experimentmanagementsystem.custom.customTableView.TableAdapter;
-import com.gemini.always.experimentmanagementsystem.presenter.ExperimentalItemAchievementEntryPresenter;
+import com.gemini.always.experimentmanagementsystem.presenter.ExperimentAchievementEntryPresenter;
 import com.gemini.always.experimentmanagementsystem.util.ExcelUtils;
 import com.gemini.always.experimentmanagementsystem.util.JsonUtil;
 import com.gemini.always.experimentmanagementsystem.util.XToastUtils;
-import com.gemini.always.experimentmanagementsystem.view.ExperimentalItemAchievementEntryView;
+import com.gemini.always.experimentmanagementsystem.view.ExperimentAchievementEntryView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ExperimentalItemAchievementEntryFragment extends BaseFragment<ExperimentalItemAchievementEntryView, ExperimentalItemAchievementEntryPresenter> implements ExperimentalItemAchievementEntryView, View.OnClickListener {
+public class ExperimentAchievementEntryFragment extends BaseFragment<ExperimentAchievementEntryView, ExperimentAchievementEntryPresenter> implements ExperimentAchievementEntryView, View.OnClickListener {
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -62,11 +62,11 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
     FloatingActionsMenu fabMenu;
     Unbinder unbinder;
 
-    private String title = "实验项目成绩录入";
-    private Class tableClass = ExperimentalItemAchievementEntryTable.class;
-    private List<ExperimentalItemAchievementEntryTable> list = new ArrayList<>();
+    private String title = "实验成绩录入";
+    private Class tableClass = ExperimentAchievementEntryTable.class;
+    private List<ExperimentAchievementEntryTable> list = new ArrayList<>();
 
-    private Class templateClass = ExperimentalItemAchievementTableTemplate.class;
+    private Class templateClass = ExperimentAchievementTableTemplate.class;
 
     private String toBeGetTemplate;
 
@@ -93,12 +93,12 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
     }
 
     @Override
-    public ExperimentalItemAchievementEntryPresenter createPresenter() {
-        return new ExperimentalItemAchievementEntryPresenter();
+    public ExperimentAchievementEntryPresenter createPresenter() {
+        return new ExperimentAchievementEntryPresenter();
     }
 
     @Override
-    public ExperimentalItemAchievementEntryView createView() {
+    public ExperimentAchievementEntryView createView() {
         return this;
     }
 
@@ -126,32 +126,30 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
         }.start();
     }
 
-    private void getTemplate(String experiment_course_match_id, String experiment_item_id) {
+    private void getTemplate(String experiment_course_match_id) {
         new Thread() {
             @Override
             public void run() {
-                getPresenter().getTemplate(experiment_course_match_id, experiment_item_id);
+                getPresenter().getTemplate(experiment_course_match_id);
             }
         }.start();
     }
 
     private void importExperimentalItemAchievement(String filePath,
                                                    String fileName,
-                                                   String experiment_item_id,
                                                    String experiment_course_match_id) {
         new Thread() {
             @Override
             public void run() {
                 getPresenter().importExperimentalItemAchievement(filePath,
                         fileName,
-                        experiment_item_id,
                         experiment_course_match_id);
             }
         }.start();
     }
 
     @Override
-    public void onGetExperimentItemAchievementTableSummaryResult(Boolean isSuccess, JSONObject responseJson) {
+    public void onGetExperimentAchievementTableSummaryResult(Boolean isSuccess, JSONObject responseJson) {
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             if (isSuccess) {
                 try {
@@ -202,9 +200,9 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
             new Thread() {
                 @Override
                 public void run() {
-                    List<ExperimentalItemAchievementTableTemplate> data = new ArrayList<>();
+                    List<ExperimentAchievementTableTemplate> data = new ArrayList<>();
                     try {
-                        data = new Gson().fromJson(responseJson.getJSONArray("data").toString(), new TypeToken<List<ExperimentalItemAchievementTableTemplate>>() {
+                        data = new Gson().fromJson(responseJson.getJSONArray("data").toString(), new TypeToken<List<ExperimentAchievementTableTemplate>>() {
                         }.getType());
                     } catch (JSONException e) {
                         Logger.e(e, "JSONException:");
@@ -231,9 +229,8 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_get_template:
-                toBeGetTemplate = list.get(table.getCheckedList().get(0) - 1).getExperimental_teaching_class_name() + " - " + list.get(table.getCheckedList().get(0) - 1).getExperiment_item_name() + " - ";
-                getTemplate(list.get(table.getCheckedList().get(0) - 1).getExperiment_course_match_id(),
-                        list.get(table.getCheckedList().get(0) - 1).getExperiment_item_id());
+                toBeGetTemplate = list.get(table.getCheckedList().get(0) - 1).getExperimental_teaching_class_name();
+                getTemplate(list.get(table.getCheckedList().get(0) - 1).getExperiment_course_match_id());
                 break;
             case R.id.fab_import:
                 if (table.getCheckedList().size() != 1) {
@@ -245,10 +242,10 @@ public class ExperimentalItemAchievementEntryFragment extends BaseFragment<Exper
                             new Thread() {
                                 @Override
                                 public void run() {
-                                    ExperimentalItemAchievementEntryTable toBeUpload = list.get(table.getCheckedList().get(0) - 1);
+                                    ExperimentAchievementEntryTable toBeUpload = list.get(table.getCheckedList().get(0) - 1);
                                     importExperimentalItemAchievement(filePath,
-                                            toBeUpload.getExperiment_item_id() + " - " + toBeUpload.getExperiment_course_match_id() + " - " + "实验项目成绩表格.xlsx",
-                                            toBeUpload.getExperiment_item_id(),
+                                            toBeUpload.getExperiment_course_match_id() + " - " + "实验成绩表格.xlsx",
+
                                             toBeUpload.getExperiment_course_match_id());
                                 }
                             }.start();

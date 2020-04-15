@@ -317,7 +317,6 @@ public class MainActivity extends AppCompatActivity {
                 level0Item[count].addSubItem(new Item("实验室人员管理"));
                 level0Item[count].addSubItem(new Item("实验仪器设备管理"));
                 level0Item[count].addSubItem(new Item("实验耗材管理"));
-                level0Item[count].addSubItem(new Item("代码维护"));
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("实验项目管理");
@@ -341,10 +340,8 @@ public class MainActivity extends AppCompatActivity {
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("实验成绩管理");
-                level0Item[count].addSubItem(new Item("实验项目成绩录入"));
-                level0Item[count].addSubItem(new Item("实验成绩汇总"));
+                level0Item[count].addSubItem(new Item("实验成绩录入"));
                 level0Item[count].addSubItem(new Item("实验成绩审核"));
-                level0Item[count].addSubItem(new Item("实验考勤成绩"));
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("开放性实验管理");
@@ -354,12 +351,6 @@ public class MainActivity extends AppCompatActivity {
                 level0Item[count].addSubItem(new Item("预约控制"));
                 level0Item[count].addSubItem(new Item("名单调整"));
                 level0Item[count].addSubItem(new Item("成绩管理"));
-                data.add(level0Item[count++]);
-
-                level0Item[count] = new Level0Item("实验课表打印");
-                level0Item[count].addSubItem(new Item("课程课表打印"));
-                level0Item[count].addSubItem(new Item("教师课表打印"));
-                level0Item[count].addSubItem(new Item("场地课表打印"));
                 data.add(level0Item[count++]);
                 break;
             case "选择为教师":
@@ -388,9 +379,7 @@ public class MainActivity extends AppCompatActivity {
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("实验成绩管理");
-                level0Item[count].addSubItem(new Item("实验项目成绩录入"));
-                level0Item[count].addSubItem(new Item("实验成绩汇总"));
-                level0Item[count].addSubItem(new Item("实验考勤成绩"));
+                level0Item[count].addSubItem(new Item("实验成绩录入"));
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("开放性实验管理");
@@ -400,12 +389,6 @@ public class MainActivity extends AppCompatActivity {
                 level0Item[count].addSubItem(new Item("名单调整"));
                 level0Item[count].addSubItem(new Item("成绩管理"));
                 data.add(level0Item[count++]);
-
-                level0Item[count] = new Level0Item("实验课表打印");
-                level0Item[count].addSubItem(new Item("课程课表打印"));
-                level0Item[count].addSubItem(new Item("教师课表打印"));
-                level0Item[count].addSubItem(new Item("场地课表打印"));
-                data.add(level0Item[count++]);
                 break;
             case "学生":
                 level0Item[count] = new Level0Item("实验选课管理");
@@ -414,10 +397,6 @@ public class MainActivity extends AppCompatActivity {
 
                 level0Item[count] = new Level0Item("实验成绩管理");
                 level0Item[count].addSubItem(new Item("实验成绩查看"));
-                data.add(level0Item[count++]);
-
-                level0Item[count] = new Level0Item("实验课表打印");
-                level0Item[count].addSubItem(new Item("实验课表打印"));
                 data.add(level0Item[count++]);
                 break;
         }
@@ -478,11 +457,11 @@ public class MainActivity extends AppCompatActivity {
             case "生成配课":
                 fragmentName = "ExperimentCourseMatchFragment";
                 break;
-            case "实验项目成绩录入":
+            case "实验成绩录入":
                 fragmentName = "ExperimentalItemAchievementEntryFragment";
                 break;
-            case "实验成绩汇总":
-                fragmentName = "ExperimentAchievementSummaryFragment";
+            case "实验成绩审核":
+                fragmentName = "ExperimentAchievementExaminingFragment";
                 break;
         }
         return fragmentName;

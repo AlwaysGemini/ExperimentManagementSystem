@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import com.gemini.always.experimentmanagementsystem.R;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentOutlineFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.CourseExperimentProjectFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentAchievementEntryFragment;
+import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentAchievementExaminingFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentAchievementSummaryFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentCourseMatchFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentItemManagementFragment;
@@ -21,7 +23,6 @@ import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentSchedu
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalConsumablesManagementFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalCourseSelectionFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalEquipmentFragment;
-import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalItemAchievementEntryFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalOrganizationFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.ExperimentalTeachingAssignmentFragment;
 import com.gemini.always.experimentmanagementsystem.ui.fragment.HelpFragment;
@@ -157,10 +158,13 @@ public class FragmentSelectActivity extends AppCompatActivity {
                 fragment = new HelpFragment();
                 break;
             case "ExperimentalItemAchievementEntryFragment":
-                fragment = new ExperimentalItemAchievementEntryFragment();
+                fragment = new ExperimentAchievementEntryFragment();
                 break;
             case "ExperimentAchievementSummaryFragment":
                 fragment = new ExperimentAchievementSummaryFragment();
+                break;
+            case "ExperimentAchievementExaminingFragment":
+                fragment = new ExperimentAchievementExaminingFragment();
                 break;
             default:
                 XToastUtils.toast("Fragment加载错误");
