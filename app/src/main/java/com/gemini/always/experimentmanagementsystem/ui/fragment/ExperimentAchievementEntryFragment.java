@@ -46,6 +46,8 @@ import butterknife.Unbinder;
 
 public class ExperimentAchievementEntryFragment extends BaseFragment<ExperimentAchievementEntryView, ExperimentAchievementEntryPresenter> implements ExperimentAchievementEntryView, View.OnClickListener {
 
+    private static String TAG = "ExperimentAchievementEntryFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
@@ -181,13 +183,13 @@ public class ExperimentAchievementEntryFragment extends BaseFragment<ExperimentA
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }
@@ -205,7 +207,7 @@ public class ExperimentAchievementEntryFragment extends BaseFragment<ExperimentA
                         data = new Gson().fromJson(responseJson.getJSONArray("data").toString(), new TypeToken<List<ExperimentAchievementTableTemplate>>() {
                         }.getType());
                     } catch (JSONException e) {
-                        Logger.e(e, "JSONException:");
+                        Logger.e(e, TAG);
                     }
                     ExcelUtils.createExcel(getContext(), toBeGetTemplate + "表格", data, templateClass);
                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast("导出成功,文件保存在:" + getActivity().getExternalFilesDir(null)));
@@ -220,7 +222,7 @@ public class ExperimentAchievementEntryFragment extends BaseFragment<ExperimentA
             try {
                 XToastUtils.toast(responseJson.getString("msg"));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException");
+                Logger.e(e, TAG);
             }
         }
     }

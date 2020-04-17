@@ -53,6 +53,8 @@ import butterknife.Unbinder;
  */
 public class ExperimentalTeachingAssignmentFragment extends BaseFragment<ExperimentalTeachingAssignmentView, ExperimentalTeachingAssignmentPresenter> implements ExperimentalTeachingAssignmentView {
 
+    private static String TAG = "ExperimentalTeachingAssignmentFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
@@ -165,7 +167,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
             try {
                 XToastUtils.toast(responseJson.getString("msg"));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+                Logger.e(e, TAG);
             }
         });
     }
@@ -183,7 +185,7 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "semester", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "college", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
-                XToastUtils.toast(e.getMessage());
+                Logger.e(e, TAG);
             }
         }
     }
@@ -220,13 +222,13 @@ public class ExperimentalTeachingAssignmentFragment extends BaseFragment<Experim
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }

@@ -34,6 +34,8 @@ import butterknife.Unbinder;
  */
 public class ExperimentalOrganizationFragment extends BaseFragment<ExperimentalOrganizationView, ExperimentalOrganizationPresenter> implements ExperimentalOrganizationView {
 
+    private static String TAG = "ExperimentalOrganizationFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.tabSegment)

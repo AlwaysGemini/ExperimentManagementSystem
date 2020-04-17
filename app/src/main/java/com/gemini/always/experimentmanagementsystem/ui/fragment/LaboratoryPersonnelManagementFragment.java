@@ -102,6 +102,8 @@ public class LaboratoryPersonnelManagementFragment extends BaseFragment<Laborato
     }
 
     private void initView() {
+        fabDelete.setVisibility(View.GONE);
+
         titlebar.setTitle("实验室人员管理");
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override

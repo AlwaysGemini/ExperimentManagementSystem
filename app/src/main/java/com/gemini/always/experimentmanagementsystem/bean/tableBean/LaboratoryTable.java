@@ -13,7 +13,7 @@ public class LaboratoryTable {
     private String laboratory_name;
 
     @TableColumn(id = 3, name = "隶属教学实验中心")
-    private String teaching_experiment_center;
+    private String teaching_experiment_center_name;
 
     @TableColumn(id = 4, name = "实验室负责人")
     private String laboratory_director;
@@ -43,12 +43,12 @@ public class LaboratoryTable {
         this.laboratory_name = laboratory_name;
     }
 
-    public String getTeaching_experiment_center() {
-        return teaching_experiment_center;
+    public String getTeaching_experiment_center_name() {
+        return teaching_experiment_center_name;
     }
 
-    public void setTeaching_experiment_center(String teaching_experiment_center) {
-        this.teaching_experiment_center = teaching_experiment_center;
+    public void setTeaching_experiment_center_name(String teaching_experiment_center_name) {
+        this.teaching_experiment_center_name = teaching_experiment_center_name;
     }
 
     public String getLaboratory_director() {

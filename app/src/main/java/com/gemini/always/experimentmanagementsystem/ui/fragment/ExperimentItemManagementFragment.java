@@ -56,6 +56,8 @@ import butterknife.Unbinder;
  */
 public class ExperimentItemManagementFragment extends BaseFragment<ExperimentalProjectManagementView, ExperimentItemManagementPresenter> implements ExperimentalProjectManagementView {
 
+    private static String TAG = "ExperimentItemManagementFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
@@ -173,7 +175,7 @@ public class ExperimentItemManagementFragment extends BaseFragment<ExperimentalP
             try {
                 XToastUtils.toast(responseJson.getString("msg"));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+                Logger.e(e, TAG);
             }
         });
     }
@@ -191,7 +193,7 @@ public class ExperimentItemManagementFragment extends BaseFragment<ExperimentalP
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experiment_type", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experiment_category", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
-                XToastUtils.toast(e.getMessage());
+                Logger.e(e, TAG);
             }
         }
     }
@@ -228,13 +230,13 @@ public class ExperimentItemManagementFragment extends BaseFragment<ExperimentalP
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }

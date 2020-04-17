@@ -40,7 +40,7 @@ public class LaboratoryPresenter extends BasePresenter<LaboratoryView> {
     public void insertData(LaboratoryTable laboratoryTable) {
         this.laboratoryModel.insertData(laboratoryTable.getLaboratory_id(),
                 laboratoryTable.getLaboratory_name(),
-                laboratoryTable.getTeaching_experiment_center(),
+                laboratoryTable.getTeaching_experiment_center_name(),
                 laboratoryTable.getLaboratory_director(),
                 laboratoryTable.getRules_and_regulations(),
                 laboratoryTable.getRemarks(),

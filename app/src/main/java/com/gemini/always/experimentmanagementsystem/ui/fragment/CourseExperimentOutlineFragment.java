@@ -54,6 +54,8 @@ import butterknife.Unbinder;
  */
 public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperimentOutlineView, CourseExperimentOutlinePresenter> implements CourseExperimentOutlineView {
 
+    private static String TAG = "CourseExperimentOutlineFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
@@ -124,13 +126,11 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
         return this;
     }
 
-    private void insertData() {
+    private void insertData(InsertCourseExperimentOutline insertCourseExperimentOutline) {
         new Thread() {
             @Override
             public void run() {
-                getPresenter().insertData(selected_and_edited_list_for_insert.get(0),
-                        selected_and_edited_list_for_insert.get(1),
-                        selected_and_edited_list_for_insert.get(2));
+                getPresenter().insertData(insertCourseExperimentOutline);
             }
         }.start();
     }
@@ -139,7 +139,9 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
         new Thread() {
             @Override
             public void run() {
-                getPresenter().getData(selected_and_edited_list_for_query.get(0));
+                QueryCourseExperimentOutline queryCourseExperimentOutline = new QueryCourseExperimentOutline();
+                queryCourseExperimentOutline.setCourse(selected_and_edited_list_for_query.get(0));
+                getPresenter().getData(queryCourseExperimentOutline);
             }
         }.start();
     }
@@ -150,7 +152,7 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
             try {
                 XToastUtils.toast(responseJson.getString("msg"));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+                Logger.e(e, TAG);
             }
         });
     }
@@ -187,13 +189,13 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }
@@ -231,9 +233,9 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                             public void run() {
                                 if (FileUtils.getFormatName(filePath).equals("xlsx")) {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.toast(filePath));
-                                    List<CourseExperimentOutlineTable> list = ExcelUtils.readExcelContent(filePath, tableClass);
-                                    for (CourseExperimentOutlineTable courseExperimentOutlineTable : list) {
-                                        getPresenter().insertData(courseExperimentOutlineTable);
+                                    List<InsertCourseExperimentOutline> list = ExcelUtils.readExcelContent(filePath, insertClass);
+                                    for (InsertCourseExperimentOutline insertCourseExperimentOutline : list) {
+                                        getPresenter().insertData(insertCourseExperimentOutline);
                                     }
                                 } else {
                                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> XToastUtils.error("请选择.xlsx格式的表格文件"));
@@ -261,7 +263,11 @@ public class CourseExperimentOutlineFragment extends BaseFragment<CourseExperime
                             @Override
                             public void onPositive(CustomDialog dialog, List<String> list) {
                                 selected_and_edited_list_for_insert = list;
-                                insertData();
+                                InsertCourseExperimentOutline insertCourseExperimentOutline = new InsertCourseExperimentOutline();
+                                insertCourseExperimentOutline.setAllocation_of_courses_id(list.get(0));
+                                insertCourseExperimentOutline.setExperiment_item_id(list.get(1));
+                                insertCourseExperimentOutline.setProportion_of_experimental_results(list.get(2));
+                                insertData(insertCourseExperimentOutline);
                                 dialog.dismiss();
                             }
                         }).create().show();

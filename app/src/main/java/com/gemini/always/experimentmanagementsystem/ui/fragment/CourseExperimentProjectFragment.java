@@ -48,6 +48,8 @@ import butterknife.Unbinder;
  */
 public class CourseExperimentProjectFragment extends BaseFragment<CourseExperimentProjectView, CourseExperimentProjectPresenter> implements CourseExperimentProjectView, View.OnClickListener {
 
+    private static String TAG = "CourseExperimentProjectFragment";
+
     @BindView(R.id.table)
     MyTableView table;
     Unbinder unbinder;
@@ -143,14 +145,14 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                     list.addAll(JsonUtil.stringToList(responseJson.getJSONArray("data").toString(), tableClass));
                     table.setData(list, CourseExperimentProjectTable.class);
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 getActivity().runOnUiThread(() -> {
                     try {
                         XToastUtils.toast(responseJson.getString("msg"));
                     } catch (JSONException e) {
-                        Logger.e(e, "JSONException:");
+                        Logger.e(e, TAG);
                     }
                 });
                 llStateful.showEmpty();
@@ -172,7 +174,7 @@ public class CourseExperimentProjectFragment extends BaseFragment<CourseExperime
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "course_assignment", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "enabling_grade", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+                Logger.e(e, TAG);
             }
         }
     }

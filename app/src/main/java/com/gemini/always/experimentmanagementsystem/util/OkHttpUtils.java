@@ -35,6 +35,8 @@ import static com.gemini.always.experimentmanagementsystem.Constants.OCTET_STREA
  */
 public class OkHttpUtils {
 
+    private static String TAG = "OkHttpUtils";
+
     /**
      * 上传文件的方法
      *
@@ -65,7 +67,7 @@ public class OkHttpUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
-                Logger.e(e, "IOException:");
+                Logger.e(e, TAG);
             }
 
             @Override
@@ -74,12 +76,9 @@ public class OkHttpUtils {
                     JSONObject responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
                     Logger.json(responseJson.toString());
                     onOkHttpUtilsListener.onResult(true, responseJson);
-                } catch (JSONException e) {
+                } catch (JSONException | IOException e) {
                     call.cancel();
-                    Logger.e(e, "JSONException:");
-                } catch (IOException e) {
-                    call.cancel();
-                    Logger.e(e, "IOException:");
+                    Logger.e(e, TAG);
                 }
             }
         });
@@ -98,7 +97,7 @@ public class OkHttpUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
-                Logger.e(e, "IOException:");
+                Logger.e(e, TAG);
             }
 
             @Override
@@ -109,10 +108,10 @@ public class OkHttpUtils {
                     onOkHttpUtilsListener.onResult(true, responseJson);
                 } catch (JSONException e) {
                     call.cancel();
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 } catch (IOException e) {
                     call.cancel();
-                    Logger.e(e, "IOException:");
+                    Logger.e(e, TAG);
                 }
             }
         });
@@ -136,7 +135,7 @@ public class OkHttpUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
-                Logger.e(e, "IOException:");
+                Logger.e(e, TAG);
             }
 
             @Override
@@ -147,10 +146,10 @@ public class OkHttpUtils {
                     onOkHttpUtilsListener.onResult(true, responseJson);
                 } catch (JSONException e) {
                     call.cancel();
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 } catch (IOException e) {
                     call.cancel();
-                    Logger.e(e, "IOException:");
+                    Logger.e(e, TAG);
                 }
             }
         });
@@ -177,7 +176,7 @@ public class OkHttpUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
-                Logger.e(e, "IOException:");
+                Logger.e(e, TAG);
             }
 
             @Override
@@ -186,12 +185,9 @@ public class OkHttpUtils {
                     JSONObject responseJson = new JSONObject(Objects.requireNonNull(response.body()).string());
                     Logger.json(responseJson.toString());
                     onOkHttpUtilsListener.onResult(true, responseJson);
-                } catch (JSONException e) {
+                } catch (JSONException | IOException e) {
                     call.cancel();
-                    Logger.e(e, "JSONException:");
-                } catch (IOException e) {
-                    call.cancel();
-                    Logger.e(e, "IOException:");
+                    Logger.e(e, TAG);
                 }
             }
         });
@@ -221,7 +217,7 @@ public class OkHttpUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
-                Logger.e(e, "IOException:");
+                Logger.e(e, TAG);
             }
 
             @Override
@@ -232,10 +228,10 @@ public class OkHttpUtils {
                     onOkHttpUtilsListener.onResult(true, responseJson);
                 } catch (JSONException e) {
                     call.cancel();
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 } catch (IOException e) {
                     call.cancel();
-                    Logger.e(e, "IOException:");
+                    Logger.e(e, TAG);
                 }
             }
         });
@@ -309,7 +305,7 @@ public class OkHttpUtils {
                             fos.close();
                         }
                     } catch (IOException e) {
-                        Logger.e(e, "IOException:");
+                        Logger.e(e, TAG);
                     }
                 }
             }

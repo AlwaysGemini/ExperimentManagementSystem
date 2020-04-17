@@ -3,14 +3,17 @@ package com.gemini.always.experimentmanagementsystem.bean.insertBean;
 import com.gemini.always.experimentmanagementsystem.custom.customDialog.DialogItem;
 
 public class InsertCourseExperimentOutline {
-    @DialogItem(id = 0, name = "授课任务代码", type = DialogItem.TYPE_EditText)
+    @DialogItem(id = 0, name = "实验大纲代码", type = DialogItem.TYPE_EditText)
+    private String course_experiment_outline_id;
+
+    @DialogItem(id = 1, name = "授课任务代码", type = DialogItem.TYPE_EditText)
     private String allocation_of_courses_id;
 
-    @DialogItem(id = 1, name = "实验成绩占比(%)", type = DialogItem.TYPE_EditText)
+    @DialogItem(id = 2, name = "实验成绩占比(%)", type = DialogItem.TYPE_EditText)
     private String proportion_of_experimental_results;
 
-    @DialogItem(id = 2, name = "实验项目代码", type = DialogItem.TYPE_EditText)
-    private String experimental_project_name;
+    @DialogItem(id = 3, name = "实验项目代码", type = DialogItem.TYPE_EditText)
+    private String experiment_item_id;
 
     public String getAllocation_of_courses_id() {
         return allocation_of_courses_id;
@@ -28,11 +31,19 @@ public class InsertCourseExperimentOutline {
         this.proportion_of_experimental_results = proportion_of_experimental_results;
     }
 
-    public String getExperimental_project_name() {
-        return experimental_project_name;
+    public String getExperiment_item_id() {
+        return experiment_item_id;
     }
 
-    public void setExperimental_project_name(String experimental_project_name) {
-        this.experimental_project_name = experimental_project_name;
+    public void setExperiment_item_id(String experiment_item_id) {
+        this.experiment_item_id = experiment_item_id;
+    }
+
+    public String getCourse_experiment_outline_id() {
+        return course_experiment_outline_id;
+    }
+
+    public void setCourse_experiment_outline_id(String course_experiment_outline_id) {
+        this.course_experiment_outline_id = course_experiment_outline_id;
     }
 }

@@ -41,6 +41,8 @@ import butterknife.Unbinder;
 
 public class ExperimentAchievementExaminingFragment extends BaseFragment<ExperimentAchievementExaminingView, ExperimentAchievementExaminingPresenter> implements ExperimentAchievementExaminingView, View.OnClickListener {
 
+    private static String TAG = "ExperimentAchievementExaminingFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
@@ -159,13 +161,13 @@ public class ExperimentAchievementExaminingFragment extends BaseFragment<Experim
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }
@@ -178,7 +180,7 @@ public class ExperimentAchievementExaminingFragment extends BaseFragment<Experim
             try {
                 XToastUtils.toast(responseJson.getString("msg"));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException");
+                Logger.e(e, TAG);
             }
         }
     }

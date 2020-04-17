@@ -38,6 +38,8 @@ import butterknife.Unbinder;
 
 public class ExperimentProjectInstructionCheckFragment extends BaseFragment<ExperimentProjectInstructionCheckView, ExperimentProjectInstructionCheckPresenter> implements ExperimentProjectInstructionCheckView, View.OnClickListener {
 
+    private static String TAG = "ExperimentProjectInstructionCheckFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
@@ -69,6 +71,12 @@ public class ExperimentProjectInstructionCheckFragment extends BaseFragment<Expe
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void initView() {
@@ -147,13 +155,13 @@ public class ExperimentProjectInstructionCheckFragment extends BaseFragment<Expe
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }
@@ -167,7 +175,7 @@ public class ExperimentProjectInstructionCheckFragment extends BaseFragment<Expe
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
             });
         }
@@ -185,11 +193,5 @@ public class ExperimentProjectInstructionCheckFragment extends BaseFragment<Expe
             case R.id.fab_menu:
                 break;
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

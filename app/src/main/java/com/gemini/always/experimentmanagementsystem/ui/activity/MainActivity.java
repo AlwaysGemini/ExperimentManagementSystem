@@ -57,12 +57,14 @@ import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static String TAG = "MainActivity";
+
     private static final int POS_CHANGE_ROLE = 0;
     private static final int POS_SETTING = 1;
     private static final int POS_HELP = 2;
     private static final int POS_LOGOUT = 4;
     private static SlidingRootNav mSlidingRootNav;
-    Level0Item[] level0Item = new Level0Item[8];
+    private Level0Item[] level0Item = new Level0Item[8];
     private TitleBar titleBar;
     private RelativeLayout container;
     private String[] mMenuTitles;
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 启动MainActivity
-     *
      * @param context
      */
     public static void startMainActivity(Context context) {
@@ -102,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 初始化侧滑界面
+     *
+     * @param savedInstanceState
+     */
     private void initSlidingMenu(Bundle savedInstanceState) {
         mMenuTitles = ResUtils.getStringArray(R.array.menu_titles);
         mMenuIcons = OtherUtils.getDrawableArray(this, R.array.menu_icons);

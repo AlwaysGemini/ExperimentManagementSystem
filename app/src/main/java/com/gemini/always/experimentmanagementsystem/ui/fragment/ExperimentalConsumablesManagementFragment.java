@@ -56,6 +56,7 @@ import butterknife.Unbinder;
  */
 public class ExperimentalConsumablesManagementFragment extends BaseFragment<ExperimentalConsumablesManagementView, ExperimentalConsumablesManagementPresenter> implements ExperimentalConsumablesManagementView {
 
+    private static String TAG = "ExperimentalConsumablesManagementFragment";
 
     @BindView(R.id.titlebar)
     TitleBar titlebar;
@@ -174,7 +175,7 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
             try {
                 XToastUtils.toast(responseJson.getString("msg"));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+                Logger.e(e, TAG);
             }
         });
     }
@@ -193,7 +194,7 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "experimental_compartment_name", spinnerDataListForQuery.get(count++));
                 ListUtil.addAllDataIntoList(jsonArray.getJSONArray(count), "laboratory_room_name", spinnerDataListForQuery.get(count++));
             } catch (JSONException e) {
-                Logger.e(e, "JSONException:");
+                Logger.e(e, TAG);
             }
         }
     }
@@ -230,13 +231,13 @@ public class ExperimentalConsumablesManagementFragment extends BaseFragment<Expe
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }

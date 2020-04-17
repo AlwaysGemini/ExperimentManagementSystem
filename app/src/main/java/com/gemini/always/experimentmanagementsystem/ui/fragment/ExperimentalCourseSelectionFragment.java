@@ -39,6 +39,8 @@ import butterknife.Unbinder;
 
 public class ExperimentalCourseSelectionFragment extends BaseFragment<ExperimentalCourseSelectionView, ExperimentalCourseSelectionPresenter> implements ExperimentalCourseSelectionView, View.OnClickListener {
 
+    private static String TAG = "ExperimentalCourseSelectionFragment";
+
     @BindView(R.id.titlebar)
     TitleBar titlebar;
     @BindView(R.id.table)
@@ -154,13 +156,13 @@ public class ExperimentalCourseSelectionFragment extends BaseFragment<Experiment
                         }
                     });
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException");
+                    Logger.e(e, TAG);
                 }
             } else {
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
                 llStateful.showEmpty();
             }
@@ -174,7 +176,7 @@ public class ExperimentalCourseSelectionFragment extends BaseFragment<Experiment
                 try {
                     XToastUtils.toast(responseJson.getString("msg"));
                 } catch (JSONException e) {
-                    Logger.e(e, "JSONException:");
+                    Logger.e(e, TAG);
                 }
             });
         }
