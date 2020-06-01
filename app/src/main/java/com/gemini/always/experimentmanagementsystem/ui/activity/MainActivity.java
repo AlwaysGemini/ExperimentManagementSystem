@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
                 level0Item[count] = new Level0Item("实验选课管理");
                 level0Item[count].addSubItem(new Item("选课规则设置"));
-                level0Item[count].addSubItem(new Item("选课名单调整"));
+                //level0Item[count].addSubItem(new Item("选课名单调整"));
                 level0Item[count].addSubItem(new Item("生成配课"));
                 data.add(level0Item[count++]);
 
@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
                 level0Item[count].addSubItem(new Item("预约控制"));
                 level0Item[count].addSubItem(new Item("名单调整"));
                 level0Item[count].addSubItem(new Item("成绩管理"));
-                data.add(level0Item[count++]);
+                //data.add(level0Item[count++]);
                 break;
             case "选择为教师":
             case "教师":
@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
                 data.add(level0Item[count++]);
 
                 level0Item[count] = new Level0Item("实验选课管理");
-                level0Item[count].addSubItem(new Item("选课名单调整"));
+                //level0Item[count].addSubItem(new Item("选课名单调整"));
                 level0Item[count].addSubItem(new Item("生成配课"));
                 data.add(level0Item[count++]);
 
@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
                 level0Item[count].addSubItem(new Item("预约控制"));
                 level0Item[count].addSubItem(new Item("名单调整"));
                 level0Item[count].addSubItem(new Item("成绩管理"));
-                data.add(level0Item[count++]);
+                //data.add(level0Item[count++]);
                 break;
             case "学生":
                 level0Item[count] = new Level0Item("实验选课管理");
@@ -468,6 +468,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "实验成绩审核":
                 fragmentName = "ExperimentAchievementExaminingFragment";
+                break;
+            case "实验成绩查看":
+                fragmentName = "CheckOutExperimentAchievementFragment";
                 break;
         }
         return fragmentName;

@@ -247,7 +247,6 @@ public class OkHttpUtils {
      * @param destFileName 下载文件名称，后面记得拼接后缀，否则手机没法识别文件类型
      * @param listener     下载监听
      */
-
     public static void download(final String url, final String destFileDir, final String destFileName, final OnDownloadListener listener) {
 
         Request request = new Request.Builder()
